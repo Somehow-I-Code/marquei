@@ -1,12 +1,10 @@
 "use client"
-import "./style.css" //Style button
+import "./styles.css"
 
 export default function Home() {
   return (
-    <button onClick={function(){
-      alert("Olá, mundo!")
-    }}>
-      Check
-    </button>
+      <button onClick={function(){
+        alert("Olá Mundo")
+      }}>Primeiro botão</button>
   );
 }

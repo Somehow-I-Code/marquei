@@ -1,7 +1,12 @@
+"use client"
+import "./style.css" //Style button
+
 export default function Home() {
   return (
-    <div>
-      <p>meu texto de teste</p>
-    </div>
+    <button onClick={function(){
+      alert("Olá, mundo!")
+    }}>
+      Check
+    </button>
   );
 }

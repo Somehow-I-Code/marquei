@@ -5,13 +5,13 @@
   margin: 0px 24px;
 }
 
-h1 {
+.category-name {
   font-weight: bold;
   color: #33363f;
   font-size: 32px;
 }
 
-ul {
+.resource-item-list {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 32px;
@@ -27,13 +27,13 @@ ul {
   justify-content: center;
 }
 
-a {
+.resource-item-link {
   display: flex;
   flex-direction: column;
   gap: 8px;
 }
 
-h2 {
+.resource-item-name {
   color: #33363f;
   font-size: 14px;
   font-weight: bold;
@@ -45,7 +45,7 @@ h2 {
   gap: 8px;
 }
 
-p {
+.resource-item-description {
   color: #545353;
   font-size: 10px;
 }

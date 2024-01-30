@@ -5,12 +5,12 @@ import "./style.css";
 
 export default function Home() {
   return (
-    <div className="resource-container">
-      <h1>Categoria 1</h1>
+    <section className="resource-container">
+      <h1 className="category-name">Categoria 1</h1>
 
-      <ul>
+      <ul className="resource-item-list">
         <li>
-          <a>
+          <a className="resource-item-link">
             <div className="resource-item-image">
               <Image
                 src={resourcePlaceholder}
@@ -20,9 +20,11 @@ export default function Home() {
 
             <div className="resource-item-info-container">
               <div className="resource-item-info">
-                <h2>Resource #1</h2>
+                <h2 className="resource-item-name">Resource #1</h2>
 
-                <p>Here we have some text helping describe that resource</p>
+                <p className="resource-item-description">
+                  Here we have some text helping describe that resource
+                </p>
               </div>
 
               <svg
@@ -43,7 +45,7 @@ export default function Home() {
         </li>
 
         <li>
-          <a>
+          <a className="resource-item-link">
             <div className="resource-item-image">
               <Image
                 src={resourcePlaceholder}
@@ -53,9 +55,11 @@ export default function Home() {
 
             <div className="resource-item-info-container">
               <div className="resource-item-info">
-                <h2>Resource #2</h2>
+                <h2 className="resource-item-name">Resource #2</h2>
 
-                <p>Here we have some text helping describe that resource</p>
+                <p className="resource-item-description">
+                  Here we have some text helping describe that resource
+                </p>
               </div>
 
               <svg
@@ -76,7 +80,7 @@ export default function Home() {
         </li>
 
         <li>
-          <a>
+          <a className="resource-item-link">
             <div className="resource-item-image">
               <Image
                 src={resourcePlaceholder}
@@ -86,9 +90,11 @@ export default function Home() {
 
             <div className="resource-item-info-container">
               <div className="resource-item-info">
-                <h2>Resource #3</h2>
+                <h2 className="resource-item-name">Resource #3</h2>
 
-                <p>Here we have some text helping describe that resource</p>
+                <p className="resource-item-description">
+                  Here we have some text helping describe that resource
+                </p>
               </div>
 
               <svg
@@ -109,7 +115,7 @@ export default function Home() {
         </li>
 
         <li>
-          <a>
+          <a className="resource-item-link">
             <div className="resource-item-image">
               <Image
                 src={resourcePlaceholder}
@@ -119,9 +125,11 @@ export default function Home() {
 
             <div className="resource-item-info-container">
               <div className="resource-item-info">
-                <h2>Resource #4</h2>
+                <h2 className="resource-item-name">Resource #4</h2>
 
-                <p>Here we have some text helping describe that resource</p>
+                <p className="resource-item-description">
+                  Here we have some text helping describe that resource
+                </p>
               </div>
 
               <svg
@@ -141,6 +149,6 @@ export default function Home() {
           </a>
         </li>
       </ul>
-    </div>
+    </section>
   );
 }

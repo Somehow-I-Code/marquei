@@ -1,3 +1,15 @@
-button {
+/*button {
     background-color: yellowgreen;
-};
+};*/
+
+header {
+  padding: 20px;
+}
+
+.show {
+  font-size: 25px;
+  font-family: "Acme", sans-serif;
+  position: relative;
+  float: right;
+  bottom: 40px;
+}

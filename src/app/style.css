@@ -1,15 +1,36 @@
-/*button {
-    background-color: yellowgreen;
-};*/
-
-header {
-  padding: 20px;
+.header {
+  padding: 10px;
 }
 
 .show {
   font-size: 25px;
-  font-family: "Acme", sans-serif;
+  font-family: "Inter";
+  display: flex;
+  justify-content: flex-end;
+  padding: 20px;
   position: relative;
-  float: right;
-  bottom: 40px;
+  bottom: 60px;
+}
+
+.listCategoria {
+  list-style-type: none;
+  display: flex;
+  gap: 8px;
+  padding: 20px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  position: relative;
+  bottom: 70px;
+}
+
+.listCategoria::-webkit-scrollbar {
+  display: none;
+}
+
+.cat {
+  font-size: 20px;
+  font-family: "Inter";
+  background: rgb(97, 219, 223);
+  border-radius: 15px;
+  white-space: nowrap;
 }

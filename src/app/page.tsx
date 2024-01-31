@@ -8,8 +8,10 @@ export default function Home() {
     <div>
       <header>
         <Image src={imageLogoMarquei} alt="The logo Marquei" />
-        <h2 className="show">Nome</h2>
       </header>
+
+      <span className="show">Nome</span>
+      
     </div>
   );
 }

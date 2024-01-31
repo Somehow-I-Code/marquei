@@ -1,15 +1,13 @@
-/*button {
-    background-color: yellowgreen;
-};*/
-
-header {
-  padding: 20px;
+.header {
+  padding: 10px;
 }
 
 .show {
   font-size: 25px;
-  font-family: "Acme", sans-serif;
+  font-family: "Inter";
+  display: flex;
+  justify-content: flex-end;
+  padding: 20px;
   position: relative;
-  float: right;
-  bottom: 40px;
+  bottom: 60px;
 }

@@ -1,18 +1,15 @@
-.header {
-  padding: 10px;
-}
-
-.show {
-  font-size: 25px;
-  font-family: "Inter";
+.page-header {
   display: flex;
-  justify-content: flex-end;
-  padding: 20px;
-  position: relative;
-  bottom: 60px;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding: 24px;
 }
 
-.listCategoria {
+.header-user-tag {
+  font-size: 25px;
+}
+
+.listCategories {
   list-style-type: none;
   display: flex;
   gap: 8px;
@@ -20,10 +17,10 @@
   overflow-x: auto;
   scrollbar-width: none;
   position: relative;
-  bottom: 70px;
+  bottom: 30px;
 }
 
-.listCategoria::-webkit-scrollbar {
+.listCategories::-webkit-scrollbar {
   display: none;
 }
 

@@ -11,10 +11,9 @@ export default function Home() {
         <div className="header-image-container">
           <Image src={imageLogoMarquei} alt="The logo Marquei" />
         </div>
-
+      </header>
         <span className="header-user-tag">Nome</span>
-      </div>
-
+        
       <section className="resource-container">
         <h1 className="category-name">Categoria 1</h1>
 

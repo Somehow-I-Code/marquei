@@ -9,7 +9,7 @@
   font-size: 25px;
 }
 
-.listCategories {
+.list-categories {
   list-style-type: none;
   display: flex;
   gap: 8px;
@@ -20,11 +20,11 @@
   bottom: 30px;
 }
 
-.listCategories::-webkit-scrollbar {
+.list-categories::-webkit-scrollbar {
   display: none;
 }
 
-.cat {
+.category {
   font-size: 20px;
   background: grey;
   border-radius: 15px;

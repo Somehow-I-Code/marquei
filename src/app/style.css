@@ -26,8 +26,7 @@
 
 .cat {
   font-size: 20px;
-  font-family: "Inter";
-  background: rgb(97, 219, 223);
+  background: grey;
   border-radius: 15px;
   white-space: nowrap;
 }

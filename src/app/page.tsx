@@ -1,11 +1,20 @@
 "use client";
 import Image from "next/image";
+import imageLogoMarquei from "../app/LOGO_MARQUEI.jpeg";
 import resourcePlaceholder from "./assets/resource-placeholder.png";
 import "./style.css";
 
 export default function Home() {
   return (
     <main>
+      <header className="page-header">
+        <div className="header-image-container">
+          <Image src={imageLogoMarquei} alt="The logo Marquei" />
+        </div>
+
+        <span className="header-user-tag">Nome</span>
+      </header>
+
       <section className="resource-container">
         <h1 className="category-name">Categoria 1</h1>
 

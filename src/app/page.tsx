@@ -7,12 +7,12 @@ import "./style.css";
 export default function Home() {
   return (
     <main>
-      <div>
-        <header>
+      <header className="page-header">
+        <div className="header-image-container">
           <Image src={imageLogoMarquei} alt="The logo Marquei" />
-        </header>
+        </div>
 
-        <span className="show">Nome</span>
+        <span className="header-user-tag">Nome</span>
       </div>
 
       <section className="resource-container">

@@ -1,15 +1,12 @@
-.header {
-  padding: 10px;
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding: 24px;
 }
 
-.show {
+.header-user-tag {
   font-size: 25px;
-  font-family: "Inter";
-  display: flex;
-  justify-content: flex-end;
-  padding: 20px;
-  position: relative;
-  bottom: 60px;
 }
 
 .resource-container {

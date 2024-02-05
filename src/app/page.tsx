@@ -15,6 +15,41 @@ export default function Home() {
         <span className="header-user-tag">Nome</span>
       </header>
 
+      <nav>
+        <ul className="list-categories">
+          <li>
+            <button className="category"> Categoria 1 </button>
+          </li>
+          <li>
+            <button className="category"> Categoria 2 </button>
+          </li>
+          <li>
+            <button className="category"> Categoria 3 </button>
+          </li>
+          <li>
+            <button className="category"> Categoria 4 </button>
+          </li>
+          <li>
+            <button className="category"> Categoria 5 </button>
+          </li>
+          <li>
+            <button className="category"> Categoria 6 </button>
+          </li>
+          <li>
+            <button className="category"> Categoria 7 </button>
+          </li>
+          <li>
+            <button className="category"> Categoria 8 </button>
+          </li>
+          <li>
+            <button className="category"> Categoria 9 </button>
+          </li>
+          <li>
+            <button className="category"> Categoria 10 </button>
+          </li>
+        </ul>
+      </nav>
+
       <section className="resource-container">
         <h1 className="category-name">Categoria 1</h1>
 

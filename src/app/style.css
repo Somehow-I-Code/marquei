@@ -9,6 +9,28 @@
   font-size: 25px;
 }
 
+.list-categories {
+  list-style-type: none;
+  display: flex;
+  gap: 8px;
+  padding: 20px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  position: relative;
+  bottom: 30px;
+}
+
+.list-categories::-webkit-scrollbar {
+  display: none;
+}
+
+.category {
+  font-size: 20px;
+  background: grey;
+  border-radius: 15px;
+  white-space: nowrap;
+}
+
 .resource-container {
   display: flex;
   flex-direction: column;

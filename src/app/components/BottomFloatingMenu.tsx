@@ -1,6 +1,6 @@
 const BottomFloatingMenu = () => {
   return (
-    <section className="bg-customPurple fixed bottom-2 left-4 right-4 flex justify-between p-1 px-10 md:p-6 items-center rounded-full mx-2">
+    <section className="bg-customPurple fixed bottom-2 left-4 right-4 flex justify-between px-12 pt-2 pb-2 items-center rounded-full mx-2">
       <div>
         <button>
           <svg

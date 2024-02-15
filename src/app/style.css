@@ -9,6 +9,10 @@
   font-size: 25px;
 }
 
+.companyLogo {
+  font-size: 40px;
+}
+
 .resource-container {
   display: flex;
   flex-direction: column;

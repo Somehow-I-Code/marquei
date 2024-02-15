@@ -51,8 +51,8 @@ export default function Home() {
         </ul>
       </nav>
 
-      <section className="resource-container">
-        <h1 className="category-name">Categoria 1</h1>
+      <section className="flex flex-col gap-6 mx-6">
+        <h1 className="text-slate-800 text-3xl font-bold">Categoria 1</h1>
 
         <ResourcesList list={RESOURCES} />
       </section>

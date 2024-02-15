@@ -13,23 +13,25 @@ type ResourcesListProps = {
 
 export default function ResourcesList({ list }: ResourcesListProps) {
   return (
-    <ul className="resource-item-list">
+    <ul className="grid grid-cols-2 gap-8">
       {list?.map((resource) => {
         return (
           <li key={resource.name}>
-            <a className="resource-item-link">
-              <div className="resource-item-image">
+            <a className="flex flex-col gap-2">
+              <div className="aspect-square rounded-lg bg-cyan-200 shadow-sm flex items-center justify-center">
                 <Image
                   src={resource.image || resourcePlaceholder}
                   alt="Placeholder image with a clock and agenda."
                 ></Image>
               </div>
 
-              <div className="resource-item-info-container">
-                <div className="resource-item-info">
-                  <h2 className="resource-item-name">{resource.name}</h2>
+              <div className="flex items-center gap-1">
+                <div className="flex flex-col gap-2">
+                  <h2 className="text-slate-800 text-sm font-bold">
+                    {resource.name}
+                  </h2>
 
-                  <p className="resource-item-description">
+                  <p className="text-slate-500 text-xs">
                     {resource.description}
                   </p>
                 </div>

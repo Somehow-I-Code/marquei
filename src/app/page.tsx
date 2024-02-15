@@ -2,7 +2,6 @@
 import Image from "next/image";
 import imageLogoMarquei from "../app/LOGO_MARQUEI.jpeg";
 import ResourcesList from "./components/ResourcesList";
-import { RESOURCES } from "./data";
 import "./style.css";
 
 export default function Home() {
@@ -51,10 +50,8 @@ export default function Home() {
         </ul>
       </nav>
 
-      <section className="flex flex-col gap-6 mx-6">
-        <h1 className="text-slate-800 text-3xl font-bold">Categoria 1</h1>
-
-        <ResourcesList list={RESOURCES} />
+      <section>
+        <ResourcesList />
       </section>
 
       <section className="navigation-bar">

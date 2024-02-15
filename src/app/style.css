@@ -2,11 +2,15 @@
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
-  padding: 24px;
+  padding: 20px;
 }
 
 .header-user-tag {
   font-size: 25px;
+}
+
+.companyLogo {
+  font-size: 40px;
 }
 
 .resource-container {

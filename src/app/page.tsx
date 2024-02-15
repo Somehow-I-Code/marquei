@@ -2,6 +2,7 @@
 import Image from "next/image";
 import imageLogoMarquei from "../app/LOGO_MARQUEI.jpeg";
 import ResourcesList from "./components/ResourcesList";
+import { RESOURCES } from "./data";
 import "./style.css";
 
 export default function Home() {
@@ -51,7 +52,7 @@ export default function Home() {
       </nav>
 
       <section>
-        <ResourcesList />
+        <ResourcesList list={RESOURCES} />
       </section>
 
       <section className="navigation-bar">

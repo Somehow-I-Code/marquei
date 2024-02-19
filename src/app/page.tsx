@@ -1,4 +1,7 @@
 "use client";
+import {
+  ChevronRightIcon,
+} from "@/components/Icons";
 import Image from "next/image";
 import imageLogoMarquei from "../app/LOGO_MARQUEI.jpeg";
 import resourcePlaceholder from "./assets/resource-placeholder.png";
@@ -73,19 +76,9 @@ export default function Home() {
                   </p>
                 </div>
 
-                <svg
-                  width="9"
-                  height="15"
-                  viewBox="0 0 9 15"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M1 1.5L7 7.5L1 13.5"
-                    stroke="#33363F"
-                    strokeWidth="2"
-                  />
-                </svg>
+                <div className="min-w-3">
+                  <ChevronRightIcon />
+                </div>
               </div>
             </a>
           </li>
@@ -108,19 +101,9 @@ export default function Home() {
                   </p>
                 </div>
 
-                <svg
-                  width="9"
-                  height="15"
-                  viewBox="0 0 9 15"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M1 1.5L7 7.5L1 13.5"
-                    stroke="#33363F"
-                    strokeWidth="2"
-                  />
-                </svg>
+                <div className="min-w-3">
+                  <ChevronRightIcon />
+                </div>
               </div>
             </a>
           </li>
@@ -143,19 +126,9 @@ export default function Home() {
                   </p>
                 </div>
 
-                <svg
-                  width="9"
-                  height="15"
-                  viewBox="0 0 9 15"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M1 1.5L7 7.5L1 13.5"
-                    stroke="#33363F"
-                    strokeWidth="2"
-                  />
-                </svg>
+                <div className="min-w-3">
+                  <ChevronRightIcon />
+                </div>
               </div>
             </a>
           </li>
@@ -178,19 +151,9 @@ export default function Home() {
                   </p>
                 </div>
 
-                <svg
-                  width="9"
-                  height="15"
-                  viewBox="0 0 9 15"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M1 1.5L7 7.5L1 13.5"
-                    stroke="#33363F"
-                    strokeWidth="2"
-                  />
-                </svg>
+                <div className="min-w-3">
+                  <ChevronRightIcon />
+                </div>
               </div>
             </a>
           </li>

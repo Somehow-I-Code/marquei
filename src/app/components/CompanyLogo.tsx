@@ -1,3 +1,3 @@
 export function CompanyLogo() {
-  return <h1 className="companyLogo font-semibold text-lg p-8">MARQUEI</h1>;
+  return <h1 className="font-semibold text-4xl p-8">MARQUEI</h1>;
 }

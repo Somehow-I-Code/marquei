@@ -57,7 +57,7 @@ export default function Home() {
       </nav>
 
       <section>
-        <ResourcesList list={RESOURCES} />
+        <ResourcesList title="Categoria 1" list={RESOURCES} />
       </section>
 
       <section className="navigation-bar">

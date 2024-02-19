@@ -13,4 +13,19 @@ export const RESOURCES = [
     name: "Resource #3",
     description: "#3 Here we have some text helping describe that resource",
   },
+
+  {
+    name: "Resource #4",
+    description: "#4 Here we have some text helping describe that resource",
+  },
+
+  {
+    name: "Resource #5",
+    description: "#5 Here we have some text helping describe that resource",
+  },
+
+  {
+    name: "Resource #6",
+    description: "#6 Here we have some text helping describe that resource",
+  },
 ];

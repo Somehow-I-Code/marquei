@@ -2,9 +2,9 @@
 
 import Image from "next/image";
 import imageLogoMarquei from "../app/LOGO_MARQUEI.jpeg";
+import BottomFloatingMenu from "./components/BottomFloatingMenu";
 import ResourcesList from "./components/ResourcesList";
 import { RESOURCES } from "./data";
-import BottomFloatingMenu from "./components/BottomFloatingMenu";
 import "./style.css";
 
 export default function Home() {
@@ -53,7 +53,7 @@ export default function Home() {
         </ul>
       </nav>
 
-      <section>
+      <section className="pb-28">
         <ResourcesList title="Categoria 1" list={RESOURCES} />
       </section>
 

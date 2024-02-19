@@ -16,8 +16,8 @@ export default function Home() {
   };
   return (
     <main>
-      <header className="page-header">
-        <div className="header-image-container">
+      <header>
+        <div className="font-semibold text-lg p-9">
           <CompanyLogo logo={logo} />
         </div>
 

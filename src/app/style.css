@@ -1,9 +1,9 @@
-.page-header {
+/*.page-header {
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
   padding: 20px;
-}
+}*/
 
 .header-user-tag {
   font-size: 25px;

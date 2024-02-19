@@ -11,14 +11,11 @@ import { CompanyLogo } from "./components/CompanyLogo";
 import "./style.css";
 
 export default function Home() {
-  const logo = {
-    name: "MARQUEI",
-  };
   return (
     <main>
-      <header>
-        <div className="font-semibold text-lg p-9">
-          <CompanyLogo logo={logo} />
+      <header className="page-header">
+        <div className="header-image-container">
+          <CompanyLogo />
         </div>
 
         <span className="header-user-tag">Nome</span>

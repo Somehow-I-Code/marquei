@@ -9,7 +9,12 @@ const styles = {
   transparent: "px-4 py-2 rounded bg-transparent",
 };
 
-export default function Button({variant,className,children,...props}: ButtonProps) {
+export default function Button({
+  variant,
+  className,
+  children,
+  ...props
+}: ButtonProps) {
   return (
     <button className={`${styles[variant]} ${className}`} {...props}>
       {children}

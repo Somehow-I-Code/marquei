@@ -3,28 +3,23 @@ import {
   MenuHamburgerIcon,
   SearchIcon,
 } from "@/components/Icons";
+import Button from "./Button";
 
 export default function BottomFloatingMenu() {
   return (
-    <section className="bg-purple-950 fixed bottom-2 left-4 right-4 flex justify-between px-10 pt-2 pb-2 items-center rounded-full mx-2">
-      <div>
-        <button>
-          <SearchIcon />
-        </button>
-      </div>
+    <section className="bg-indigo-950 fixed bottom-2 left-4 right-4 flex justify-between py-2 px-5 items-center rounded-full">
+      <Button variant="transparent">
+        <SearchIcon />
+      </Button>
 
-      <div className="bg-white flex w-auto px-2 py-1 rounded-full">
-        <button>
-          <FilledPlusIcon />
-        </button>
-        <p className="text-black font-bold">Agendar</p>
-      </div>
+      <Button variant="white" className="flex items-center gap-1 rounded-full">
+        <FilledPlusIcon />
+        <p className="text-indigo-950 font-bold">Agendar</p>
+      </Button>
 
-      <div>
-        <button>
-          <MenuHamburgerIcon />
-        </button>
-      </div>
+      <Button variant="transparent">
+        <MenuHamburgerIcon />
+      </Button>
     </section>
   );
 }

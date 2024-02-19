@@ -1,13 +1,13 @@
 "use client";
 import {
-  ChevronRightIcon,
   FilledPlusIcon,
   MenuHamburgerIcon,
   SearchIcon,
 } from "@/components/Icons";
 import Image from "next/image";
 import imageLogoMarquei from "../app/LOGO_MARQUEI.jpeg";
-import resourcePlaceholder from "./assets/resource-placeholder.png";
+import ResourcesList from "./components/ResourcesList";
+import { RESOURCES } from "./data";
 import "./style.css";
 
 export default function Home() {
@@ -56,110 +56,10 @@ export default function Home() {
         </ul>
       </nav>
 
-      <section className="resource-container">
-        <h1 className="category-name">Categoria 1</h1>
+      <section className="flex flex-col gap-6 mx-6">
+        <h1 className="text-slate-800 text-3xl font-bold">Categoria 1</h1>
 
-        <ul className="resource-item-list">
-          <li>
-            <a className="resource-item-link">
-              <div className="resource-item-image">
-                <Image
-                  src={resourcePlaceholder}
-                  alt="Placeholder image with a clock and agenda."
-                ></Image>
-              </div>
-
-              <div className="resource-item-info-container">
-                <div className="resource-item-info">
-                  <h2 className="resource-item-name">Resource #1</h2>
-
-                  <p className="resource-item-description">
-                    Here we have some text helping describe that resource
-                  </p>
-                </div>
-
-                <div className="min-w-3">
-                  <ChevronRightIcon />
-                </div>
-              </div>
-            </a>
-          </li>
-
-          <li>
-            <a className="resource-item-link">
-              <div className="resource-item-image">
-                <Image
-                  src={resourcePlaceholder}
-                  alt="Placeholder image with a clock and agenda."
-                ></Image>
-              </div>
-
-              <div className="resource-item-info-container">
-                <div className="resource-item-info">
-                  <h2 className="resource-item-name">Resource #2</h2>
-
-                  <p className="resource-item-description">
-                    Here we have some text helping describe that resource
-                  </p>
-                </div>
-
-                <div className="min-w-3">
-                  <ChevronRightIcon />
-                </div>
-              </div>
-            </a>
-          </li>
-
-          <li>
-            <a className="resource-item-link">
-              <div className="resource-item-image">
-                <Image
-                  src={resourcePlaceholder}
-                  alt="Placeholder image with a clock and agenda."
-                ></Image>
-              </div>
-
-              <div className="resource-item-info-container">
-                <div className="resource-item-info">
-                  <h2 className="resource-item-name">Resource #3</h2>
-
-                  <p className="resource-item-description">
-                    Here we have some text helping describe that resource
-                  </p>
-                </div>
-
-                <div className="min-w-3">
-                  <ChevronRightIcon />
-                </div>
-              </div>
-            </a>
-          </li>
-
-          <li>
-            <a className="resource-item-link">
-              <div className="resource-item-image">
-                <Image
-                  src={resourcePlaceholder}
-                  alt="Placeholder image with a clock and agenda."
-                ></Image>
-              </div>
-
-              <div className="resource-item-info-container">
-                <div className="resource-item-info">
-                  <h2 className="resource-item-name">Resource #4</h2>
-
-                  <p className="resource-item-description">
-                    Here we have some text helping describe that resource
-                  </p>
-                </div>
-
-                <div className="min-w-3">
-                  <ChevronRightIcon />
-                </div>
-              </div>
-            </a>
-          </li>
-        </ul>
+        <ResourcesList list={RESOURCES} />
       </section>
 
       <section className="navigation-bar">

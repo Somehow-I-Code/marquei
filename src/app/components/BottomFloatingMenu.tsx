@@ -1,6 +1,10 @@
-import { FilledPlusIcon, MenuHamburgerIcon, SearchIcon } from "@/components/Icons";
+import {
+  FilledPlusIcon,
+  MenuHamburgerIcon,
+  SearchIcon,
+} from "@/components/Icons";
 
-const BottomFloatingMenu = () => {
+export default function BottomFloatingMenu() {
   return (
     <section className="bg-purple-950 fixed bottom-2 left-4 right-4 flex justify-between px-10 pt-2 pb-2 items-center rounded-full mx-2">
       <div>
@@ -23,6 +27,4 @@ const BottomFloatingMenu = () => {
       </div>
     </section>
   );
-};
-
-export default BottomFloatingMenu;
+}

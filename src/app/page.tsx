@@ -1,7 +1,6 @@
 "use client";
 
 import BottomFloatingMenu from "./components/BottomFloatingMenu";
-import CompanyLogo from "./components/CompanyLogo";
 import ResourcesList from "./components/ResourcesList";
 import Salute from "./components/Salute";
 import { RESOURCES } from "./data";
@@ -11,8 +10,6 @@ export default function Home() {
   return (
     <main>
       <header className="flex justify-between items-end px-6 py-12">
-        <CompanyLogo />
-
         <Salute>Francisco</Salute>
       </header>
 
@@ -51,7 +48,7 @@ export default function Home() {
         </ul>
       </nav>
 
-      <section>
+      <section className="pb-28">
         <ResourcesList title="Categoria 1" list={RESOURCES} />
       </section>
 

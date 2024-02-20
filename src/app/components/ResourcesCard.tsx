@@ -1,4 +1,4 @@
-import { ChevronRightIcon } from "@/components/Icons";
+import { ChevronRight } from "lucide-react";
 
 type Resource = {
   name: string;
@@ -25,7 +25,7 @@ export default function ResourcesCard({ resource }: ResourceCardProps) {
           </div>
 
           <div className="min-w-3">
-            <ChevronRightIcon />
+            <ChevronRight />
           </div>
         </div>
       </a>

@@ -1,13 +1,10 @@
 "use client";
-import {
-  FilledPlusIcon,
-  MenuHamburgerIcon,
-  SearchIcon,
-} from "@/components/Icons";
+
 import Image from "next/image";
 import imageLogoMarquei from "../app/LOGO_MARQUEI.jpeg";
 import ResourcesList from "./components/ResourcesList";
 import { RESOURCES } from "./data";
+import BottomFloatingMenu from "./components/BottomFloatingMenu";
 import "./style.css";
 
 export default function Home() {
@@ -62,25 +59,7 @@ export default function Home() {
         <ResourcesList list={RESOURCES} />
       </section>
 
-      <section className="navigation-bar">
-        <div>
-          <button>
-            <SearchIcon />
-          </button>
-        </div>
-
-        <div>
-          <button>
-            <FilledPlusIcon />
-          </button>
-        </div>
-
-        <div>
-          <button>
-            <MenuHamburgerIcon />
-          </button>
-        </div>
-      </section>
+      <BottomFloatingMenu />
     </main>
   );
 }

@@ -1,21 +1,16 @@
 "use client";
 
-import Image from "next/image";
-import imageLogoMarquei from "../app/LOGO_MARQUEI.jpeg";
 import BottomFloatingMenu from "./components/BottomFloatingMenu";
 import ResourcesList from "./components/ResourcesList";
+import Salute from "./components/Salute";
 import { RESOURCES } from "./data";
 import "./style.css";
 
 export default function Home() {
   return (
     <main>
-      <header className="page-header">
-        <div className="header-image-container">
-          <Image src={imageLogoMarquei} alt="The logo Marquei" />
-        </div>
-
-        <span className="header-user-tag">Nome</span>
+      <header className="flex justify-between items-end px-6 py-12">
+        <Salute>Francisco</Salute>
       </header>
 
       <nav>

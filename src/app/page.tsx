@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import resourcePlaceholder from "./assets/resource-placeholder.png";
-import { CompanyLogo } from "./components/CompanyLogo";
+import CompanyLogo from "./components/CompanyLogo";
 import Salute from "./components/Salute";
 import "./style.css";
 

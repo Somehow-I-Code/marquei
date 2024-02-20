@@ -1,27 +1,17 @@
 "use client";
 import Image from "next/image";
 import resourcePlaceholder from "./assets/resource-placeholder.png";
-import { ClientName } from "./components/ClientName";
 import { CompanyLogo } from "./components/CompanyLogo";
+import Salute from "./components/Salute";
 import "./style.css";
 
 export default function Home() {
-  const logo = {
-    name: "MARQUEI",
-  };
-
-  const user = {
-    name1: "Olá, usuário",
-  };
-
   return (
     <main>
-      <header className="page-header">
-        <div className="header-image-container">
-          <CompanyLogo logo={logo} />
-        </div>
+      <header className="flex justify-between items-end px-6 py-12">
+        <CompanyLogo />
 
-        <ClientName user={user} />
+        <Salute>Francisco</Salute>
       </header>
 
       <nav>

@@ -1,13 +1,12 @@
-interface CompanyLogoProps {
-  logo: {
-    name: string;
-  };
-}
+import { Karantina } from "next/font/google";
 
-export function CompanyLogo({ logo }: CompanyLogoProps) {
+const karantina = Karantina({ subsets: ["latin"], weight: "400" });
+
+export function CompanyLogo() {
+  console.log(karantina.className);
   return (
-    <div>
-      <h1 className="companyLogo">{logo.name}</h1>
-    </div>
+    <h1 className={`text-6xl text-indigo-950 ${karantina.className}`}>
+      Marquei
+    </h1>
   );
 }

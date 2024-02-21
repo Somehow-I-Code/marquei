@@ -17,7 +17,7 @@ export default function ResourcesList({ title, list }: ResourcesListProps) {
 
       <ul className="grid grid-cols-2 gap-8">
         {list?.map((resource) => {
-          return <ResourcesCard key={resource.name} resource={resource} />;
+          return <ResourcesCard resource={resource} />;
         })}
       </ul>
     </div>

@@ -26,6 +26,7 @@ export default function Home() {
             "Categoria 6",
           ]}
         />
+      </section>
 
       <section className="pb-28">
         <ResourcesList title="Categoria 1" list={RESOURCES} />

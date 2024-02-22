@@ -25,7 +25,7 @@ export default function ResourcesCard({ resource }: ResourceCardProps) {
           </div>
 
           <div className="min-w-3">
-            <ChevronRight />
+            <ChevronRight className="text-blue-600" />
           </div>
         </div>
       </a>

@@ -14,7 +14,7 @@ export default function BottomFloatingMenu() {
 
       <Button variant="white" className="flex items-center gap-1 rounded-full">
         <FilledPlusIcon />
-        <p className="text-indigo-950 font-bold">Agendar</p>
+        <p className="text-indigo-950 font-bold text-xs">Agendar</p>
       </Button>
 
       <Button variant="transparent">

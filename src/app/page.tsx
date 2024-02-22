@@ -12,13 +12,15 @@ export default function Home() {
     <main>
       <header className="flex justify-between items-end px-6 py-12">
         <CompanyLogo />
-
         <Salute>Francisco</Salute>
       </header>
 
       <section className="flex flex-col gap-6">
         <CategoriesList list={CATEGORIESLIST} />
+      </section>
 
+      <section className="pb-28">
+        <ResourcesList title="Categoria 1" list={RESOURCES} />
         <div>
           <ResourcesList title="Categoria 1" list={RESOURCES} />
         </div>

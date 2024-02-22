@@ -1,4 +1,4 @@
-import Pill from "./Pill";
+import Badge from "./Badge";
 
 type CategoriesListProps = {
   list: Array<string>;
@@ -13,7 +13,7 @@ export default function CategoriesList({ list }: CategoriesListProps) {
         {list?.map((category) => {
           return (
             <li key={category} className="whitespace-nowrap">
-              {active === category ? <Pill>{category}</Pill> : category}
+              {active === category ? <Badge>{category}</Badge> : category}
             </li>
           );
         })}

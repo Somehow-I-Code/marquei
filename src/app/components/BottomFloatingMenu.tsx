@@ -1,4 +1,4 @@
-import { AlignJustify, Plus, SearchIcon } from "lucide-react";
+import { Menu, Plus, SearchIcon } from "lucide-react";
 import Button from "./Button";
 
 export default function BottomFloatingMenu() {
@@ -14,7 +14,7 @@ export default function BottomFloatingMenu() {
       </Button>
 
       <Button variant="transparent">
-        <AlignJustify className="text-slate-50" />
+        <Menu className="text-slate-50" />
       </Button>
     </section>
   );

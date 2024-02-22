@@ -9,8 +9,8 @@ export default function BottomFloatingMenu() {
       </Button>
 
       <Button variant="white" className="flex items-center gap-1 rounded-full">
-        <Plus className="text-indigo-950" />
-        <p className="text-indigo-950 font-bold">Agendar</p>
+        <Plus />
+        <p className="text-indigo-950 font-bold text-xs">Agendar</p>
       </Button>
 
       <Button variant="transparent">

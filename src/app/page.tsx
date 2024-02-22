@@ -15,12 +15,9 @@ export default function Home() {
         <Salute>Francisco</Salute>
       </header>
 
-      <section className="flex flex-col gap-6">
+      <section className="flex flex-col gap-6 pb-28">
         <CategoriesList list={CATEGORIESLIST} />
-      </section>
 
-      <section className="pb-28">
-        <ResourcesList title="Categoria 1" list={RESOURCES} />
         <div>
           <ResourcesList title="Categoria 1" list={RESOURCES} />
         </div>

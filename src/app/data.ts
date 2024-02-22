@@ -29,3 +29,12 @@ export const RESOURCES = [
     description: "#6 Here we have some text helping describe that resource",
   },
 ];
+
+export const CATEGORIESLIST = [
+  "Categoria 1",
+  "Categoria 2",
+  "Categoria 3",
+  "Categoria 4",
+  "Categoria 5",
+  "Categoria 6",
+];

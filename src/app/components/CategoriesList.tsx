@@ -1,4 +1,4 @@
-import Badge from "./Badge";
+import Badge from "./badge";
 
 type CategoriesListProps = {
   list: Array<string>;

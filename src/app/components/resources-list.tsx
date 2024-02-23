@@ -1,4 +1,4 @@
-import ResourcesCard from "./ResourcesCard";
+import ResourcesCard from "./resources-card";
 
 type Resource = {
   name: string;

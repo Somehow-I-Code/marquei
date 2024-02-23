@@ -1,4 +1,4 @@
-import Pill from "./Pill";
+import Pill from "./pill";
 
 type CategoriesListProps = {
   list: Array<string>;

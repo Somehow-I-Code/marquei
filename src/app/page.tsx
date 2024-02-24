@@ -1,10 +1,10 @@
 "use client";
 
-import BottomFloatingMenu from "./components/BottomFloatingMenu";
-import CategoriesList from "./components/CategoriesList";
-import CompanyLogo from "./components/CompanyLogo";
-import ResourcesList from "./components/ResourcesList";
-import Salute from "./components/Salute";
+import BottomFloatingMenu from "./components/bottom-floating-menu";
+import CategoriesList from "./components/categories-list";
+import CompanyLogo from "./components/company-logo";
+import ResourcesList from "./components/resources-list";
+import Salute from "./components/salute";
 import { CATEGORIESLIST, RESOURCES } from "./data";
 
 export default function Home() {

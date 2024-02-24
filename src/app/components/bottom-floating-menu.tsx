@@ -1,6 +1,5 @@
-import { Menu, Plus, SearchIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
-
+import { Menu, Plus, SearchIcon } from "lucide-react";
 
 export default function BottomFloatingMenu() {
   return (
@@ -9,7 +8,10 @@ export default function BottomFloatingMenu() {
         <SearchIcon className="text-slate-50" />
       </Button>
 
-      <Button variant="outline" className="flex items-center gap-1 rounded-full">
+      <Button
+        variant="outline"
+        className="flex items-center gap-1 rounded-full"
+      >
         <Plus />
         <p className="text-indigo-950 font-bold text-xs">Agendar</p>
       </Button>

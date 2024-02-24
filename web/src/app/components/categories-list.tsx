@@ -5,7 +5,7 @@ type CategoriesListProps = {
 };
 
 export default function CategoriesList({ list }: CategoriesListProps) {
-  const active = "Categoria 1";
+  const active = "Médicos";
 
   return (
     <nav>

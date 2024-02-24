@@ -53,17 +53,3 @@ export const RESOURCES = [
     category: "Resultados",
   },
 ];
-
-// const x = {
-//   'Categoria 1': [],
-//   'Categoria 2': [],
-// }
-
-export const CATEGORIESLIST = [
-  "Categoria 1",
-  "Categoria 2",
-  "Categoria 3",
-  "Categoria 4",
-  "Categoria 5",
-  "Categoria 6",
-];

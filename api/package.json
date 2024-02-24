@@ -1,0 +1,19 @@
+{
+  "name": "marquei-api",
+  "version": "1.0.0",
+  "description": "All the endpoints needed for the marquei web project",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Somehow-I-Code/marquei.git"
+  },
+  "author": "somehow i code",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Somehow-I-Code/marquei/issues"
+  },
+  "homepage": "https://github.com/Somehow-I-Code/marquei#readme"
+}

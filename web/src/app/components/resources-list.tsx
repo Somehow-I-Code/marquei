@@ -1,13 +1,9 @@
+import { Resources } from "@/types/resources";
 import ResourcesCard from "./resources-card";
-
-type Resource = {
-  name: string;
-  description: string;
-};
 
 type ResourcesListProps = {
   title: string;
-  list: Array<Resource>;
+  list: Resources;
 };
 
 export default function ResourcesList({ title, list }: ResourcesListProps) {

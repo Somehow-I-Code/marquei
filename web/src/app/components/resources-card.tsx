@@ -1,9 +1,5 @@
+import { Resource } from "@/types/resources";
 import { ChevronRight } from "lucide-react";
-
-type Resource = {
-  name: string;
-  description: string;
-};
 
 type ResourceCardProps = {
   resource: Resource;

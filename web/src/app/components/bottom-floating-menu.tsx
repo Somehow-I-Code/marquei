@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { Menu, Plus, SearchIcon } from "lucide-react";
+import { Menu, Plus, SearchIcon } from "@/components/ui/icons";
 
 export default function BottomFloatingMenu() {
   return (

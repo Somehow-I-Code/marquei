@@ -12,3 +12,19 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model Player {
+  id Int @id @default(autoincrement())
+  name String
+  position String
+  number Int
+  clubid Int?
+  club Club? @relation(fields: [clubid],references: [id])
+}
+
+model Club {
+  id Int @id @default(autoincrement())
+  name String
+  country String
+  players Player[]
+}

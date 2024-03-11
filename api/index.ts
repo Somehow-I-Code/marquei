@@ -1,6 +1,9 @@
-import Fastify from "fastify";
+import { PrismaClient } from "@prisma/client";
+import Fastify, { FastifyRequest } from "fastify";
+import { z } from "zod";
 
 const server = Fastify();
+const prisma = new PrismaClient();
 
 server.get("/hello", async (request, reply) => {
   reply.send({ hello: "thiago" });
@@ -65,6 +68,49 @@ server.get("/resources", async (request, reply) => {
     ],
   });
 });
+
+server.get("/players", async function (request, reply) {
+  const players = await prisma.player.findMany();
+  reply.send(players);
+});
+
+server.post("/players", async function (request, reply) {
+  const playerSchema = z.object({
+    name: z.string(),
+    position: z.string(),
+    number: z.number(),
+  });
+  const { name, position, number } = playerSchema.parse(request.body);
+  const player = await prisma.player.create({
+    data: {
+      name,
+      position,
+      number,
+    },
+  });
+  reply.status(201).send({ id: player.id });
+});
+
+server.get("/players/:id", async function (request:FastifyRequest<{Params:{id:string}}>, reply){
+  const id = Number(request.params.id);
+  const player = await prisma.player.findUnique({
+    where:{
+      id
+    }
+  })
+  reply.send(player)
+  })
+
+  server.delete("/players/:id", async function (request:FastifyRequest<{Params:{id:string}}>,reply){
+    const id = Number(request.params.id);
+    const playerdeleted = await prisma.player.delete({
+      where:{
+        id: id,
+      }
+    })
+    reply.status(204).send(playerdeleted)
+  })
+
 
 server.listen({ port: 8080 }, (err, address) => {
   if (err) {

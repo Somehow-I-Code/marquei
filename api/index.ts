@@ -1,4 +1,5 @@
 import Fastify from "fastify";
+import { createCategory } from "./src/http/routes/create-category";
 
 const server = Fastify();
 
@@ -65,6 +66,8 @@ server.get("/resources", async (request, reply) => {
     ],
   });
 });
+
+server.register(createCategory);
 
 server.listen({ port: 8080 }, (err, address) => {
   if (err) {

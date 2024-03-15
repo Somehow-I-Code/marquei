@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
-import { Menu, SearchIcon } from "@/components/ui/icons";
+import { Drawer, DrawerTrigger } from "@/components/ui/drawer";
+import { Menu, Plus, SearchIcon } from "@/components/ui/icons";
 import ScheduleDrawer from "./schedule-drawer";
 
 export default function BottomFloatingMenu() {
@@ -9,7 +10,18 @@ export default function BottomFloatingMenu() {
         <SearchIcon className="text-slate-50" />
       </Button>
 
-      <ScheduleDrawer />
+      <Drawer>
+        <DrawerTrigger asChild>
+          <Button
+            variant="outline"
+            className="flex items-center gap-1 rounded-full"
+          >
+            <Plus />
+            <p className="text-indigo-950 font-bold text-xs">Agendar</p>
+            <ScheduleDrawer />
+          </Button>
+        </DrawerTrigger>
+      </Drawer>
 
       <Button variant="ghost">
         <Menu className="text-slate-50" />

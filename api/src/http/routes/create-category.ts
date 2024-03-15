@@ -19,7 +19,7 @@ export async function createCategory(server: FastifyInstance) {
         },
     })
 
-    return reply.status(201).send({ "message": "Categoria criada com sucesso" })
+    return reply.status(201).send(category)
     });  
 }
 

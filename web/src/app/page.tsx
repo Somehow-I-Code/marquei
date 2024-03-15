@@ -6,13 +6,13 @@ import ResourcesList from "./components/resources-list";
 import Salute from "./components/salute";
 
 async function getHello() {
-    const response = await fetch("http://localhost:8080/hello");
+    const response = await fetch("http://api:8080/hello");
     const data = await response.json();
     return data;
 }
 
 async function getResources(): Promise<{ data: Resources }> {
-    const response = await fetch("http://localhost:8080/resources");
+    const response = await fetch("http://api:8080/resources");
     const data = await response.json();
     return data;
 }

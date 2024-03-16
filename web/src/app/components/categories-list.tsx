@@ -13,7 +13,6 @@ export default function CategoriesList({ list }: CategoriesListProps) {
         {list?.map((category) => {
           return (
             <li key={category} className="whitespace-nowrap text-xs">
-              
               {active === category ? <Badge>{category}</Badge> : category}
             </li>
           );

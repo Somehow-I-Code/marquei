@@ -1,13 +1,10 @@
 import { FastifyInstance } from "fastify";
-import { prisma } from "../../lib/prisma";
+import resourcesRepository from "../../repositories/resources";
 
 export async function getResources(server: FastifyInstance) {
   server.get("/resources", async (request, reply) => {
-    const resource = await prisma.resource.findMany({
-      include: {
-        Category: true,
-      },
-    });
-    return reply.send(resource);
+    const resources = await resourcesRepository.findAll();
+
+    return reply.send(resources);
   });
 }

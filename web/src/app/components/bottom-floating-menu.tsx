@@ -11,6 +11,7 @@ export default function BottomFloatingMenu() {
       </Button>
 
       <Drawer>
+        <ScheduleDrawer />
         <DrawerTrigger asChild>
           <Button
             variant="outline"
@@ -18,7 +19,6 @@ export default function BottomFloatingMenu() {
           >
             <Plus />
             <p className="text-indigo-950 font-bold text-xs">Agendar</p>
-            <ScheduleDrawer />
           </Button>
         </DrawerTrigger>
       </Drawer>

@@ -1,33 +1,40 @@
 {
-  "name": "marquei-api",
-  "version": "1.0.0",
-  "description": "All the endpoints needed for the marquei web project",
-  "main": "index.js",
-  "scripts": {
-    "build": "tsc -p tsconfig.json",
-    "start": "node index.js",
-    "dev": "tsx watch index.ts"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Somehow-I-Code/marquei.git"
-  },
-  "author": "somehow i code",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/Somehow-I-Code/marquei/issues"
-  },
-  "homepage": "https://github.com/Somehow-I-Code/marquei#readme",
-  "dependencies": {
-    "@prisma/client": "^5.10.2",
-    "fastify": "^4.26.1",
-    "zod": "^3.22.4"
-  },
-  "devDependencies": {
-    "@tsconfig/node20": "^20.1.2",
-    "@types/node": "^20.11.20",
-    "prisma": "^5.10.2",
-    "tsx": "^4.7.1",
-    "typescript": "^5.3.3"
-  }
+    "name": "marquei-api",
+    "version": "1.0.0",
+    "description": "All the endpoints needed for the marquei web project",
+    "main": "index.js",
+    "lint-staged": {
+        "**/*": "prettier --write --ignore-unknown"
+    },
+    "scripts": {
+        "build": "tsc -p tsconfig.json",
+        "start": "node index.js",
+        "dev": "tsx watch index.ts",
+        "prepare": "husky"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/Somehow-I-Code/marquei.git"
+    },
+    "author": "somehow i code",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/Somehow-I-Code/marquei/issues"
+    },
+    "homepage": "https://github.com/Somehow-I-Code/marquei#readme",
+    "dependencies": {
+        "@prisma/client": "^5.10.2",
+        "fastify": "^4.26.1",
+        "zod": "^3.22.4"
+    },
+    "devDependencies": {
+        "@tsconfig/node20": "^20.1.2",
+        "@types/node": "^20.11.20",
+        "husky": "^9.0.11",
+        "lint-staged": "^15.2.2",
+        "prettier": "3.2.5",
+        "prisma": "^5.10.2",
+        "tsx": "^4.7.1",
+        "typescript": "^5.3.3"
+    }
 }

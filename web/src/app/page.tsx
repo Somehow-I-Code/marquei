@@ -1,4 +1,4 @@
-import { Resources } from "@/types/resources";
+import { ResourceResponse, Resources } from "@/types/resources";
 import BottomFloatingMenu from "./components/bottom-floating-menu";
 import CategoriesList from "./components/categories-list";
 import CompanyLogo from "./components/company-logo";
@@ -11,10 +11,19 @@ async function getHello() {
     return data;
 }
 
-async function getResources(): Promise<{ data: Resources }> {
+function transformResources(resources: ResourceResponse) {
+    return resources.map(({ id, name, description, category }) => ({
+        id,
+        name,
+        description,
+        category: category.title,
+    }));
+}
+
+async function getResources(): Promise<Resources> {
     const response = await fetch("http://api:8080/resources");
     const data = await response.json();
-    return data;
+    return transformResources(data);
 }
 
 function getResourcesByCategory(resources: Resources) {
@@ -36,7 +45,7 @@ export default async function Home() {
     const greeting = await getHello();
     const resources = await getResources();
 
-    const resourcesByCategory = getResourcesByCategory(resources.data);
+    const resourcesByCategory = getResourcesByCategory(resources);
     // { 'Categoria 1': [...], 'Categoria 2': [...], 'Categoria 3': [...]}
     const categoriesList = Object.keys(resourcesByCategory);
     // ['Categoria 1', 'Categoria 2', 'Categoria 3']

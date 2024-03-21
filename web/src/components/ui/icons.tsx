@@ -1,3 +1,21 @@
-import { ChevronRight, Plus, Menu, SearchIcon } from "lucide-react";
+import {
+    Blocks,
+    CalendarPlus2,
+    Check,
+    ChevronRight,
+    Menu,
+    Plus,
+    SearchIcon,
+    Star,
+} from "lucide-react";
 
-export { ChevronRight, Plus, Menu, SearchIcon };
+export {
+    Blocks,
+    CalendarPlus2,
+    Check,
+    ChevronRight,
+    Menu,
+    Plus,
+    SearchIcon,
+    Star,
+};

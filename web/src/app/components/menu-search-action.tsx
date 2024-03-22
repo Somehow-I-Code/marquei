@@ -17,7 +17,7 @@ import {
     Star,
 } from "@/components/ui/icons";
 
-export default function MenuSearchAction() {
+export default function MenuSearchAction({ resources }) {
     const [open, setOpen] = useState(false);
 
     function openCommandDialog() {
@@ -64,6 +64,23 @@ export default function MenuSearchAction() {
                             <Star /> <span>Recurso #9</span>
                         </CommandItem>
                     </CommandGroup>
+                    {Object.keys(resources).map((category) => {
+                        return (
+                            <CommandGroup key={category} heading={category}>
+                                {resources[category].map((resource) => {
+                                    return (
+                                        <CommandItem
+                                            key={resource.name}
+                                            className="flex items-center gap-3"
+                                        >
+                                            <Star />{" "}
+                                            <span>{resource.name}</span>
+                                        </CommandItem>
+                                    );
+                                })}
+                            </CommandGroup>
+                        );
+                    })}
                 </CommandList>
             </CommandDialog>
         </div>

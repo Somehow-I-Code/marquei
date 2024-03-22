@@ -4,10 +4,10 @@ import { Menu, Plus } from "@/components/ui/icons";
 import MenuSearchAction from "./menu-search-action";
 import ScheduleDrawer from "./schedule-drawer";
 
-export default function BottomFloatingMenu() {
+export default function BottomFloatingMenu({ resources }) {
     return (
         <section className="bg-indigo-950 fixed bottom-2 left-4 right-4 flex justify-between py-2 px-5 items-center rounded-full">
-            <MenuSearchAction />
+            <MenuSearchAction resources={resources} />
 
             <Drawer>
                 <ScheduleDrawer />

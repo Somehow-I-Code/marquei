@@ -6,7 +6,7 @@ import ResourcesList from "./components/resources-list";
 import Salute from "./components/salute";
 
 async function getHello() {
-    const response = await fetch("http://localhost:8080/hello");
+    const response = await fetch("http://api:8080/hello");
     const data = await response.json();
     return data;
 }
@@ -21,9 +21,8 @@ function transformResources(resources: ResourceResponse) {
 }
 
 async function getResources(): Promise<Resources> {
-    const response = await fetch("http://localhost:8080/resources");
+    const response = await fetch("http://api:8080/resources");
     const data = await response.json();
-    console.log(data);
     return transformResources(data);
 }
 

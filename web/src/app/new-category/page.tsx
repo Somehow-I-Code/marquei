@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
-export default function AddCategorie() {
+export default function NewCategory() {
     return (
         <section className="flex flex-col justify-center items-center h-screen">
             <div className="flex flex-col items-center space-y-2">

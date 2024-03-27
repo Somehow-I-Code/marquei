@@ -11,7 +11,7 @@ export type ResourceResponse = Array<{
     createdAt: string;
     updatedAt: string;
     categoryId: number;
-    Category: {
+    category: {
         id: number;
         title: string;
         createdAt: string;

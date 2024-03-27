@@ -12,11 +12,11 @@ async function getHello() {
 }
 
 function transformResources(resources: ResourceResponse) {
-    return resources.map(({ id, name, description, Category }) => ({
+    return resources.map(({ id, name, description, category }) => ({
         id,
         name,
         description,
-        category: Category.title,
+        category: category.title,
     }));
 }
 

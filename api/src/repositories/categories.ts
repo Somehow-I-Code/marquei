@@ -1,5 +1,9 @@
 import { prisma } from "../lib/prisma";
+<<<<<<< HEAD
 import { CreateCategoryInput } from "../validators/categories";
+=======
+import { CreateCategoryInput } from "./../validators/categories";
+>>>>>>> main
 
 class CategoriesRepository {
     async create({ title }: CreateCategoryInput) {

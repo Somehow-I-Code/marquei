@@ -16,8 +16,15 @@ import {
     SearchIcon,
     Star,
 } from "@/components/ui/icons";
+import { Resources } from "@/types/resources";
 
-export default function MenuSearchAction() {
+type MenuSearchActionProps = {
+    resources: {
+        [key: string]: Resources;
+    };
+};
+
+export default function MenuSearchAction({ resources }: MenuSearchActionProps) {
     const [open, setOpen] = useState(false);
 
     function openCommandDialog() {
@@ -50,20 +57,23 @@ export default function MenuSearchAction() {
                         </CommandItem>
                     </CommandGroup>
 
-                    <CommandGroup heading="Recursos">
-                        <CommandItem className="flex items-center gap-3">
-                            <Star /> <span>Recurso #1</span>
-                        </CommandItem>
-
-                        <CommandItem className="flex items-center gap-3">
-                            <Star />
-                            <span>Recurso #6</span>
-                        </CommandItem>
-
-                        <CommandItem className="flex items-center gap-3">
-                            <Star /> <span>Recurso #9</span>
-                        </CommandItem>
-                    </CommandGroup>
+                    {Object.keys(resources).map((category) => {
+                        return (
+                            <CommandGroup key={category} heading={category}>
+                                {resources[category].map((resource) => {
+                                    return (
+                                        <CommandItem
+                                            key={resource.name}
+                                            className="flex items-center gap-3"
+                                        >
+                                            <Star />{" "}
+                                            <span>{resource.name}</span>
+                                        </CommandItem>
+                                    );
+                                })}
+                            </CommandGroup>
+                        );
+                    })}
                 </CommandList>
             </CommandDialog>
         </div>

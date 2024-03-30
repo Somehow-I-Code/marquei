@@ -1,5 +1,5 @@
 import Fastify from "fastify";
-import { createCategory } from "./src/http/routes/create-category";
+import { createCategories } from "./src/http/routes/create-categories";
 import { createResources } from "./src/http/routes/create-resources";
 import { getResources } from "./src/http/routes/get-resources";
 
@@ -9,7 +9,7 @@ server.get("/hello", async (request, reply) => {
     reply.send({ hello: "thiago" });
 });
 
-server.register(createCategory);
+server.register(createCategories);
 server.register(createResources);
 server.register(getResources);
 

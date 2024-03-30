@@ -1,4 +1,5 @@
 import { FastifyInstance } from "fastify";
+
 import categoriesRepository from "../../repositories/categories";
 import { createCategory } from "../../validators/categories";
 

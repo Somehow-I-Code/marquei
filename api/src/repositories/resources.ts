@@ -17,7 +17,7 @@ class ResourcesRepository {
     async findAll() {
         const resources = await prisma.resource.findMany({
             include: {
-                Category: true,
+                category: true,
             },
         });
 

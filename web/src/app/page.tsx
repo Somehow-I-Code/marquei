@@ -71,7 +71,7 @@ export default async function Home() {
                 </div>
             </section>
 
-            <BottomFloatingMenu />
+            <BottomFloatingMenu resources={resourcesByCategory} />
         </main>
     );
 }

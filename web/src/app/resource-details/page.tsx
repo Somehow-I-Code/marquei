@@ -22,7 +22,9 @@ export default function ResourceDetails() {
             </div>
 
             <div>
-                <BottomFloatingMenu />
+                //lembrar de adicionar os dados que estão sendo passados em
+                resources
+                <BottomFloatingMenu resources={{}} />
             </div>
         </section>
     );

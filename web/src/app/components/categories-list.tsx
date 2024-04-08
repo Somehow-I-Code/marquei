@@ -16,11 +16,13 @@ export default function CategoriesList({ list }: CategoriesListProps) {
                             key={category}
                             className="whitespace-nowrap text-xs"
                         >
-                            {active === category ? (
-                                <Badge>{category}</Badge>
-                            ) : (
-                                category
-                            )}
+                            <a href={`#${category}`}>
+                                {active === category ? (
+                                    <Badge>{category}</Badge>
+                                ) : (
+                                    category
+                                )}
+                            </a>
                         </li>
                     );
                 })}

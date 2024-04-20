@@ -1,10 +1,6 @@
 "use client";
 
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
-import { Eye, EyeOff } from "lucide-react";
-import { useState } from "react";
+import { login } from "@/app/login/actions";
 import { Button } from "@/components/ui/button";
 import {
     Form,
@@ -15,7 +11,12 @@ import {
     FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Eye, EyeOff } from "lucide-react";
 import Link from "next/link";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
 import CompanyLogo from "../components/company-logo";
 
 const FormSchema = z.object({
@@ -38,8 +39,6 @@ export default function LoginForm() {
 
     const [showPassword, setShowPassword] = useState(false);
 
-    function onSubmit(data: z.infer<typeof FormSchema>) {}
-
     return (
         <div className="px-6 py-12 flex flex-col flex-wrap gap-4">
             <div>
@@ -54,10 +53,7 @@ export default function LoginForm() {
                 </div>
                 <div className="pt-8">
                     <Form {...form}>
-                        <form
-                            onSubmit={form.handleSubmit(onSubmit)}
-                            className="flex flex-col"
-                        >
+                        <form action={login} className="flex flex-col">
                             <FormField
                                 control={form.control}
                                 name="email"
@@ -136,4 +132,3 @@ export default function LoginForm() {
         </div>
     );
 }
-

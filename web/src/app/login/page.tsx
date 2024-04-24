@@ -85,9 +85,8 @@ export default function LoginForm() {
                                             Senha
                                         </FormLabel>
                                         <FormControl>
-                                            <div className="relative">
+                                            <div className="flex justify-between items-center">
                                                 <Input
-                                                    className=""
                                                     type={
                                                         showPassword
                                                             ? "text"
@@ -103,7 +102,7 @@ export default function LoginForm() {
                                                             !showPassword,
                                                         )
                                                     }
-                                                    className="absolute right-3 top-1/2 transform -translate-y-1/2"
+                                                    className="absolute right-3"
                                                 >
                                                     {showPassword ? (
                                                         <EyeOff size={20} />
@@ -136,4 +135,5 @@ export default function LoginForm() {
         </div>
     );
 }
+
 

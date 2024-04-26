@@ -14,7 +14,9 @@ async function getCategories(): Promise<CategoriesResponse> {
 export default async function NewResource() {
     const categories = await getCategories();
 
-    async function createResource(data: NewResourceFormSchema) {}
+    async function createResource(data: NewResourceFormSchema) {
+        "use server";
+    }
 
     return (
         <section>

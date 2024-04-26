@@ -17,7 +17,7 @@ export async function login(server: FastifyInstance) {
         if (user) {
             reply.code(200).send({ message: "Usuário encontrado" });
         } else {
-            reply.code(404).send({ message: "Usuário não encontrado" });
+            reply.code(401).send({ message: "Usuário não encontrado" });
         }
     });
 }

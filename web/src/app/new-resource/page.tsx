@@ -23,16 +23,16 @@ export default async function NewResource() {
             categoryId: Number(data.category),
         };
 
-        const resource = await fetch("http://api:8080/resources", {
+        const response = await fetch("http://api:8080/resources", {
             method: "post",
             headers: {
                 "content-type": "application/json",
             },
             body: JSON.stringify(body),
         });
+        console.log(response);
+        const resource = await response.json();
         console.log(resource);
-        const result = await resource.json();
-        console.log(result);
     }
 
     return (

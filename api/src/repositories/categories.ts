@@ -11,6 +11,12 @@ class CategoriesRepository {
 
         return category;
     }
+
+    async findAll() {
+        const categories = await prisma.category.findMany();
+
+        return categories;
+    }
 }
 
 const categoriesRepository = new CategoriesRepository();

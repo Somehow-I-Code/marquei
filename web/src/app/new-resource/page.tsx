@@ -1,4 +1,5 @@
 import { CategoriesResponse } from "@/types/categories";
+import { revalidatePath } from "next/cache";
 import CompanyLogo from "../components/company-logo";
 import FormTitle from "../components/form-title";
 import NewResourceForm, {
@@ -18,7 +19,6 @@ export default async function NewResource() {
     async function createResource(data: NewResourceFormSchema) {
         "use server";
 
-        console.log(data);
         const body = {
             ...data,
             categoryId: Number(data.category),
@@ -31,9 +31,13 @@ export default async function NewResource() {
             },
             body: JSON.stringify(body),
         });
-        console.log(response);
-        const resource = await response.json();
-        console.log(resource);
+
+        if (response.status !== 201) {
+            const error = await response.json();
+            throw new Error(error.message);
+        }
+
+        revalidatePath("/");
     }
 
     return (

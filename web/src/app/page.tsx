@@ -48,7 +48,7 @@ export default async function Home() {
     const categoriesList = Object.keys(resourcesByCategory);
 
     return (
-        <main>
+        <>
             <header className="flex justify-between items-end px-6 py-12">
                 <CompanyLogo />
                 <Salute>{greeting?.hello || "Usuário"}</Salute>
@@ -69,6 +69,6 @@ export default async function Home() {
             </section>
 
             <BottomFloatingMenu resources={resourcesByCategory} />
-        </main>
+        </>
     );
 }

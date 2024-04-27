@@ -26,12 +26,16 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 
 const formSchema = z.object({
-    name: z.string().min(1).max(50, {
-        message:
-            "O nome do recurso deve ter no mínimo 2 e no máximo 50 caracteres",
+    name: z.string().min(1, {
+        message: "O nome do recurso não pode estar em branco",
     }),
-    category: z.string(),
-    description: z.string().max(100),
+
+    category: z.string().min(1, {
+        message: "Selecione uma das categorias da lista",
+    }),
+    description: z.string().max(1000, {
+        message: "A descrição está muito longa",
+    }),
 });
 
 export type NewResourceFormSchema = z.infer<typeof formSchema>;

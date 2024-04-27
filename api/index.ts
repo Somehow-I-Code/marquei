@@ -10,6 +10,10 @@ server.get("/hello", async (request, reply) => {
     reply.send({ hello: "thiago" });
 });
 
+server.post("/login", async () => {
+
+})  
+
 server.register(createCategories);
 server.register(createResources);
 server.register(getResources);

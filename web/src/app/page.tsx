@@ -44,17 +44,14 @@ function getResourcesByCategory(resources: Resources) {
 export default async function Home() {
     const greeting = await getHello();
     const resources = await getResources();
-
     const resourcesByCategory = getResourcesByCategory(resources);
-    // { 'Categoria 1': [...], 'Categoria 2': [...], 'Categoria 3': [...]}
     const categoriesList = Object.keys(resourcesByCategory);
-    // ['Categoria 1', 'Categoria 2', 'Categoria 3']
 
     return (
         <main>
             <header className="flex justify-between items-end px-6 py-12">
                 <CompanyLogo />
-                <Salute>{greeting?.hello || "Francisco"}</Salute>
+                <Salute>{greeting?.hello || "Usuário"}</Salute>
             </header>
 
             <section className="flex flex-col gap-6 pb-28">

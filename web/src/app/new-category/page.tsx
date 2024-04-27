@@ -4,7 +4,7 @@ import NewCategoryForm, {
 } from "./component/new-category-form";
 
 export default function NewCategory() {
-    async function name(data: NewCategoryFormSchema) {
+    async function createCategory(data: NewCategoryFormSchema) {
         "use server";
         console.log(data);
     }
@@ -18,7 +18,7 @@ export default function NewCategory() {
                     Nova Categoria
                 </h1>
 
-                <NewCategoryForm name={name} />
+                <NewCategoryForm createCategory={createCategory} />
             </div>
         </section>
     );

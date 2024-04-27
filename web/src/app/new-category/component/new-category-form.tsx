@@ -22,10 +22,12 @@ const FormSchema = z.object({
 export type NewCategoryFormSchema = z.infer<typeof FormSchema>;
 
 type NewCategoryFormProps = {
-    name: (data: NewCategoryFormSchema) => void;
+    createCategory: (data: NewCategoryFormSchema) => void;
 };
 
-export default function NewCategoryForm({ name }: NewCategoryFormProps) {
+export default function NewCategoryForm({
+    createCategory,
+}: NewCategoryFormProps) {
     const form = useForm<z.infer<typeof FormSchema>>({
         resolver: zodResolver(FormSchema),
         defaultValues: {
@@ -34,7 +36,7 @@ export default function NewCategoryForm({ name }: NewCategoryFormProps) {
     });
 
     function onSubmit(data: NewCategoryFormSchema) {
-        name(data);
+        createCategory(data);
     }
 
     return (

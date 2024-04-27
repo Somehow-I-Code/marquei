@@ -13,7 +13,6 @@ import { Input } from "@/components/ui/input";
 import {
     Select,
     SelectContent,
-    SelectGroup,
     SelectItem,
     SelectTrigger,
     SelectValue,
@@ -135,7 +134,11 @@ export default function NewResourceForm({
                                         <FormLabel htmlFor="category">
                                             Categoria
                                         </FormLabel>
-                                        <Select onValueChange={field.onChange}>
+                                        <Select
+                                            value={field.value}
+                                            defaultValue={field.value}
+                                            onValueChange={field.onChange}
+                                        >
                                             <FormControl>
                                                 <SelectTrigger>
                                                     <SelectValue
@@ -146,26 +149,18 @@ export default function NewResourceForm({
                                                 </SelectTrigger>
                                             </FormControl>
                                             <SelectContent>
-                                                <SelectGroup>
-                                                    {categories.map(
-                                                        (category) => {
-                                                            return (
-                                                                <SelectItem
-                                                                    key={
-                                                                        category.id
-                                                                    }
-                                                                    value={String(
-                                                                        category.id,
-                                                                    )}
-                                                                >
-                                                                    {
-                                                                        category.title
-                                                                    }
-                                                                </SelectItem>
-                                                            );
-                                                        },
-                                                    )}
-                                                </SelectGroup>
+                                                {categories.map((category) => {
+                                                    return (
+                                                        <SelectItem
+                                                            key={category.id}
+                                                            value={String(
+                                                                category.id,
+                                                            )}
+                                                        >
+                                                            {category.title}
+                                                        </SelectItem>
+                                                    );
+                                                })}
                                             </SelectContent>
                                         </Select>
                                         <FormMessage />

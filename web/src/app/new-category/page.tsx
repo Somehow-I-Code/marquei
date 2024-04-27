@@ -1,16 +1,24 @@
-import { Button } from "@/components/ui/button";
-import Link from "next/link";
+import CompanyLogo from "../components/company-logo";
+import NewCategoryForm, {
+    NewCategoryFormSchema,
+} from "./component/new-category-form";
 
 export default function NewCategory() {
+    async function createCategory(data: NewCategoryFormSchema) {
+        "use server";
+        console.log(data);
+    }
     return (
-        <section className="flex flex-col justify-center items-center h-screen">
-            <div className="flex flex-col items-center space-y-2">
-                <h1 className="text-xl font-bold">
-                    Tela para adicionar categorias
+        <section>
+            <div className="h-40 px-6 py-12">
+                <CompanyLogo />
+            </div>
+            <div className="flex flex-col p-6 gap-12">
+                <h1 className="text-3xl font-bold text-indigo-950">
+                    Nova Categoria
                 </h1>
-                <Button>
-                    <Link href="/">Voltar para home</Link>
-                </Button>
+
+                <NewCategoryForm createCategory={createCategory} />
             </div>
         </section>
     );

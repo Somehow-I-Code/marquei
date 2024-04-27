@@ -8,6 +8,7 @@ import NewResourceForm, {
 async function getCategories(): Promise<CategoriesResponse> {
     const response = await fetch("http://api:8080/categories");
     const data = await response.json();
+
     return data;
 }
 

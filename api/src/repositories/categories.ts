@@ -14,6 +14,7 @@ class CategoriesRepository {
 
     async findAll() {
         const categories = await prisma.category.findMany();
+
         return categories;
     }
 }

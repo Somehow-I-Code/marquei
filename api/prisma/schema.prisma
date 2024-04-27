@@ -30,3 +30,18 @@ model Resource {
   category    Category @relation(fields: [categoryId], references: [id])
   categoryId  Int
 }
+
+model User {
+  id           Int      @id @default(autoincrement())
+  name         String
+  email        String   @unique
+  password     String
+  profileLevel Level    @default(USER)
+  createdAt    DateTime @default(now())
+  updateAt     DateTime @default(now())
+}
+
+enum Level {
+  USER
+  ADMIN
+}

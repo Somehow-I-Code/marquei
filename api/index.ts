@@ -3,6 +3,7 @@ import { createCategories } from "./src/http/routes/create-categories";
 import { createResources } from "./src/http/routes/create-resources";
 import { getCategories } from "./src/http/routes/get-categories";
 import { getResources } from "./src/http/routes/get-resources";
+import { login } from "./src/http/routes/login";
 
 const server = Fastify();
 
@@ -14,6 +15,7 @@ server.register(createCategories);
 server.register(createResources);
 server.register(getResources);
 server.register(getCategories);
+server.register(login)
 
 server.listen({ port: 8080, host: "0.0.0.0" }, (err, address) => {
     if (err) {

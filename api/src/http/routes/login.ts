@@ -1,20 +1,19 @@
 import { FastifyInstance } from "fastify";
 import { prisma } from "../../lib/prisma";
-import { loginSchema } from "../../validators/login-form";
+import { LoginInput, loginSchema } from "../../validators/login-form";
 
 export async function login(server: FastifyInstance) {
     server.post("/login", async (request, reply) => {
-
-        let credentials;
+        let credentials: LoginInput;
 
         try {
             credentials = loginSchema.parse(request.body);
         } catch (error) {
-            if (error instanceof Error) {
-                return reply
-                    .code(400)
-                    .send({ error: "Erro de validação: " + error.message });
-            }
+            error instanceof Error;
+            return reply.code(400).send({
+                error: "ValidationError",
+                message: (error as Error).message,
+            });
         }
 
         const { email, password } = credentials;
@@ -31,4 +30,3 @@ export async function login(server: FastifyInstance) {
         return reply.code(200).send({ message: "Usuário encontrado" });
     });
 }
-

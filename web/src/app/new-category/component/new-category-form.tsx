@@ -10,13 +10,18 @@ import {
     FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { useToast } from "@/components/ui/use-toast";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { ToastAction } from "@radix-ui/react-toast";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
 const FormSchema = z.object({
-    name: z.string(),
+    name: z.string().min(1, {
+        message: "O nome da categoria não pode estar vazia",
+    }),
 });
 
 export type NewCategoryFormSchema = z.infer<typeof FormSchema>;
@@ -28,15 +33,44 @@ type NewCategoryFormProps = {
 export default function NewCategoryForm({
     createCategory,
 }: NewCategoryFormProps) {
-    const form = useForm<z.infer<typeof FormSchema>>({
+    const form = useForm<NewCategoryFormSchema>({
         resolver: zodResolver(FormSchema),
         defaultValues: {
             name: "",
         },
     });
 
-    function onSubmit(data: NewCategoryFormSchema) {
-        createCategory(data);
+    const { toast } = useToast();
+
+    const router = useRouter();
+
+    async function onSubmit(data: NewCategoryFormSchema) {
+        try {
+            await createCategory(data);
+
+            form.reset();
+
+            toast({
+                title: "Ótimo!",
+                description: "Sua categoria foi cadastrado com sucesso",
+                action: (
+                    <ToastAction
+                        onClick={() => router.push("/")}
+                        altText="Ir para a home"
+                    >
+                        Ir para a home
+                    </ToastAction>
+                ),
+            });
+        } catch (e) {
+            if (e instanceof Error) {
+                toast({
+                    variant: "destructive",
+                    title: "Algo não deu certo!",
+                    description: e.message,
+                });
+            }
+        }
     }
 
     return (
@@ -50,9 +84,13 @@ export default function NewCategoryForm({
                     name="name"
                     render={({ field }) => (
                         <FormItem className="mb-2">
-                            <FormLabel className="flex gap-2">Nome</FormLabel>
+                            <FormLabel htmlFor="name" className="flex gap-2">
+                                Nome
+                            </FormLabel>
                             <FormControl>
                                 <Input
+                                    id="name"
+                                    type="text"
                                     placeholder="Médicos, Quadras, Manicures..."
                                     {...field}
                                 />
@@ -63,7 +101,7 @@ export default function NewCategoryForm({
                     )}
                 />
                 <div className="flex flex-col gap-2">
-                    <Button className="text-base font-bold" type="submit">
+                    <Button type="submit" className="text-base font-bold">
                         SALVAR
                     </Button>
                     <Button

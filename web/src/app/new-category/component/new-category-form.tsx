@@ -20,7 +20,7 @@ import { z } from "zod";
 
 const FormSchema = z.object({
     name: z.string().min(1, {
-        message: "O nome da categoria não pode estar vazia",
+        message: "O nome da categoria não pode estar vazio",
     }),
 });
 
@@ -52,7 +52,7 @@ export default function NewCategoryForm({
 
             toast({
                 title: "Ótimo!",
-                description: "Sua categoria foi cadastrado com sucesso",
+                description: "Sua categoria foi cadastrada com sucesso",
                 action: (
                     <ToastAction
                         onClick={() => router.push("/")}

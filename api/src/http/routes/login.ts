@@ -9,7 +9,6 @@ export async function login(server: FastifyInstance) {
         try {
             credentials = loginSchema.parse(request.body);
         } catch (error) {
-            error instanceof Error;
             return reply.code(400).send({
                 error: "ValidationError",
                 message: (error as Error).message,

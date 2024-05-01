@@ -18,10 +18,10 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 
 const formSchema = z.object({
-    userName: z.string().min(1, {
+    name: z.string().min(1, {
         message: "O nome do usuário não pode estar em branco",
     }),
-    occupationPosition: z.string().min(1, {
+    occupation: z.string().min(1, {
         message: "O cargo de ocupação não pode estar em branco",
     }),
     email: z.string().email({
@@ -32,19 +32,21 @@ const formSchema = z.object({
     }),
 });
 
+export type NewAccountFormSchema = z.infer<typeof formSchema>;
+
 export default function NewAccountForm() {
-    const form = useForm<z.infer<typeof formSchema>>({
+    const form = useForm<NewAccountFormSchema>({
         resolver: zodResolver(formSchema),
         defaultValues: {
-            userName: "",
-            occupationPosition: "",
+            name: "",
+            occupation: "",
             email: "",
             profileLevel: "",
         },
     });
 
-    function OnSubmit(values: z.infer<typeof formSchema>) {
-        console.log(values);
+    function OnSubmit(data: NewAccountFormSchema) {
+        console.log(data);
     }
 
     return (
@@ -56,16 +58,14 @@ export default function NewAccountForm() {
                 <div className="flex flex-col gap-4">
                     <FormField
                         control={form.control}
-                        name="userName"
+                        name="name"
                         render={({ field }) => (
                             <FormItem>
                                 <div className="flex flex-col gap-2">
-                                    <FormLabel htmlFor="userName">
-                                        Nome
-                                    </FormLabel>
+                                    <FormLabel htmlFor="name">Nome</FormLabel>
                                     <FormControl>
                                         <Input
-                                            id="userName"
+                                            id="name"
                                             type="text"
                                             placeholder="Maria da Silva"
                                             {...field}
@@ -79,17 +79,17 @@ export default function NewAccountForm() {
 
                     <FormField
                         control={form.control}
-                        name="occupationPosition"
+                        name="occupation"
                         render={({ field }) => {
                             return (
                                 <FormItem>
                                     <div className="flex flex-col gap-2">
-                                        <FormLabel htmlFor="occupationPosition">
+                                        <FormLabel htmlFor="occupation">
                                             Cargo de ocupação
                                         </FormLabel>
                                         <FormControl>
                                             <Input
-                                                id="occupationPosition"
+                                                id="occupation"
                                                 type="text"
                                                 placeholder="Secretária, gerente..."
                                                 {...field}

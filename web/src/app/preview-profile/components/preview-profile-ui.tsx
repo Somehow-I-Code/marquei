@@ -1,11 +1,12 @@
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
+import Link from "next/link";
 
 export default async function PreviewProfile() {
     return (
         <section>
             <div className="flex flex-col p-24 gap-2">
-                <Label className="flex items-center justify-center text-indigo-950 text-2xl font-inter font-bold mt-[-15px]">
+                <Label className="flex items-center justify-center text-indigo-950 text-2xl font-bold mt-[-15px]">
                     Nome do usuário
                 </Label>
 
@@ -30,12 +31,14 @@ export default async function PreviewProfile() {
             </div>
 
             <div className="flex flex-col p-6 gap-2 mt-[-25px]">
-                <Button className="font-bold text-base">ALTERAR SENHA</Button>
+                <Button className="font-bold text-base">
+                    <Link href="">ALTERAR SENHA</Link>
+                </Button>
                 <Button className="font-bold text-base bg-white text-indigo-950 border border-indigo-950">
-                    VOLTAR
+                    <Link href="/">VOLTAR</Link>
                 </Button>
                 <Button className="font-bold text-base bg-white text-rose-600 border border-rose-600">
-                    SAIR
+                    <Link href="login">SAIR</Link>
                 </Button>
             </div>
         </section>

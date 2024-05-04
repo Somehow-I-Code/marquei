@@ -1,8 +1,7 @@
 import { prisma } from "../lib/prisma";
-import { LoginInput } from "../validators/login-form";
 
 class UsersRepository {
-    async find({ email }: LoginInput) {
+    async find(email: string) {
         const user = await prisma.user.findUnique({
             where: {
                 email,

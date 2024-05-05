@@ -1,16 +1,16 @@
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import UserImage from "./assets/user.svg";
 import EmailPreviewProfile from "./components/email-profile";
 import NameAndOcupation from "./components/name-and-ocupation";
 import ProfileLevelPreview from "./components/profile-level";
-import VectorsUser from "./components/vectors-user.svg";
 
 export default async function PreviewProfile() {
     return (
         <section>
             <div className="flex justify-center items-center bg-indigo-950 h-24">
                 <div className="relative mt-24 w-28 h-28 rounded-full flex items-center justify-center overflow-hidden">
-                    <VectorsUser />
+                    <UserImage />
                 </div>
             </div>
 

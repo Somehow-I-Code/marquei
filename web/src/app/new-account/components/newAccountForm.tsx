@@ -11,7 +11,13 @@ import {
     FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Select, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from "@/components/ui/select";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
@@ -34,7 +40,11 @@ const formSchema = z.object({
 
 export type NewAccountFormSchema = z.infer<typeof formSchema>;
 
-export default function NewAccountForm() {
+type NewAccountFormProps = {
+    levels: Array<string>;
+};
+
+export default function NewAccountForm({ levels }: NewAccountFormProps) {
     const form = useForm<NewAccountFormSchema>({
         resolver: zodResolver(formSchema),
         defaultValues: {
@@ -44,6 +54,17 @@ export default function NewAccountForm() {
             profileLevel: "",
         },
     });
+
+    function getLevelMessage(level: string) {
+        switch (level) {
+            case "USER":
+                return "Gerencia agendamentos e recursos";
+            case "ADMIN":
+                return "Gerencia agendamentos, recursos e outros usuários";
+            default:
+                return null;
+        }
+    }
 
     function OnSubmit(data: NewAccountFormSchema) {
         console.log(data);
@@ -147,13 +168,25 @@ export default function NewAccountForm() {
                                                     <SelectValue
                                                         id="profileLevel"
                                                         placeholder="Escolha um nível de perfil"
+                                                        {...field}
                                                     />
                                                 </SelectTrigger>
                                             </FormControl>
+                                            <SelectContent>
+                                                {levels.map((level) => {
+                                                    return (
+                                                        <SelectItem
+                                                            key={level}
+                                                            value={level}
+                                                        >
+                                                            {level}
+                                                        </SelectItem>
+                                                    );
+                                                })}
+                                            </SelectContent>
                                         </Select>
                                         <FormDescription>
-                                            Consegue gerenciar agendamentos e
-                                            recursos
+                                            {getLevelMessage(field.value)}
                                         </FormDescription>
                                         <FormMessage />
                                     </div>

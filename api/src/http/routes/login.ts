@@ -24,13 +24,13 @@ export async function login(server: FastifyInstance) {
         });
 
         if (!user) {
-            return reply.code(401).send({ message: "Email inválido" });
+            return reply.code(401).send({ message: "Credenciais inválidas" });
         }
 
         const passwordMatch = await bcrypt.compare(password, user.password);
 
         if (!passwordMatch) {
-            return reply.code(401).send({ message: "Senha inválida" });
+            return reply.code(401).send({ message: "Credenciais inválidas" });
         }
 
         return reply

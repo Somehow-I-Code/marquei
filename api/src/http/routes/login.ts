@@ -1,3 +1,4 @@
+import bcrypt from "bcrypt";
 import { FastifyInstance } from "fastify";
 import { prisma } from "../../lib/prisma";
 import { LoginInput, loginSchema } from "../../validators/login-form";
@@ -26,6 +27,15 @@ export async function login(server: FastifyInstance) {
             return reply.code(401).send({ message: "Credenciais inválidas" });
         }
 
-        return reply.code(200).send({ message: "Usuário encontrado" });
+        const passwordMatch = await bcrypt.compare(password, user.password);
+
+        if (!passwordMatch) {
+            return reply.code(401).send({ message: "Credenciais inválidas" });
+        }
+
+        return reply
+            .code(200)
+            .send({ message: "Credenciais válidadas com sucesso!" });
     });
 }
+

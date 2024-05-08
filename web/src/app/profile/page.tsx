@@ -57,7 +57,7 @@ export default function ProfilePage({
                 >
                     <Link href="/">VOLTAR</Link>
                 </Button>
-                <Button variant={"destructive"} className="font-bold text-base">
+                <Button variant="destructive" className="font-bold text-base">
                     SAIR
                 </Button>
             </div>

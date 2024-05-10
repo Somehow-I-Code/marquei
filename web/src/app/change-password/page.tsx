@@ -13,9 +13,7 @@ export default async function ChangePasswordPage() {
                     Alterar sua senha
                 </h1>
 
-                <div>
-                    <ChangePasswordForm />
-                </div>
+                <ChangePasswordForm />
             </div>
         </section>
     );

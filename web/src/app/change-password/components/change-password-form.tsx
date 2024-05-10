@@ -15,7 +15,13 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 
 const FormSchema = z.object({
-    password: z.string().min(8, {
+    oldPassword: z.string().min(8, {
+        message: "Sua senha deve conter no mínimo 8 caracteres",
+    }),
+    newPassword: z.string().min(8, {
+        message: "Sua senha deve conter no mínimo 8 caracteres",
+    }),
+    repeatPassword: z.string().min(8, {
         message: "Sua senha deve conter no mínimo 8 caracteres",
     }),
 });
@@ -26,7 +32,9 @@ export default function ChangePasswordForm() {
     const form = useForm<ChangePasswordFormSchema>({
         resolver: zodResolver(FormSchema),
         defaultValues: {
-            password: "",
+            oldPassword: "",
+            newPassword: "",
+            repeatPassword: "",
         },
     });
 
@@ -42,14 +50,14 @@ export default function ChangePasswordForm() {
             >
                 <FormField
                     control={form.control}
-                    name="password"
+                    name="oldPassword"
                     render={({ field }) => (
                         <FormItem className="flex flex-col mb-2">
-                            <FormLabel className="">Senha antiga</FormLabel>
+                            <FormLabel>Senha antiga</FormLabel>
                             <FormControl>
                                 <div className="flex justify-between items-center">
                                     <Input
-                                        type=""
+                                        type="password"
                                         placeholder="Digite sua senha antiga"
                                         {...field}
                                     />
@@ -62,14 +70,14 @@ export default function ChangePasswordForm() {
 
                 <FormField
                     control={form.control}
-                    name="password"
+                    name="newPassword"
                     render={({ field }) => (
                         <FormItem className="flex flex-col mb-2">
-                            <FormLabel className="">Nova senha </FormLabel>
+                            <FormLabel>Nova senha </FormLabel>
                             <FormControl>
                                 <div className="flex justify-between items-center">
                                     <Input
-                                        type=""
+                                        type="password"
                                         placeholder="Digite sua nova senha"
                                         {...field}
                                     />
@@ -82,14 +90,14 @@ export default function ChangePasswordForm() {
 
                 <FormField
                     control={form.control}
-                    name="password"
+                    name="repeatPassword"
                     render={({ field }) => (
                         <FormItem className="flex flex-col mb-2">
                             <FormLabel>Repita a nova senha</FormLabel>
                             <FormControl>
                                 <div className="flex justify-between items-center">
                                     <Input
-                                        type=""
+                                        type="password"
                                         placeholder="Digite sua nova senha"
                                         {...field}
                                     />

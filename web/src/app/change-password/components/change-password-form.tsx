@@ -46,13 +46,13 @@ export default function ChangePasswordForm() {
         <Form {...form}>
             <form
                 onSubmit={form.handleSubmit(onSubmit)}
-                className="flex flex-col gap-2"
+                className="flex flex-col gap-4"
             >
                 <FormField
                     control={form.control}
                     name="oldPassword"
                     render={({ field }) => (
-                        <FormItem className="flex flex-col mb-2">
+                        <FormItem className="flex flex-col">
                             <FormLabel>Senha antiga</FormLabel>
                             <FormControl>
                                 <div className="flex justify-between items-center">
@@ -72,7 +72,7 @@ export default function ChangePasswordForm() {
                     control={form.control}
                     name="newPassword"
                     render={({ field }) => (
-                        <FormItem className="flex flex-col mb-2">
+                        <FormItem className="flex flex-col">
                             <FormLabel>Nova senha </FormLabel>
                             <FormControl>
                                 <div className="flex justify-between items-center">
@@ -108,7 +108,7 @@ export default function ChangePasswordForm() {
                     )}
                 />
 
-                <div className="flex flex-col gap-2 py-2">
+                <div className="flex flex-col gap-2">
                     <Button type="submit" className="font-bold text-base">
                         ALTERAR SENHA
                     </Button>

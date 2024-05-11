@@ -3,8 +3,8 @@ import FormTitle from "../components/form-title";
 import NewProfileForm from "./components/new-profile-form";
 
 async function getLevels() {
-    const reponse = await fetch("http://api:8080/levels");
-    const data = await reponse.json();
+    const response = await fetch("http://api:8080/levels");
+    const data = await response.json();
 
     return data;
 }

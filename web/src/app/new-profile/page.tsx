@@ -1,4 +1,3 @@
-import { revalidatePath } from "next/cache";
 import CompanyLogo from "../components/company-logo";
 import FormTitle from "../components/form-title";
 import NewProfileForm, {
@@ -35,7 +34,7 @@ export default async function NewProfile() {
             throw new Error(error.message);
         }
 
-        revalidatePath("/");
+        // TODO: revalidar a tela com a lista de todos os perfis
     }
 
     return (

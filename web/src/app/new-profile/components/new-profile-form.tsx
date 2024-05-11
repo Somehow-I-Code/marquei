@@ -77,7 +77,7 @@ export default function NewProfileForm({
 
     const router = useRouter();
 
-    async function OnSubmit(data: NewProfileFormSchema) {
+    async function onSubmit(data: NewProfileFormSchema) {
         try {
             await createProfile(data);
 
@@ -109,7 +109,7 @@ export default function NewProfileForm({
     return (
         <Form {...form}>
             <form
-                onSubmit={form.handleSubmit(OnSubmit)}
+                onSubmit={form.handleSubmit(onSubmit)}
                 className="flex flex-col gap-6"
             >
                 <div className="flex flex-col gap-4">

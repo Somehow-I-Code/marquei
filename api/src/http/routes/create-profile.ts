@@ -1,10 +1,10 @@
 import { FastifyInstance } from "fastify";
 import profileRepository from "../../repositories/profiles";
-import { createProfile } from "../../validators/profile";
+import { createProfileSchema } from "../../validators/profile";
 
-export async function createProfiles(server: FastifyInstance) {
+export async function createProfile(server: FastifyInstance) {
     server.post("/profiles", async (request, reply) => {
-        const { name, occupation, email, level } = createProfile.parse(
+        const { name, occupation, email, level } = createProfileSchema.parse(
             request.body,
         );
 

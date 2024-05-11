@@ -33,25 +33,25 @@ const formSchema = z.object({
     email: z.string().email({
         message: "Digite um e-mail válido",
     }),
-    profileLevel: z.string().min(1, {
+    level: z.string().min(1, {
         message: "Selecione um dos níveis de perfil da lista",
     }),
 });
 
-export type NewAccountFormSchema = z.infer<typeof formSchema>;
+export type NewProfileFormSchema = z.infer<typeof formSchema>;
 
-type NewAccountFormProps = {
+type NewProfileFormProps = {
     levels: Array<string>;
 };
 
-export default function NewAccountForm({ levels }: NewAccountFormProps) {
-    const form = useForm<NewAccountFormSchema>({
+export default function NewProfileForm({ levels }: NewProfileFormProps) {
+    const form = useForm<NewProfileFormSchema>({
         resolver: zodResolver(formSchema),
         defaultValues: {
             name: "",
             occupation: "",
             email: "",
-            profileLevel: "",
+            level: "",
         },
     });
 
@@ -66,7 +66,7 @@ export default function NewAccountForm({ levels }: NewAccountFormProps) {
         }
     }
 
-    function OnSubmit(data: NewAccountFormSchema) {
+    function OnSubmit(data: NewProfileFormSchema) {
         console.log(data);
     }
 
@@ -150,12 +150,12 @@ export default function NewAccountForm({ levels }: NewAccountFormProps) {
 
                     <FormField
                         control={form.control}
-                        name="profileLevel"
+                        name="level"
                         render={({ field }) => {
                             return (
                                 <FormItem>
                                     <div className="flex flex-col gap-2">
-                                        <FormLabel htmlFor="profileLevel">
+                                        <FormLabel htmlFor="level">
                                             Nível de perfil
                                         </FormLabel>
                                         <Select
@@ -166,7 +166,7 @@ export default function NewAccountForm({ levels }: NewAccountFormProps) {
                                             <FormControl>
                                                 <SelectTrigger>
                                                     <SelectValue
-                                                        id="profileLevel"
+                                                        id="level"
                                                         placeholder="Escolha um nível de perfil"
                                                         {...field}
                                                     />

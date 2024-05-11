@@ -18,8 +18,11 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select";
+import { ToastAction } from "@/components/ui/toast";
+import { useToast } from "@/components/ui/use-toast";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
@@ -42,9 +45,13 @@ export type NewProfileFormSchema = z.infer<typeof formSchema>;
 
 type NewProfileFormProps = {
     levels: Array<string>;
+    createProfile: (data: NewProfileFormSchema) => void;
 };
 
-export default function NewProfileForm({ levels }: NewProfileFormProps) {
+export default function NewProfileForm({
+    levels,
+    createProfile,
+}: NewProfileFormProps) {
     const form = useForm<NewProfileFormSchema>({
         resolver: zodResolver(formSchema),
         defaultValues: {
@@ -66,8 +73,37 @@ export default function NewProfileForm({ levels }: NewProfileFormProps) {
         }
     }
 
-    function OnSubmit(data: NewProfileFormSchema) {
-        console.log(data);
+    const { toast } = useToast();
+
+    const router = useRouter();
+
+    async function OnSubmit(data: NewProfileFormSchema) {
+        try {
+            await createProfile(data);
+
+            form.reset();
+
+            toast({
+                title: "Ótimo!",
+                description: "Seu perfil foi criado com sucesso.",
+                action: (
+                    <ToastAction
+                        onClick={() => router.push("/")}
+                        altText="Ir para a home"
+                    >
+                        Ir para a home
+                    </ToastAction>
+                ),
+            });
+        } catch (e) {
+            if (e instanceof Error) {
+                toast({
+                    variant: "destructive",
+                    title: "Algo não deu certo!",
+                    description: e.message,
+                });
+            }
+        }
     }
 
     return (

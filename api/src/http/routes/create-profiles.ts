@@ -1,5 +1,5 @@
 import { FastifyInstance } from "fastify";
-import profileRepository from "../../repositories/profile";
+import profileRepository from "../../repositories/profiles";
 import { createProfile } from "../../validators/profile";
 
 export async function createProfiles(server: FastifyInstance) {

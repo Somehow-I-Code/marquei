@@ -1,15 +1,15 @@
 import CompanyLogo from "../components/company-logo";
 import FormTitle from "../components/form-title";
-import NewAccountForm from "./components/newAccountForm";
+import NewProfileForm from "./components/new-profile-form";
 
 async function getLevels() {
-    const reponse = await fetch("http://api:8080/levels");
-    const data = await reponse.json();
+    const response = await fetch("http://api:8080/levels");
+    const data = await response.json();
 
     return data;
 }
 
-export default async function NewAccount() {
+export default async function NewProfile() {
     const levels = await getLevels();
 
     return (
@@ -20,7 +20,7 @@ export default async function NewAccount() {
             <div className="p-6 flex flex-col gap-8">
                 <FormTitle>Novo perfil</FormTitle>
 
-                <NewAccountForm levels={levels} />
+                <NewProfileForm levels={levels} />
             </div>
         </section>
     );

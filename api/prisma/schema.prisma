@@ -34,11 +34,23 @@ model Resource {
 model User {
   id           Int      @id @default(autoincrement())
   name         String
+  occupation   String?
   email        String   @unique
   password     String
   profileLevel Level    @default(USER)
   createdAt    DateTime @default(now())
   updateAt     DateTime @default(now())
+}
+
+model Profile {
+  id         Int      @id @default(autoincrement())
+  name       String
+  occupation String?
+  email      String   @unique
+  password   String
+  level      Level    @default(USER)
+  createdAt  DateTime @default(now())
+  updateAt   DateTime @default(now())
 }
 
 enum Level {

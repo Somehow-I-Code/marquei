@@ -1,5 +1,6 @@
 import Fastify from "fastify";
 import { createCategories } from "./src/http/routes/create-categories";
+import { createProfile } from "./src/http/routes/create-profile";
 import { createResources } from "./src/http/routes/create-resources";
 import { getCategories } from "./src/http/routes/get-categories";
 import { getLevels } from "./src/http/routes/get-levels";
@@ -14,6 +15,7 @@ server.get("/hello", async (request, reply) => {
 
 server.register(createCategories);
 server.register(createResources);
+server.register(createProfile);
 server.register(getResources);
 server.register(getCategories);
 server.register(getLevels);

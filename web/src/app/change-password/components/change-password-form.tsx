@@ -39,7 +39,18 @@ export default function ChangePasswordForm() {
         },
     });
 
-    const [showPassword, setShowPassword] = useState(false);
+    const [showPassword, setShowPassword] = useState({
+        oldPassword: false,
+        newPassword: false,
+        repeatPassword: false,
+    });
+
+    const passwordVisibility = (fieldName: keyof ChangePasswordFormSchema) => {
+        setShowPassword({
+            ...showPassword,
+            [fieldName]: !showPassword[fieldName],
+        });
+    };
 
     function onSubmit(data: ChangePasswordFormSchema) {
         console.log(data);
@@ -62,7 +73,9 @@ export default function ChangePasswordForm() {
                                     <Input
                                         id="oldPassword"
                                         type={
-                                            showPassword ? "text" : "password"
+                                            showPassword.oldPassword
+                                                ? "text"
+                                                : "password"
                                         }
                                         placeholder="Digite sua senha antiga"
                                         {...field}
@@ -70,11 +83,11 @@ export default function ChangePasswordForm() {
                                     <button
                                         type="button"
                                         onClick={() =>
-                                            setShowPassword(!showPassword)
+                                            passwordVisibility("oldPassword")
                                         }
                                         className="absolute right-8"
                                     >
-                                        {showPassword ? (
+                                        {showPassword.oldPassword ? (
                                             <EyeOff size={20} />
                                         ) : (
                                             <Eye size={20} />
@@ -97,7 +110,9 @@ export default function ChangePasswordForm() {
                                     <Input
                                         id="newPassword"
                                         type={
-                                            showPassword ? "text" : "password"
+                                            showPassword.newPassword
+                                                ? "text"
+                                                : "password"
                                         }
                                         placeholder="Digite sua nova senha"
                                         {...field}
@@ -105,11 +120,11 @@ export default function ChangePasswordForm() {
                                     <button
                                         type="button"
                                         onClick={() =>
-                                            setShowPassword(!showPassword)
+                                            passwordVisibility("newPassword")
                                         }
                                         className="absolute right-8"
                                     >
-                                        {showPassword ? (
+                                        {showPassword.newPassword ? (
                                             <EyeOff size={20} />
                                         ) : (
                                             <Eye size={20} />
@@ -132,7 +147,9 @@ export default function ChangePasswordForm() {
                                     <Input
                                         id="repeatPassword"
                                         type={
-                                            showPassword ? "text" : "password"
+                                            showPassword.repeatPassword
+                                                ? "text"
+                                                : "password"
                                         }
                                         placeholder="Digite sua nova senha"
                                         {...field}
@@ -140,11 +157,11 @@ export default function ChangePasswordForm() {
                                     <button
                                         type="button"
                                         onClick={() =>
-                                            setShowPassword(!showPassword)
+                                            passwordVisibility("repeatPassword")
                                         }
                                         className="absolute right-8"
                                     >
-                                        {showPassword ? (
+                                        {showPassword.repeatPassword ? (
                                             <EyeOff size={20} />
                                         ) : (
                                             <Eye size={20} />

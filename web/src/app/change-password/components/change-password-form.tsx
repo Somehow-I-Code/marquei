@@ -52,9 +52,7 @@ export default function ChangePasswordForm() {
         });
     };
 
-    function onSubmit(data: ChangePasswordFormSchema) {
-        console.log(data);
-    }
+    function onSubmit() {}
 
     return (
         <Form {...form}>

@@ -29,7 +29,7 @@ const FormSchema = z.object({
 export type LoginFormSchema = z.infer<typeof FormSchema>;
 
 type LoginFormProps = {
-    login: (data: LoginFormSchema) => void;
+    login: (credentials: LoginFormSchema) => Promise<string>;
 };
 
 export default function LoginForm({ login }: LoginFormProps) {
@@ -43,8 +43,9 @@ export default function LoginForm({ login }: LoginFormProps) {
 
     const [showPassword, setShowPassword] = useState(false);
 
-    function onSubmit(data: LoginFormSchema) {
-        login(data);
+    async function onSubmit(credentials: LoginFormSchema) {
+        const token = await login(credentials);
+        console.log(token);
     }
 
     return (

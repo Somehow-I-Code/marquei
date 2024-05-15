@@ -4,7 +4,6 @@ import LoginForm, { LoginFormSchema } from "./components/login-form";
 export default function LoginPage() {
     async function login(credentials: LoginFormSchema) {
         "use server";
-        console.log(credentials);
         const response = await fetch("http://api:8080/login", {
             method: "POST",
             body: JSON.stringify(credentials),

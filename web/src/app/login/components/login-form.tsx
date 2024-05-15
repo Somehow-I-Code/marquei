@@ -45,7 +45,6 @@ export default function LoginForm({ login }: LoginFormProps) {
 
     async function onSubmit(credentials: LoginFormSchema) {
         const token = await login(credentials);
-        console.log(token);
     }
 
     return (

@@ -2,9 +2,17 @@ import CompanyLogo from "../components/company-logo";
 import LoginForm, { LoginFormSchema } from "./components/login-form";
 
 export default function LoginPage() {
-    async function login(data: LoginFormSchema) {
+    async function login(credentials: LoginFormSchema) {
         "use server";
-        console.log(data);
+        const response = await fetch("http://api:8080/login", {
+            method: "POST",
+            body: JSON.stringify(credentials),
+            headers: {
+                "content-type": "application/json",
+            },
+        });
+        const data = (await response.json()) as { token: string };
+        return data.token;
     }
 
     return (

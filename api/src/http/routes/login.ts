@@ -1,7 +1,7 @@
 import bcrypt from "bcrypt";
 import { FastifyInstance } from "fastify";
 import jwt from "jsonwebtoken";
-import usersRepository from "../../repositories/users";
+import profileRepository from "../../repositories/profiles";
 import { LoginInput, loginSchema } from "../../validators/login-form";
 
 export async function login(server: FastifyInstance) {
@@ -24,7 +24,7 @@ export async function login(server: FastifyInstance) {
         }
 
         const { email, password } = credentials;
-        const user = await usersRepository.find(email);
+        const user = await profileRepository.find(email);
 
         if (!user) {
             return reply.code(401).send({ message: "Credenciais inválidas" });
@@ -37,11 +37,10 @@ export async function login(server: FastifyInstance) {
         }
 
         const token = jwt.sign(
-            { email: user.email, profileLevel: user.profileLevel },
+            { email: user.email, level: user.level },
             process.env.JWT_SECRET,
         );
 
         return reply.code(200).send({ token });
     });
 }
-

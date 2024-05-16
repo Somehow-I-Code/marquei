@@ -6,6 +6,7 @@ import {
     FormField,
     FormItem,
     FormLabel,
+    FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -93,6 +94,7 @@ export default function ChangePasswordForm() {
                                     </button>
                                 </div>
                             </FormControl>
+                            <FormMessage />
                         </FormItem>
                     )}
                 />
@@ -102,7 +104,7 @@ export default function ChangePasswordForm() {
                     name="newPassword"
                     render={({ field }) => (
                         <FormItem className="flex flex-col">
-                            <FormLabel>Nova senha </FormLabel>
+                            <FormLabel>Nova senha</FormLabel>
                             <FormControl>
                                 <div className="flex justify-between items-center">
                                     <Input
@@ -130,6 +132,7 @@ export default function ChangePasswordForm() {
                                     </button>
                                 </div>
                             </FormControl>
+                            <FormMessage />
                         </FormItem>
                     )}
                 />
@@ -167,6 +170,7 @@ export default function ChangePasswordForm() {
                                     </button>
                                 </div>
                             </FormControl>
+                            <FormMessage />
                         </FormItem>
                     )}
                 />

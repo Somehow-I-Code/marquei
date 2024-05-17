@@ -53,7 +53,7 @@ export default function ChangePasswordForm() {
         });
     };
 
-    function onSubmit() {}
+    function onSubmit(data: ChangePasswordFormSchema) {}
 
     return (
         <Form {...form}>

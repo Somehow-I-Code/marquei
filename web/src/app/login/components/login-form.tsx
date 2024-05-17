@@ -10,9 +10,11 @@ import {
     FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { useToast } from "@/components/ui/use-toast";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Eye, EyeOff } from "lucide-react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -33,6 +35,8 @@ type LoginFormProps = {
 };
 
 export default function LoginForm({ login }: LoginFormProps) {
+    const { toast } = useToast();
+    const router = useRouter();
     const form = useForm<LoginFormSchema>({
         resolver: zodResolver(FormSchema),
         defaultValues: {
@@ -44,7 +48,19 @@ export default function LoginForm({ login }: LoginFormProps) {
     const [showPassword, setShowPassword] = useState(false);
 
     async function onSubmit(credentials: LoginFormSchema) {
-        const token = await login(credentials);
+        try {
+            const token = await login(credentials);
+            localStorage.setItem("marqueitoken", token);
+            router.push("/");
+        } catch (e) {
+            if (e instanceof Error) {
+                toast({
+                    variant: "destructive",
+                    title: "Algo não deu certo!",
+                    description: e.message,
+                });
+            }
+        }
     }
 
     return (

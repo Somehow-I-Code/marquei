@@ -22,17 +22,6 @@ class ProfileRepository {
 
         return profile;
     }
-
-    // TODO: update to use schema profile
-    async find(email: string) {
-        const user = await prisma.profile.findUnique({
-            where: {
-                email,
-            },
-        });
-
-        return user;
-    }
 }
 
 const profileRepository = new ProfileRepository();

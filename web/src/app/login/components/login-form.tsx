@@ -10,13 +10,16 @@ import {
     FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { useToast } from "@/components/ui/use-toast";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Eye, EyeOff } from "lucide-react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
+// Definindo o esquema que quero de validação dos dados, um objeto contendo o email e o password, com suas repectivas mensagens
 const FormSchema = z.object({
     email: z.string().email({
         message: "Digite um e-mail válido",
@@ -26,13 +29,23 @@ const FormSchema = z.object({
     }),
 });
 
+// Inferindo o esquema de validação para o tipo LoginFormSchema
 export type LoginFormSchema = z.infer<typeof FormSchema>;
 
+// O LoginFormProps é um tipo, que contém o valor login, que é uma função que tem como parâmetro as credentials (email e password), esperando como promessa uma string
 type LoginFormProps = {
-    login: () => void;
+    login: (credentials: LoginFormSchema) => Promise<string>;
 };
 
+//Não entendi pq o login tem que estar entre {}
 export default function LoginForm({ login }: LoginFormProps) {
+    // Atribuindo a função useRouter para a variável router para ser usando posteriormente
+    const router = useRouter();
+
+    // Atribuindo a função useToast para a variável toast para ser usando posteriormente, não sei pq o toast tem que estar entre {}
+    const { toast } = useToast();
+
+    // Não está muito claro pra mim, mas pelo que eu entendi está usando ao função useForm para para definir valores padrões vazios pro email e password
     const form = useForm<LoginFormSchema>({
         resolver: zodResolver(FormSchema),
         defaultValues: {
@@ -41,9 +54,34 @@ export default function LoginForm({ login }: LoginFormProps) {
         },
     });
 
+    // Não entendi direito, mas pelo que interpretei é um array que contém um a variável como valor inicial, não sei bem se setShowPAssword é uma função, que recebe a função useState como parâmetro o false
     const [showPassword, setShowPassword] = useState(false);
 
-    async function onSubmit(credentials: LoginFormSchema) {}
+    async function onSubmit(credentials: LoginFormSchema) {
+        try {
+            // 1 - Chamar a função que comunica com o backend
+            // Esperando a execução da função login e atribuindo o resultado ao token
+            const token = await login(credentials);
+
+            // 7 - Criar sessão
+            // Não entendi bem, mas acho que estou guardando na localStorage o token
+            localStorage.setItem("marquei-token", token);
+
+            // 5 - Se certo - redireciona
+            // Se o usuário conseguiu logar redirecionar pra home
+            router.push("/");
+        } catch (e) {
+            // 6 - Se errado - toast erro (limpar senha)
+            // Se não conseguir logar, mostrar mensagem de erro
+            if (e instanceof Error) {
+                toast({
+                    variant: "destructive",
+                    title: "Oh não!",
+                    description: e.message,
+                });
+            }
+        }
+    }
 
     return (
         <Form {...form}>
@@ -78,6 +116,7 @@ export default function LoginForm({ login }: LoginFormProps) {
                                 <div className="flex justify-between items-center">
                                     <Input
                                         type={
+                                            // Não entendi muito bem como funiona o useState
                                             showPassword ? "text" : "password"
                                         }
                                         placeholder="Digite sua senha"

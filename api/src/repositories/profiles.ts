@@ -22,6 +22,17 @@ class ProfileRepository {
 
         return profile;
     }
+
+    // Criando a função findByEmail que irá usar a função findUnique do prisma para encontrar como um valor único o campo email
+    async findByEmail(email: string) {
+        const profile = await prisma.profile.findUnique({
+            where: {
+                email,
+            },
+        });
+
+        return profile;
+    }
 }
 
 const profileRepository = new ProfileRepository();

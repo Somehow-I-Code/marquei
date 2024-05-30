@@ -1,5 +1,19 @@
+# @name login
+POST {{host}}/login
+Content-Type: application/json
+
+{
+    "email": "userdasilva@email.com",
+    "password": "gTQ2k9Xm2e"
+}
+
+###
+
+@authToken = {{login.response.body.$.token}}
+
 POST {{host}}/profiles
 Content-Type: application/json
+Authorization: {{authToken}}
 
 {
     "name": "User da Silva",

@@ -1,0 +1,8 @@
+POST {{host}}/resources
+Content-Type: application/json
+
+{
+    "name": "Dr. Hudson Dodói",
+    "description": "Ortopedista",
+    "categoryId": 1
+}

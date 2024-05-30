@@ -1,0 +1,9 @@
+POST {{host}}/profiles
+Content-Type: application/json
+
+{
+    "name": "User da Silva",
+    "occupation": "Recepcionista",
+    "email": "userdasilva@email.com",
+    "level": "ADMIN"
+}

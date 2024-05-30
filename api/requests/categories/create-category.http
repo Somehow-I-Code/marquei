@@ -1,0 +1,6 @@
+POST {{host}}/categories
+Content-Type: application/json
+
+{
+    "title": "Médicos"
+}

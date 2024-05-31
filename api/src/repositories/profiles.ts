@@ -24,14 +24,14 @@ class ProfileRepository {
         return profile;
     }
 
-    async find(email: string) {
-        const user = await prisma.profile.findUnique({
+    async findByEmail(email: string) {
+        const profile = await prisma.profile.findUnique({
             where: {
                 email,
             },
         });
 
-        return user;
+        return profile;
     }
 }
 

@@ -37,7 +37,7 @@ export async function login(server: FastifyInstance) {
         }
 
         const token = jwt.sign(
-            { email: profile.email, level: profile.level },
+            { id: profile.id, email: profile.email, level: profile.level },
             process.env.JWT_SECRET,
         );
 

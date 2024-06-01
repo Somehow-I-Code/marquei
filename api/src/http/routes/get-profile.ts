@@ -1,7 +1,6 @@
 import { FastifyInstance } from "fastify";
 import jwt from "jsonwebtoken";
 import profileRepository from "../../repositories/profiles";
-import { profileSchema } from "../../validators/profile";
 
 export async function getProfile(server: FastifyInstance) {
     server.get("/profile", async (request, reply) => {
@@ -18,17 +17,15 @@ export async function getProfile(server: FastifyInstance) {
 
         if (!token) {
             //TODO: Adicionar isso ao middleware de autorização
-            return reply.send();
+            return reply.send({ message: "Falta token na requisição" });
         }
 
         const decoded = jwt.verify(token, process.env.JWT_SECRET) as {
-            email: string;
+            id: number;
         };
 
-        const profile = await profileRepository.findByEmail(decoded.email);
+        const profile = await profileRepository.findById(decoded.id);
 
-        const parsedProfile = await profileSchema.parse(profile);
-
-        return reply.send(parsedProfile);
+        return reply.send(profile);
     });
 }

@@ -33,6 +33,22 @@ class ProfileRepository {
 
         return profile;
     }
+
+    async findById(id: number) {
+        const profile = await prisma.profile.findUnique({
+            where: {
+                id,
+            },
+            select: {
+                name: true,
+                occupation: true,
+                email: true,
+                level: true,
+            },
+        });
+
+        return profile;
+    }
 }
 
 const profileRepository = new ProfileRepository();

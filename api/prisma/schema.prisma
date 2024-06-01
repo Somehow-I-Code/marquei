@@ -46,3 +46,11 @@ enum Level {
   USER
   ADMIN
 }
+
+model Company {
+  id        Int      @id @default(autoincrement())
+  name      String
+  isActive  Boolean
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+}

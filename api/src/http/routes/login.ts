@@ -24,20 +24,20 @@ export async function login(server: FastifyInstance) {
         }
 
         const { email, password } = credentials;
-        const user = await profileRepository.find(email);
+        const profile = await profileRepository.findByEmail(email);
 
-        if (!user) {
+        if (!profile) {
             return reply.code(401).send({ message: "Credenciais inválidas" });
         }
 
-        const passwordMatch = await bcrypt.compare(password, user.password);
+        const passwordMatch = await bcrypt.compare(password, profile.password);
 
         if (!passwordMatch) {
             return reply.code(401).send({ message: "Credenciais inválidas" });
         }
 
         const token = jwt.sign(
-            { email: user.email, level: user.level },
+            { id: profile.id, email: profile.email, level: profile.level },
             process.env.JWT_SECRET,
         );
 

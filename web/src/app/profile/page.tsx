@@ -1,20 +1,27 @@
 import { Button } from "@/components/ui/button";
+import { ProfilesResponse } from "@/types/profiles";
 import Link from "next/link";
 import UserImage from "./assets/user.svg";
 
-type ProfilePageProps = {
-    name: string;
-    occupation: string;
-    email: string;
-    level: string;
-};
+async function getProfile(): Promise<ProfilesResponse> {
+    //TODO: Buscar o token do cookie da sessão
+    const token =
+        "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFuYUB0ZXh0LmNvbSIsImxldmVsIjoiVVNFUiIsImlhdCI6MTcxNzAwNDA4OX0.l_HNrXszwsP_xrQNjA95RHEYMvNGAF5cfd_KEGkbcrc";
 
-export default function ProfilePage({
-    name,
-    occupation,
-    email,
-    level,
-}: ProfilePageProps) {
+    const response = await fetch("http://api:8080/profile", {
+        headers: {
+            authorization: token,
+        },
+    });
+
+    const data = await response.json();
+
+    return data;
+}
+
+export default async function ProfilePage() {
+    const profile = await getProfile();
+
     return (
         <section>
             <div className="flex justify-center items-center relative">
@@ -26,30 +33,30 @@ export default function ProfilePage({
 
             <div className="flex flex-col justify-center items-center">
                 <span className="p-2 rounded text-indigo-950 text-2xl font-bold">
-                    {name}
+                    {profile.name}
                 </span>
 
                 <span className="text-amber-600 font-semibold">
-                    {occupation}
+                    {profile.occupation}
                 </span>
             </div>
 
             <div className="flex flex-col p-6 gap-2">
                 <div className="flex justify-between items-center top-0">
                     <span className="text-gray-400 text-sm">E-mail</span>
-                    <span className="text-base">{email}</span>
+                    <span className="text-base">{profile.email}</span>
                 </div>
                 <div className="flex justify-between items-center">
                     <span className="text-gray-400 text-sm">
                         Nível de perfil
                     </span>
-                    <span className="text-base">{level}</span>
+                    <span className="text-base">{profile.level}</span>
                 </div>
             </div>
 
             <div className="flex flex-col p-6 gap-2">
                 <Button asChild className="font-bold text-base">
-                    <Link href="">ALTERAR SENHA</Link>
+                    <Link href="/change-password">ALTERAR SENHA</Link>
                 </Button>
                 <Button
                     asChild

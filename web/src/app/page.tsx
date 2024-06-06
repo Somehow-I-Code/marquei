@@ -1,4 +1,6 @@
 import { ResourceResponse, Resources } from "@/types/resources";
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 import BottomFloatingMenu from "./components/bottom-floating-menu";
 import CategoriesList from "./components/categories-list";
 import CompanyLogo from "./components/company-logo";
@@ -18,6 +20,16 @@ function transformResources(resources: ResourceResponse) {
         description,
         category: category.title,
     }));
+}
+
+function getSession() {
+    const session = cookies().get("session")?.value;
+
+    if (!session) {
+        return null;
+    }
+
+    return session;
 }
 
 async function getResources(): Promise<Resources> {
@@ -42,6 +54,12 @@ function getResourcesByCategory(resources: Resources) {
 }
 
 export default async function Home() {
+    const session = getSession();
+
+    if (!session) {
+        return redirect("/login");
+    }
+
     const greeting = await getHello();
     const resources = await getResources();
     const resourcesByCategory = getResourcesByCategory(resources);

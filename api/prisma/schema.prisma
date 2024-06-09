@@ -59,7 +59,7 @@ model Company {
   isActive  Boolean
   createdAt DateTime   @default(now())
   updatedAt DateTime   @default(now())
-  Profile   Profile[]
-  Resource  Resource[]
-  Category  Category[]
+  profile   Profile[]
+  resource  Resource[]
+  category  Category[]
 }

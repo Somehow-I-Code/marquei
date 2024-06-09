@@ -1,5 +1,9 @@
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 import CompanyLogo from "../components/company-logo";
 import LoginForm, { LoginFormSchema } from "./components/login-form";
+
+const _30_DAYS = 30 * 24 * 60 * 60 * 1000;
 
 export default function LoginPage() {
     async function login(credentials: LoginFormSchema) {
@@ -18,7 +22,10 @@ export default function LoginPage() {
         }
 
         const data = (await response.json()) as { token: string };
-        return data.token;
+        cookies().set("session", data.token, {
+            expires: new Date(Date.now() + _30_DAYS),
+        });
+        redirect("/");
     }
 
     return (

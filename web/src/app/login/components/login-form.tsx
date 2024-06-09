@@ -31,7 +31,7 @@ const FormSchema = z.object({
 export type LoginFormSchema = z.infer<typeof FormSchema>;
 
 type LoginFormProps = {
-    login: (credentials: LoginFormSchema) => Promise<string>;
+    login: (credentials: LoginFormSchema) => Promise<void>;
 };
 
 export default function LoginForm({ login }: LoginFormProps) {
@@ -49,9 +49,7 @@ export default function LoginForm({ login }: LoginFormProps) {
 
     async function onSubmit(credentials: LoginFormSchema) {
         try {
-            const token = await login(credentials);
-            localStorage.setItem("marqueitoken", token);
-            router.push("/");
+            await login(credentials);
         } catch (e) {
             if (e instanceof Error) {
                 toast({

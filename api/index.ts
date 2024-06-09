@@ -4,8 +4,10 @@ import { createProfile } from "./src/http/routes/create-profile";
 import { createResources } from "./src/http/routes/create-resources";
 import { getCategories } from "./src/http/routes/get-categories";
 import { getLevels } from "./src/http/routes/get-levels";
+import { getProfile } from "./src/http/routes/get-profile";
 import { getResources } from "./src/http/routes/get-resources";
 import { login } from "./src/http/routes/login";
+import { resetPassword } from "./src/http/routes/reset-password";
 
 const server = Fastify();
 
@@ -20,6 +22,8 @@ server.register(getResources);
 server.register(getCategories);
 server.register(getLevels);
 server.register(login);
+server.register(getProfile);
+server.register(resetPassword)
 
 server.listen({ port: 8080, host: "0.0.0.0" }, (err, address) => {
     if (err) {

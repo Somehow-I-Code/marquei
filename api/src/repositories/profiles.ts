@@ -25,14 +25,30 @@ class ProfileRepository {
         return profile;
     }
 
-    async find(email: string) {
-        const user = await prisma.profile.findUnique({
+    async findByEmail(email: string) {
+        const profile = await prisma.profile.findUnique({
             where: {
                 email,
             },
         });
 
-        return user;
+        return profile;
+    }
+
+    async findById(id: number) {
+        const profile = await prisma.profile.findUnique({
+            where: {
+                id,
+            },
+            select: {
+                name: true,
+                occupation: true,
+                email: true,
+                level: true,
+            },
+        });
+
+        return profile;
     }
 }
 

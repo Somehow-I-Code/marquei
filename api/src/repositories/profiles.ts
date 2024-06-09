@@ -9,8 +9,6 @@ class ProfileRepository {
         const password = generatePassword();
         const passwordHash = await hash(password, 10);
 
-        emailService.sendEmailWithPassword(email, password);
-
         const profile = await prisma.profile.create({
             data: {
                 name,
@@ -18,8 +16,11 @@ class ProfileRepository {
                 email,
                 password: passwordHash,
                 level,
+                companyId: 1,
             },
         });
+
+        emailService.sendEmailWithPassword(email, password);
 
         return profile;
     }

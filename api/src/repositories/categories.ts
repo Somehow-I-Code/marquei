@@ -6,6 +6,7 @@ class CategoriesRepository {
         const category = await prisma.category.create({
             data: {
                 title,
+                companyId: 1,
             },
         });
 

@@ -45,6 +45,7 @@ model Profile {
 enum Level {
   USER
   ADMIN
+  SUDO
 }
 
 model Company {

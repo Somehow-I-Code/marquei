@@ -16,8 +16,8 @@ Content-Type: application/json
 Authorization: {{authToken}}
 
 {
-    "name": "User da Sudo",
+    "name": "User da Silva",
     "occupation": "Recepcionista",
-    "email": "userdasudo@email.com",
-    "level": "SUDO"
+    "email": "userdasilva@email.com",
+    "level": "ADMIN"
 }

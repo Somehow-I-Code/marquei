@@ -1,4 +1,3 @@
-import bcrypt from "bcrypt";
 import { FastifyInstance } from "fastify";
 import jwt from "jsonwebtoken";
 import profileRepository from "../../repositories/profiles";

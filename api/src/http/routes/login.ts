@@ -8,7 +8,7 @@ export async function login(server: FastifyInstance) {
     server.post("/login", async (request, reply) => {
         if (typeof process.env.JWT_SECRET !== "string") {
             return reply
-                .code(500)
+                .status(500)
                 .send({ message: "Configuração de token não aplicada" });
         }
 

@@ -6,8 +6,7 @@ export async function getProfile(server: FastifyInstance) {
     server.get("/profile", async (request, reply) => {
         if (typeof process.env.JWT_SECRET !== "string") {
             return reply
-                .code(500)
-
+                .status(500)
                 .send({ message: "Configuração de token não aplicada" });
         }
 

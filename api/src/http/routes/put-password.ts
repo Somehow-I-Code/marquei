@@ -3,12 +3,11 @@ import { FastifyInstance } from "fastify";
 import jwt from "jsonwebtoken";
 import profileRepository from "../../repositories/profiles";
 
-export async function PutPassword(server: FastifyInstance) {
+export async function putPassword(server: FastifyInstance) {
     server.put("/change-password", async (request, reply) => {
         if (typeof process.env.JWT_SECRET !== "string") {
             return reply
-                .code(500)
-
+                .status(500)
                 .send({ message: "Configuração de token não aplicada" });
         }
 

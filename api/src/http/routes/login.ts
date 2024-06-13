@@ -17,7 +17,7 @@ export async function login(server: FastifyInstance) {
         try {
             credentials = loginSchema.parse(request.body);
         } catch (error) {
-            return reply.code(400).send({
+            return reply.status(400).send({
                 error: "ValidationError",
                 message: (error as Error).message,
             });
@@ -27,13 +27,13 @@ export async function login(server: FastifyInstance) {
         const profile = await profileRepository.findByEmail(email);
 
         if (!profile) {
-            return reply.code(401).send({ message: "Credenciais inválidas" });
+            return reply.status(401).send({ message: "Credenciais inválidas" });
         }
 
         const passwordMatch = await bcrypt.compare(password, profile.password);
 
         if (!passwordMatch) {
-            return reply.code(401).send({ message: "Credenciais inválidas" });
+            return reply.status(401).send({ message: "Credenciais inválidas" });
         }
 
         const token = jwt.sign(
@@ -46,6 +46,6 @@ export async function login(server: FastifyInstance) {
             process.env.JWT_SECRET,
         );
 
-        return reply.code(200).send({ token });
+        return reply.status(200).send({ token });
     });
 }

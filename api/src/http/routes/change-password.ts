@@ -2,8 +2,8 @@ import { FastifyInstance } from "fastify";
 import jwt from "jsonwebtoken";
 import profileRepository from "../../repositories/profiles";
 
-export async function putPassword(server: FastifyInstance) {
-    server.put("/change-password", async (request, reply) => {
+export async function changePassword(server: FastifyInstance) {
+    server.patch("/change-password", async (request, reply) => {
         if (typeof process.env.JWT_SECRET !== "string") {
             return reply
                 .status(500)

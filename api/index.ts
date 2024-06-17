@@ -1,5 +1,6 @@
 import Fastify from "fastify";
 import { adminCreateProfile } from "./src/http/routes/admin-create-profile";
+import { changePassword } from "./src/http/routes/change-password";
 import { createCategories } from "./src/http/routes/create-categories";
 import { createProfile } from "./src/http/routes/create-profile";
 import { createResources } from "./src/http/routes/create-resources";
@@ -26,6 +27,7 @@ server.register(login);
 server.register(getProfile);
 server.register(resetPassword);
 server.register(adminCreateProfile);
+server.register(changePassword);
 
 server.listen({ port: 8080, host: "0.0.0.0" }, (err, address) => {
     if (err) {

@@ -10,6 +10,7 @@ RUN rm -rf prisma
 
 RUN chown -R node:node node_modules/.prisma
 
-# USER node
+#TODO: Revisar necessidade dessa linha
+#USER node
 
 EXPOSE 8080

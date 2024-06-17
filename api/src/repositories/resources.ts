@@ -8,6 +8,7 @@ class ResourcesRepository {
                 name,
                 description,
                 categoryId,
+                companyId: 1,
             },
         });
 

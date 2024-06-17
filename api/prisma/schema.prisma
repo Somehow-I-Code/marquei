@@ -19,6 +19,8 @@ model Category {
   createdAt DateTime   @default(now())
   updatedAt DateTime   @default(now())
   resources Resource[]
+  company   Company    @relation(fields: [companyId], references: [id])
+  companyId Int
 }
 
 model Resource {
@@ -29,6 +31,8 @@ model Resource {
   updatedAt   DateTime @default(now())
   category    Category @relation(fields: [categoryId], references: [id])
   categoryId  Int
+  company     Company  @relation(fields: [companyId], references: [id])
+  companyId   Int
 }
 
 model Profile {
@@ -40,17 +44,23 @@ model Profile {
   level      Level    @default(USER)
   createdAt  DateTime @default(now())
   updatedAt  DateTime @default(now())
+  company    Company  @relation(fields: [companyId], references: [id])
+  companyId  Int
 }
 
 enum Level {
   USER
   ADMIN
+  SUDO
 }
 
 model Company {
-  id        Int      @id @default(autoincrement())
+  id        Int        @id @default(autoincrement())
   name      String
   isActive  Boolean
-  createdAt DateTime @default(now())
-  updatedAt DateTime @default(now())
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @default(now())
+  profile   Profile[]
+  resource  Resource[]
+  category  Category[]
 }

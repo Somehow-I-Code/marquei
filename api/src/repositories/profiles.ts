@@ -5,7 +5,13 @@ import { CreateProfileInput } from "../validators/profile";
 import generatePassword from "./utils/generateRandomPassword";
 
 class ProfileRepository {
-    async create({ name, occupation, email, level }: CreateProfileInput) {
+    async create({
+        name,
+        occupation,
+        email,
+        level,
+        companyId,
+    }: CreateProfileInput) {
         const password = generatePassword();
         const passwordHash = await hash(password, 10);
 
@@ -16,7 +22,7 @@ class ProfileRepository {
                 email,
                 password: passwordHash,
                 level,
-                companyId: 1,
+                companyId,
             },
         });
 

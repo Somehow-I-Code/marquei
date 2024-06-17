@@ -10,6 +10,6 @@ RUN rm -rf prisma
 
 RUN chown -R node:node node_modules/.prisma
 
-USER node
+# USER node
 
 EXPOSE 8080

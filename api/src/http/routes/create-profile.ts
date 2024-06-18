@@ -6,27 +6,19 @@ import profileRepository from "../../repositories/profiles";
 import { createProfileSchema } from "../../validators/profile";
 
 function getToken(headers: IncomingHttpHeaders) {
-    // Função que pega o token do cabeçalho da requisição
-    // Desconstruindo o headers tirando apenas o authorization
     const { authorization } = headers;
-    console.log("authorization", authorization);
-    // Separa o bearer do token, e retorna somente o token
+
     return authorization?.split(" ")[1];
 }
 
 export async function createProfile(server: FastifyInstance) {
     server.post("/profiles", async (request, reply) => {
-        // Chama a função que pega o token, passando como parâmetro o cabeçalho da requisição
         const token = getToken(request.headers);
-        console.log("token", token);
-        console.log(request.headers);
 
-        // Se não tiver o token, retorna mensagem de erro
         if (!token) {
             return reply.status(400).send({ message: "Token inválido!" });
         }
 
-        // Se tiver token, verifica se o JWT_SECRET está configurado, se não tiver retorna erro
         if (process.env.JWT_SECRET === undefined) {
             return reply
                 .status(500)
@@ -61,9 +53,6 @@ export async function createProfile(server: FastifyInstance) {
         const newUserIsNotSudo = level !== Level.SUDO;
 
         if (isAdmin && isInTheSameCompany && newUserIsNotSudo) {
-            // ADMIN podem cadastrar somente na sua company
-
-            // Criar o usuário
             const newProfile = await profileRepository.create({
                 name,
                 occupation,
@@ -72,11 +61,8 @@ export async function createProfile(server: FastifyInstance) {
                 companyId,
             });
 
-            // Return sucesso (201)
             return reply.status(201).send(newProfile);
         }
-
-        // return reply.status(201).send(profile);
 
         return reply.status(401).send({
             message: "Você não tem permissão para executar esta operação!",

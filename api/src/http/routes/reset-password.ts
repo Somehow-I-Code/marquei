@@ -1,5 +1,6 @@
 import { FastifyInstance } from "fastify";
 import jwt from "jsonwebtoken";
+import z from "zod";
 import profileRepository from "../../repositories/profiles";
 import {
     ResetPassword,
@@ -21,9 +22,10 @@ export async function resetPassword(server: FastifyInstance) {
         try {
             resetPasswordEmail = resetPasswordSchema.parse(request.body);
         } catch (e) {
+            console.log(e);
             return reply.code(400).send({
-                e: "E-mail Inválido",
-                message: (e as Error).message,
+                error: "ValidationError",
+                message: (e as z.ZodError).issues[0].message,
             });
         }
 

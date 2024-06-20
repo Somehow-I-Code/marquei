@@ -1,6 +1,7 @@
 import bcrypt from "bcrypt";
 import { FastifyInstance } from "fastify";
 import jwt from "jsonwebtoken";
+import z from "zod";
 import profileRepository from "../../repositories/profiles";
 import { LoginInput, loginSchema } from "../../validators/login-form";
 
@@ -19,7 +20,7 @@ export async function login(server: FastifyInstance) {
         } catch (error) {
             return reply.status(400).send({
                 error: "ValidationError",
-                message: (error as Error).message,
+                message: (error as z.ZodError).issues[0].message,
             });
         }
 
@@ -49,3 +50,4 @@ export async function login(server: FastifyInstance) {
         return reply.status(200).send({ token });
     });
 }
+

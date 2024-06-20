@@ -18,7 +18,14 @@ export async function resetPassword(server: FastifyInstance) {
 
         let resetPasswordEmail: ResetPassword;
 
-        resetPasswordEmail = resetPasswordSchema.parse(request.body);
+        try {
+            resetPasswordEmail = resetPasswordSchema.parse(request.body);
+        } catch (e) {
+            return reply.code(400).send({
+                e: "E-mail Inválido",
+                message: (e as Error).message,
+            });
+        }
 
         const { email } = resetPasswordEmail;
 
@@ -36,6 +43,7 @@ export async function resetPassword(server: FastifyInstance) {
             },
             process.env.JWT_SECRET,
         );
-        return reply.code(200).send({ token });
+        return reply.status(200).send({ token });
     });
 }
+

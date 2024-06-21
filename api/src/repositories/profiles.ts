@@ -35,20 +35,36 @@ class ProfileRepository {
         return profile;
     }
 
-    async findById(id: number) {
+    async findById(id: number, includePassword = false) {
         const profile = await prisma.profile.findUnique({
             where: {
                 id,
             },
             select: {
+                id: true,
                 name: true,
                 occupation: true,
                 email: true,
                 level: true,
+                password: includePassword,
             },
         });
 
         return profile;
+    }
+
+    async updatePassword(id: number, newPassword: string) {
+        const passwordHash = await hash(newPassword, 10);
+        const updatedProfile = await prisma.profile.update({
+            where: {
+                id,
+            },
+            data: {
+                password: passwordHash,
+            },
+        });
+
+        return updatedProfile;
     }
 }
 

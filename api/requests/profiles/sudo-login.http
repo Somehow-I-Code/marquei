@@ -1,0 +1,20 @@
+# @name login
+POST {{host}}/login
+Content-Type: application/json
+
+{
+    "email": "sudodasilva@email.com",
+    "password": "0FhozlBFb2"
+}
+
+###
+
+@authToken = Baerer {{login.response.body.$.token}}
+
+POST {{host}}/sudo-login
+Authorization: {{authToken}}
+Content-Type: application/json
+
+{
+    "email": "user54dasilva@email.com"
+}

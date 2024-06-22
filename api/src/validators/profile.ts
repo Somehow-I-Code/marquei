@@ -3,7 +3,7 @@ import { z } from "zod";
 export const createProfileSchema = z.object({
     name: z.string(),
     occupation: z.string(),
-    email: z.string(),
+    email: z.string().email(),
     level: z.union([z.literal("USER"), z.literal("ADMIN"), z.literal("SUDO")]),
     companyId: z.number(),
 });

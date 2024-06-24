@@ -16,5 +16,5 @@ Authorization: {{authToken}}
 Content-Type: application/json
 
 {
-    "email": "user54dasilva@email.com"
+    "email": "admindasilva@email.com"
 }

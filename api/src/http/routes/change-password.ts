@@ -4,6 +4,7 @@ import { FastifyInstance } from "fastify";
 import jwt from "jsonwebtoken";
 import profileRepository from "../../repositories/profiles";
 import { changePasswordSchema } from "../../validators/change-password";
+import { ZodError } from "zod";
 
 export async function changePassword(server: FastifyInstance) {
     server.patch("/change-password", async (request, reply) => {
@@ -32,11 +33,9 @@ export async function changePassword(server: FastifyInstance) {
             changePassword = changePasswordSchema.parse(request.body);
         } catch (error) {
             return reply.status(400).send({
-                message: (error as Error).message,
+                message: (error as ZodError).issues[0].message,
             });
         }
-
-        const { currentPassword, newPassword, repeatPassword } = changePassword;
 
         const profile = await profileRepository.findById(decoded.id, true);
 
@@ -45,6 +44,8 @@ export async function changePassword(server: FastifyInstance) {
                 .status(404)
                 .send({ message: "Usuário não encontrado" });
         }
+
+        const { currentPassword, newPassword, repeatPassword } = changePassword;
 
         const passwordMatch = await bcrypt.compare(
             currentPassword,

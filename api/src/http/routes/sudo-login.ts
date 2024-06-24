@@ -60,6 +60,12 @@ export async function sudoLogin(server: FastifyInstance) {
                 .send({ message: "Usuário não encontrado!" });
         }
 
+        if (sudoProfile.level === profile.level) {
+            return reply.status(401).send({
+                message: "Você não tem permissão para executar esta operação!",
+            });
+        }
+
         const token = sign(
             {
                 id: profile.id,

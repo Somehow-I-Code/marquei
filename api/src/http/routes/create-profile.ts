@@ -25,7 +25,6 @@ export async function createProfile(server: FastifyInstance) {
                 .send({ message: "JWT secret não configurado!" });
         }
 
-        // Decodificando o token
         const profile = verify(token, process.env.JWT_SECRET) as {
             level: Level;
             companyId: number;

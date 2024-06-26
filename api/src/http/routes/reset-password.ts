@@ -2,6 +2,7 @@ import { FastifyInstance } from "fastify";
 import jwt from "jsonwebtoken";
 import z from "zod";
 import profileRepository from "../../repositories/profiles";
+import resetPasswordService from "../../services/reset-password-link";
 import {
     ResetPassword,
     resetPasswordSchema,
@@ -45,6 +46,7 @@ export async function resetPassword(server: FastifyInstance) {
             },
             process.env.JWT_SECRET,
         );
+        resetPasswordService.sendResetPasswordLink(token);
         return reply.status(200).send({ token });
     });
 }

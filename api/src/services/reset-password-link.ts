@@ -9,12 +9,13 @@ class ResetPasswordService {
                     text: `Clique no link para alterar sua senha: http://localhost:3001/password-reset/${token}`,
                 }),
                 headers: {
-                    "content-type": "aplication/json",
+                    "content-type": "application/json",
                 },
             });
         }
     }
 }
 
-const resetPassword = new ResetPasswordService();
-export default resetPassword;
+const resetPasswordService = new ResetPasswordService();
+export default resetPasswordService;
+

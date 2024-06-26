@@ -4,10 +4,7 @@ import { IncomingHttpHeaders } from "http";
 import { sign, verify } from "jsonwebtoken";
 import { ZodError } from "zod";
 import profileRepository from "../../repositories/profiles";
-import {
-    SudoLoginInput,
-    sudoLoginSchema,
-} from "./../../validators/sudo-profile";
+import { SudoLoginInput, sudoLoginSchema } from "../../validators/sudo-login";
 
 function getToken(headers: IncomingHttpHeaders) {
     const { authorization } = headers;

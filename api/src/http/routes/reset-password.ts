@@ -2,11 +2,11 @@ import { FastifyInstance } from "fastify";
 import jwt from "jsonwebtoken";
 import z from "zod";
 import profileRepository from "../../repositories/profiles";
-import resetPasswordService from "../../services/reset-password-link";
 import {
     ResetPassword,
     resetPasswordSchema,
 } from "../../validators/reset-password";
+import emailService from "../../services/email";
 
 const _1_HOUR = 1000 * 60 * 60;
 
@@ -46,7 +46,7 @@ export async function resetPassword(server: FastifyInstance) {
             },
             process.env.JWT_SECRET,
         );
-        resetPasswordService.sendResetPasswordLink(token);
+        emailService.sendResetPasswordLink(token);
         return reply.status(200).send({ token });
     });
 }

@@ -67,6 +67,8 @@ class ProfileRepository {
             },
             data: {
                 password: passwordHash,
+                // Atualizando o campo firstLogin para false
+                firstLogin: false,
             },
         });
 

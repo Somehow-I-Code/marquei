@@ -43,7 +43,6 @@ export async function login(server: FastifyInstance) {
                 email: profile.email,
                 level: profile.level,
                 companyId: profile.companyId,
-                // Adicionando o campo firstLogin no token, para verificar se o usuário está fazendo o primeiro login ou não
                 firstLogin: profile.firstLogin,
             },
             process.env.JWT_SECRET,

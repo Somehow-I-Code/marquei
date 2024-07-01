@@ -1,8 +1,6 @@
 import z from "zod";
 
 export const changePasswordSchema = z.object({
-    // Passando o campo currentPassword para opcional, pois no fluxo de alterar a senha é obrigatório o campo
-    // mas no fluxo de atualizar a senha é opcional
     currentPassword: z
         .string()
         .min(8, {

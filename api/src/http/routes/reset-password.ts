@@ -6,6 +6,7 @@ import {
     ResetPassword,
     resetPasswordSchema,
 } from "../../validators/reset-password";
+import emailService from "../../services/email";
 
 const _1_HOUR = 1000 * 60 * 60;
 
@@ -45,6 +46,7 @@ export async function resetPassword(server: FastifyInstance) {
             },
             process.env.JWT_SECRET,
         );
+        emailService.sendResetPasswordLink(token);
         return reply.status(200).send({ token });
     });
 }

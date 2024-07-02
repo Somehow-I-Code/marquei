@@ -70,8 +70,6 @@ export async function changePassword(server: FastifyInstance) {
 
         await profileRepository.updatePassword(profile.id, newPassword);
 
-        return reply
-            .status(200)
-            .send({ message: "Senha alterada com sucesso" });
+        return reply.status(200).send();
     });
 }

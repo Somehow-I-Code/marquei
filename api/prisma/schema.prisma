@@ -46,6 +46,7 @@ model Profile {
   updatedAt  DateTime @default(now())
   company    Company  @relation(fields: [companyId], references: [id])
   companyId  Int
+  firstLogin Boolean  @default(true)
 }
 
 enum Level {

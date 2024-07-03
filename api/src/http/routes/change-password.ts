@@ -1,30 +1,34 @@
-import { ChangePasswordInput } from "./../../validators/change-password";
 import bcrypt from "bcrypt";
 import { FastifyInstance } from "fastify";
+import { IncomingHttpHeaders } from "http";
 import jwt from "jsonwebtoken";
+import { ZodError } from "zod";
 import profileRepository from "../../repositories/profiles";
 import { changePasswordSchema } from "../../validators/change-password";
-import { ZodError } from "zod";
+import { ChangePasswordInput } from "./../../validators/change-password";
+
+function getToken(headers: IncomingHttpHeaders) {
+    const requestAuthorization = headers["authorization"];
+    return requestAuthorization?.split(" ")[1];
+}
 
 export async function changePassword(server: FastifyInstance) {
     server.patch("/change-password", async (request, reply) => {
+        const token = getToken(request.headers);
+
         if (typeof process.env.JWT_SECRET !== "string") {
             return reply
                 .status(500)
                 .send({ message: "Configuração de token não aplicada" });
         }
 
-        const requestAuthorization = request.headers["authorization"];
-
-        const token = requestAuthorization?.split(" ")[1];
-
         if (!token) {
-            //TODO: Adicionar isso ao middleware de autorização
             return reply.send({ message: "Falta token na requisição" });
         }
 
         const decoded = jwt.verify(token, process.env.JWT_SECRET) as {
             id: number;
+            firstLogin: boolean;
         };
 
         let changePassword: ChangePasswordInput;
@@ -47,16 +51,37 @@ export async function changePassword(server: FastifyInstance) {
 
         const { currentPassword, newPassword, repeatPassword } = changePassword;
 
-        const passwordMatch = await bcrypt.compare(
-            currentPassword,
+        if (decoded.firstLogin === false) {
+            if (!currentPassword) {
+                return reply
+                    .status(400)
+                    .send({ message: "É obrigatório senha atual!" });
+            }
+
+            const passwordMatch = await bcrypt.compare(
+                currentPassword,
+                profile.password,
+            );
+
+            if (!passwordMatch) {
+                return reply
+                    .status(401)
+                    .send({ message: "Senha atual incorreta" });
+            }
+
+            if (currentPassword === newPassword) {
+                return reply.status(400).send({
+                    message: "A nova senha não pode ser igual à antiga senha",
+                });
+            }
+        }
+
+        const newPasswordMatch = await bcrypt.compare(
+            newPassword,
             profile.password,
         );
 
-        if (!passwordMatch) {
-            return reply.status(401).send({ message: "Senha atual incorreta" });
-        }
-
-        if (currentPassword === newPassword) {
+        if (newPasswordMatch) {
             return reply.status(400).send({
                 message: "A nova senha não pode ser igual à antiga senha",
             });
@@ -68,10 +93,22 @@ export async function changePassword(server: FastifyInstance) {
             });
         }
 
-        await profileRepository.updatePassword(profile.id, newPassword);
+        const updatedProfile = await profileRepository.updatePassword(
+            profile.id,
+            newPassword,
+        );
 
-        return reply
-            .status(200)
-            .send({ message: "Senha alterada com sucesso" });
+        const refreshedToken = jwt.sign(
+            {
+                id: updatedProfile.id,
+                email: updatedProfile.email,
+                level: updatedProfile.level,
+                companyId: updatedProfile.companyId,
+                firstLogin: updatedProfile.firstLogin,
+            },
+            process.env.JWT_SECRET,
+        );
+
+        return reply.status(200).send({ token: refreshedToken });
     });
 }

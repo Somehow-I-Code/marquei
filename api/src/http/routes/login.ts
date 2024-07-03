@@ -43,6 +43,7 @@ export async function login(server: FastifyInstance) {
                 email: profile.email,
                 level: profile.level,
                 companyId: profile.companyId,
+                firstLogin: profile.firstLogin,
             },
             process.env.JWT_SECRET,
         );
@@ -50,4 +51,3 @@ export async function login(server: FastifyInstance) {
         return reply.status(200).send({ token });
     });
 }
-

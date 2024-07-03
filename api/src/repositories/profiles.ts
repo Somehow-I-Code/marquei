@@ -67,6 +67,8 @@ class ProfileRepository {
             },
             data: {
                 password: passwordHash,
+                firstLogin: false,
+                updatedAt: new Date(Date.now()),
             },
         });
 

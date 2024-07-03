@@ -28,18 +28,13 @@ export default async function ChangePasswordPage() {
 
         const body = {
             ...data,
-            currentPassword: String(data.currentPassword),
-            newPassword: String(data.newPassword),
-            repeatPassword: String(data.repeatPassword),
         };
-
-        const token = `Bearer ${session}`;
 
         const response = await fetch("http://api:8080/change-password", {
             method: "PATCH",
             headers: {
                 "content-type": "application/json",
-                authorization: token,
+                authorization: `Bearer ${session}`,
             },
             body: JSON.stringify(body),
         });

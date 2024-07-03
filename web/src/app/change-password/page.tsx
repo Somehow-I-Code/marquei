@@ -3,6 +3,18 @@ import CompanyLogo from "../components/company-logo";
 import ChangePasswordForm, {
     ChangePasswordFormSchema,
 } from "./components/change-password-form";
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
+
+function getSession() {
+    const session = cookies().get("session")?.value;
+
+    if (!session) {
+        return null;
+    }
+
+    return session;
+}
 
 export default async function ChangePasswordPage() {
     async function changePassword(data: ChangePasswordFormSchema) {
@@ -15,14 +27,16 @@ export default async function ChangePasswordPage() {
             repeatPassword: String(data.repeatPassword),
         };
 
-        const token =
-            "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJ1c2VyZGFzaWx2YUBlbWFpbC5jb20iLCJsZXZlbCI6IkFETUlOIiwiY29tcGFueUlkIjoxLCJpYXQiOjE3MTk4NjM0ODF9.1GCkjQ3RmOOvI12VnHZLd-d1MkhVW7wrsQ51kd0e0Hw";
+        const session = getSession();
+
+        if (!session) {
+            return redirect("/profile");
+        }
 
         const response = await fetch("http://api:8080/change-password", {
             method: "PATCH",
             headers: {
                 "content-type": "application/json",
-                authorization: token,
             },
             body: JSON.stringify(body),
         });

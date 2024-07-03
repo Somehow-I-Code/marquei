@@ -17,6 +17,12 @@ function getSession() {
 }
 
 export default async function ChangePasswordPage() {
+    const session = getSession();
+
+    if (!session) {
+        return redirect("/login");
+    }
+
     async function changePassword(data: ChangePasswordFormSchema) {
         "use server";
 
@@ -27,16 +33,13 @@ export default async function ChangePasswordPage() {
             repeatPassword: String(data.repeatPassword),
         };
 
-        const session = getSession();
-
-        if (!session) {
-            return redirect("/profile");
-        }
+        const token = `Bearer ${session}`;
 
         const response = await fetch("http://api:8080/change-password", {
             method: "PATCH",
             headers: {
                 "content-type": "application/json",
+                authorization: token,
             },
             body: JSON.stringify(body),
         });

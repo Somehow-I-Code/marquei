@@ -9,39 +9,48 @@ import {
     FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { ToastAction } from "@/components/ui/toast";
+import { useToast } from "@/components/ui/use-toast";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Eye, EyeOff } from "lucide-react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
 const FormSchema = z.object({
-    oldPassword: z.string().min(8, {
-        message: "Sua senha deve conter no mínimo 8 caracteres",
+    currentPassword: z.string().min(8, {
+        message: "A senha atual deve conter no mínimo 8 letras ou números",
     }),
     newPassword: z.string().min(8, {
-        message: "Sua senha deve conter no mínimo 8 caracteres",
+        message: "A senha nova deve conter no mínimo 8 letras ou números",
     }),
     repeatPassword: z.string().min(8, {
-        message: "Sua senha deve conter no mínimo 8 caracteres",
+        message: "A senha repetida deve conter no mínimo 8 letras ou números",
     }),
 });
 
 export type ChangePasswordFormSchema = z.infer<typeof FormSchema>;
 
-export default function ChangePasswordForm() {
+type ChangePasswordFormProps = {
+    changePassword: (data: ChangePasswordFormSchema) => void;
+};
+
+export default function ChangePasswordForm({
+    changePassword,
+}: ChangePasswordFormProps) {
     const form = useForm<ChangePasswordFormSchema>({
         resolver: zodResolver(FormSchema),
         defaultValues: {
-            oldPassword: "",
+            currentPassword: "",
             newPassword: "",
             repeatPassword: "",
         },
     });
 
     const [showPassword, setShowPassword] = useState({
-        oldPassword: false,
+        currentPassword: false,
         newPassword: false,
         repeatPassword: false,
     });
@@ -53,7 +62,38 @@ export default function ChangePasswordForm() {
         });
     };
 
-    function onSubmit(data: ChangePasswordFormSchema) {}
+    const { toast } = useToast();
+
+    const router = useRouter();
+
+    async function onSubmit(data: ChangePasswordFormSchema) {
+        try {
+            await changePassword(data);
+
+            form.reset();
+
+            toast({
+                title: "Ótimo!",
+                description: "Senha alterada com sucesso",
+                action: (
+                    <ToastAction
+                        onClick={() => router.push("/profile")}
+                        altText="Ir para o perfil"
+                    >
+                        Ir para o perfil
+                    </ToastAction>
+                ),
+            });
+        } catch (e) {
+            if (e instanceof Error) {
+                toast({
+                    variant: "destructive",
+                    title: "Algo não deu certo!",
+                    description: e.message,
+                });
+            }
+        }
+    }
 
     return (
         <Form {...form}>
@@ -63,30 +103,32 @@ export default function ChangePasswordForm() {
             >
                 <FormField
                     control={form.control}
-                    name="oldPassword"
+                    name="currentPassword"
                     render={({ field }) => (
                         <FormItem className="flex flex-col">
                             <FormLabel>Senha antiga</FormLabel>
                             <FormControl>
                                 <div className="flex justify-between items-center">
                                     <Input
-                                        id="oldPassword"
+                                        id="currentPassword"
                                         type={
-                                            showPassword.oldPassword
+                                            showPassword.currentPassword
                                                 ? "text"
                                                 : "password"
                                         }
-                                        placeholder="Digite sua senha antiga"
+                                        placeholder="Digite sua senha atual"
                                         {...field}
                                     />
                                     <button
                                         type="button"
                                         onClick={() =>
-                                            passwordVisibility("oldPassword")
+                                            passwordVisibility(
+                                                "currentPassword",
+                                            )
                                         }
                                         className="absolute right-8"
                                     >
-                                        {showPassword.oldPassword ? (
+                                        {showPassword.currentPassword ? (
                                             <EyeOff size={20} />
                                         ) : (
                                             <Eye size={20} />
@@ -152,7 +194,7 @@ export default function ChangePasswordForm() {
                                                 ? "text"
                                                 : "password"
                                         }
-                                        placeholder="Digite sua nova senha"
+                                        placeholder="Repita sua nova senha"
                                         {...field}
                                     />
                                     <button

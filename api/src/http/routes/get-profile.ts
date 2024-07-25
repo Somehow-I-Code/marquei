@@ -1,25 +1,24 @@
 import { FastifyInstance } from "fastify";
 import jwt from "jsonwebtoken";
 import profileRepository from "../../repositories/profiles";
+import { getToken } from "./utils/get-token";
 
 export async function getProfile(server: FastifyInstance) {
     server.get("/profile", async (request, reply) => {
+        const profileToken = getToken(request.headers);
+
         if (typeof process.env.JWT_SECRET !== "string") {
             return reply
                 .status(500)
                 .send({ message: "Configuração de token não aplicada" });
         }
 
-        const requestAuthorization = request.headers["authorization"];
-
-        const token = requestAuthorization?.split(" ")[1];
-
-        if (!token) {
+        if (!profileToken) {
             //TODO: Adicionar isso ao middleware de autorização
             return reply.send({ message: "Falta token na requisição" });
         }
 
-        const decoded = jwt.verify(token, process.env.JWT_SECRET) as {
+        const decoded = jwt.verify(profileToken, process.env.JWT_SECRET) as {
             id: number;
         };
 

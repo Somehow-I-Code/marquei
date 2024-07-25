@@ -1,12 +1,7 @@
 import { Level } from "@prisma/client";
 import { FastifyInstance } from "fastify";
-import { IncomingHttpHeaders } from "http";
 import { verify } from "jsonwebtoken";
-
-function getToken(headers: IncomingHttpHeaders) {
-    const { authorization } = headers;
-    return authorization?.split(" ")[1];
-}
+import { getToken } from "../routes/utils/get-token";
 
 function removeSudoFromLevels(levels: Array<string>) {
     return levels.filter((level) => level !== Level.SUDO);
@@ -14,9 +9,9 @@ function removeSudoFromLevels(levels: Array<string>) {
 
 export async function getLevels(server: FastifyInstance) {
     server.get("/levels", async (request, reply) => {
-        const token = getToken(request.headers);
+        const levelToken = getToken(request.headers);
 
-        if (!token) {
+        if (!levelToken) {
             return reply.status(400).send({ message: "Token inválido" });
         }
 
@@ -26,7 +21,7 @@ export async function getLevels(server: FastifyInstance) {
                 .send({ message: "JWT SECRET não configurado" });
         }
 
-        const profile = verify(token, process.env.JWT_SECRET) as {
+        const profile = verify(levelToken, process.env.JWT_SECRET) as {
             level: Level;
         };
 

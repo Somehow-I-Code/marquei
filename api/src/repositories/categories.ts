@@ -2,11 +2,11 @@ import { prisma } from "../lib/prisma";
 import { CreateCategoryInput } from "../validators/categories";
 
 class CategoriesRepository {
-    async create({ title }: CreateCategoryInput) {
+    async create({ title, companyId }: CreateCategoryInput) {
         const category = await prisma.category.create({
             data: {
                 title,
-                companyId: 1,
+                companyId,
             },
         });
 

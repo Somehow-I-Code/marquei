@@ -201,7 +201,7 @@ export default function NewResourceForm({
                     <Button
                         asChild
                         variant="outline"
-                        className="border border-indigo-950 font-bold"
+                        className="border border-indigo-950 text-indigo-950 font-bold"
                     >
                         <Link href="/">CANCELAR</Link>
                     </Button>

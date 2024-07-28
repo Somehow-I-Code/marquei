@@ -1,8 +1,18 @@
-import CompanyLogo from "../components/company-logo";
+import { redirect } from "next/navigation";
+import CompanyLogo from "../../components/company-logo";
 import CreateNewPasswordForm from "./components/create-new-password-form";
 
+type CreateNewPasswordProps = {
+    params: {
+        token: string;
+    };
+};
 
-export default function CreateNewPassword() {
+export default function CreateNewPassword({ params }: CreateNewPasswordProps) {
+    if (!params.token) {
+        redirect("/reset-password");
+    }
+
     return (
         <section className="px-6 py-12 flex flex-col flex-wrap gap-9">
             <div>

@@ -1,0 +1,10 @@
+POST {{host}}/admin/profiles
+Content-Type: application/json
+
+{
+    "name": "Marquei ADMIN",
+    "occupation": "DEV",
+    "email": "sudo@marquei.com",
+    "level": "SUDO",
+    "companyId": 1
+}

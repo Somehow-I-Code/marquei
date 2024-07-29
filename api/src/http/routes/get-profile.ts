@@ -5,7 +5,7 @@ import { getToken } from "./utils/get-token";
 
 export async function getProfile(server: FastifyInstance) {
     server.get("/profile", async (request, reply) => {
-        const profileToken = getToken(request.headers);
+        const token = getToken(request.headers);
 
         if (typeof process.env.JWT_SECRET !== "string") {
             return reply
@@ -13,12 +13,12 @@ export async function getProfile(server: FastifyInstance) {
                 .send({ message: "Configuração de token não aplicada" });
         }
 
-        if (!profileToken) {
+        if (!token) {
             //TODO: Adicionar isso ao middleware de autorização
             return reply.send({ message: "Falta token na requisição" });
         }
 
-        const decoded = jwt.verify(profileToken, process.env.JWT_SECRET) as {
+        const decoded = jwt.verify(token, process.env.JWT_SECRET) as {
             id: number;
         };
 

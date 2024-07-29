@@ -9,9 +9,9 @@ function removeSudoFromLevels(levels: Array<string>) {
 
 export async function getLevels(server: FastifyInstance) {
     server.get("/levels", async (request, reply) => {
-        const levelToken = getToken(request.headers);
+        const token = getToken(request.headers);
 
-        if (!levelToken) {
+        if (!token) {
             return reply.status(400).send({ message: "Token inválido" });
         }
 
@@ -21,7 +21,7 @@ export async function getLevels(server: FastifyInstance) {
                 .send({ message: "JWT SECRET não configurado" });
         }
 
-        const profile = verify(levelToken, process.env.JWT_SECRET) as {
+        const profile = verify(token, process.env.JWT_SECRET) as {
             level: Level;
         };
 

@@ -1,12 +1,7 @@
 import { Level } from "@prisma/client";
 import { FastifyInstance } from "fastify";
-import { IncomingHttpHeaders } from "http";
 import { verify } from "jsonwebtoken";
-
-function getToken(headers: IncomingHttpHeaders) {
-    const { authorization } = headers;
-    return authorization?.split(" ")[1];
-}
+import { getToken } from "../routes/utils/get-token";
 
 function removeSudoFromLevels(levels: Array<string>) {
     return levels.filter((level) => level !== Level.SUDO);

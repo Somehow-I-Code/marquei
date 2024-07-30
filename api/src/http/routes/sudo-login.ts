@@ -1,16 +1,10 @@
 import { Level } from "@prisma/client";
 import { FastifyInstance } from "fastify";
-import { IncomingHttpHeaders } from "http";
 import { sign, verify } from "jsonwebtoken";
 import { ZodError } from "zod";
 import profileRepository from "../../repositories/profiles";
 import { SudoLoginInput, sudoLoginSchema } from "../../validators/sudo-login";
-
-function getToken(headers: IncomingHttpHeaders) {
-    const { authorization } = headers;
-
-    return authorization?.split(" ")[1];
-}
+import { getToken } from "./utils/get-token";
 
 export async function sudoLogin(server: FastifyInstance) {
     server.post("/sudo-login", async (request, reply) => {

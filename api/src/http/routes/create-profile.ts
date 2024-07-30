@@ -1,15 +1,9 @@
 import { Level } from "@prisma/client";
 import { FastifyInstance } from "fastify";
-import { IncomingHttpHeaders } from "http";
 import { verify } from "jsonwebtoken";
 import profileRepository from "../../repositories/profiles";
 import { createProfileSchema } from "../../validators/profile";
-
-function getToken(headers: IncomingHttpHeaders) {
-    const { authorization } = headers;
-
-    return authorization?.split(" ")[1];
-}
+import { getToken } from "../routes/utils/get-token";
 
 export async function createProfile(server: FastifyInstance) {
     server.post("/profiles", async (request, reply) => {

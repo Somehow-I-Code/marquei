@@ -16,7 +16,7 @@ export default async function NewCompany() {
         const response = await fetch("http://api:8080/company", {
             method: "post",
             headers: {
-                "content-type": "applicartion/json",
+                "content-type": "application/json",
             },
             body: JSON.stringify(body),
         });

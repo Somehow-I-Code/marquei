@@ -23,7 +23,7 @@ const FormSchema = z.object({
     name: z.string().min(1, {
         message: "O nome da empresa não pode estar vazio",
     }),
-    isActive: z.boolean().default(true),
+    isActive: z.boolean(),
 });
 
 export type NewCompanyFormSchema = z.infer<typeof FormSchema>;
@@ -53,7 +53,7 @@ export default function NewCompanyForm({ createCompany }: NewCompanyFormProps) {
 
             toast({
                 title: "Ótimo!",
-                description: "A empresa foi cadastrado com sucesso!",
+                description: "A empresa foi cadastrada com sucesso!",
                 action: (
                     <ToastAction
                         onClick={() => router.push("/")}
@@ -111,7 +111,10 @@ export default function NewCompanyForm({ createCompany }: NewCompanyFormProps) {
                                     <FormLabel>Está ativo?</FormLabel>
 
                                     <FormControl>
-                                        <Switch />
+                                        <Switch
+                                            checked={field.value}
+                                            onCheckedChange={field.onChange}
+                                        />
                                     </FormControl>
                                 </div>
                             </FormItem>

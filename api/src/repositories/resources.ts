@@ -2,13 +2,18 @@ import { prisma } from "../lib/prisma";
 import { CreateResourceInput } from "./../validators/resources";
 
 class ResourcesRepository {
-    async create({ name, description, categoryId }: CreateResourceInput) {
+    async create({
+        name,
+        description,
+        categoryId,
+        companyId,
+    }: CreateResourceInput) {
         const resource = await prisma.resource.create({
             data: {
                 name,
                 description,
                 categoryId,
-                companyId: 1,
+                companyId,
             },
         });
 

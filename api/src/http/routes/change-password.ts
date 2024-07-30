@@ -1,16 +1,11 @@
 import bcrypt from "bcrypt";
 import { FastifyInstance } from "fastify";
-import { IncomingHttpHeaders } from "http";
 import jwt from "jsonwebtoken";
 import { ZodError } from "zod";
 import profileRepository from "../../repositories/profiles";
 import { changePasswordSchema } from "../../validators/change-password";
 import { ChangePasswordInput } from "./../../validators/change-password";
-
-function getToken(headers: IncomingHttpHeaders) {
-    const requestAuthorization = headers["authorization"];
-    return requestAuthorization?.split(" ")[1];
-}
+import { getToken } from "../routes/utils/get-token";
 
 export async function changePassword(server: FastifyInstance) {
     server.patch("/change-password", async (request, reply) => {

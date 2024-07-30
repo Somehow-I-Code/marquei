@@ -1,0 +1,21 @@
+# @name login
+POST {{host}}/login
+Content-Type: application/json
+
+{
+    "email": "sudoGisele01@email.com",
+    "password": "12345678"
+}
+
+###
+
+@authToken = Bearer {{login.response.body.$.token}}
+
+POST {{host}}/company
+Content-Type: application/json
+Authorization: {{authToken}}
+
+{
+    "name": "Gisele SPA das unhas",
+    "isActive": true
+}

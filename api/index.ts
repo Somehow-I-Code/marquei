@@ -2,6 +2,7 @@ import Fastify from "fastify";
 import { adminCreateProfile } from "./src/http/routes/admin-create-profile";
 import { changePassword } from "./src/http/routes/change-password";
 import { createCategories } from "./src/http/routes/create-categories";
+import { createCompany } from "./src/http/routes/create-company";
 import { createProfile } from "./src/http/routes/create-profile";
 import { createResources } from "./src/http/routes/create-resources";
 import { getCategories } from "./src/http/routes/get-categories";
@@ -30,6 +31,7 @@ server.register(resetPassword);
 server.register(adminCreateProfile);
 server.register(changePassword);
 server.register(sudoLogin);
+server.register(createCompany);
 
 server.listen({ port: 8080, host: "0.0.0.0" }, (err, address) => {
     if (err) {

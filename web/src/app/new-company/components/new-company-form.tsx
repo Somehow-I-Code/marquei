@@ -11,8 +11,11 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Switch } from "@/components/ui/switch";
+import { ToastAction } from "@/components/ui/toast";
+import { useToast } from "@/components/ui/use-toast";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
@@ -20,23 +23,63 @@ const FormSchema = z.object({
     name: z.string().min(1, {
         message: "O nome da empresa não pode estar vazio",
     }),
-    isActive: z.boolean().default(false),
+    isActive: z.boolean(),
 });
 
 export type NewCompanyFormSchema = z.infer<typeof FormSchema>;
 
-export default function NewCompanyForm() {
+type NewCompanyFormProps = {
+    createCompany: (data: NewCompanyFormSchema) => void;
+};
+
+export default function NewCompanyForm({ createCompany }: NewCompanyFormProps) {
     const form = useForm<NewCompanyFormSchema>({
         resolver: zodResolver(FormSchema),
         defaultValues: {
             name: "",
-            isActive: false,
+            isActive: true,
         },
     });
 
+    const { toast } = useToast();
+
+    const router = useRouter();
+
+    async function onSubmit(data: NewCompanyFormSchema) {
+        try {
+            await createCompany(data);
+
+            form.reset();
+
+            toast({
+                title: "Ótimo!",
+                description: "A empresa foi cadastrada com sucesso!",
+                action: (
+                    <ToastAction
+                        onClick={() => router.push("/")}
+                        altText="Ir para a home"
+                    >
+                        Ir para a home
+                    </ToastAction>
+                ),
+            });
+        } catch (e) {
+            if (e instanceof Error) {
+                toast({
+                    variant: "destructive",
+                    title: "Algo não deu certo!",
+                    description: e.message,
+                });
+            }
+        }
+    }
+
     return (
         <Form {...form}>
-            <form className="flex flex-col gap-6">
+            <form
+                onSubmit={form.handleSubmit(onSubmit)}
+                className="flex flex-col gap-6"
+            >
                 <div className="flex flex-col gap-4">
                     <FormField
                         control={form.control}
@@ -68,7 +111,10 @@ export default function NewCompanyForm() {
                                     <FormLabel>Está ativo?</FormLabel>
 
                                     <FormControl>
-                                        <Switch />
+                                        <Switch
+                                            checked={field.value}
+                                            onCheckedChange={field.onChange}
+                                        />
                                     </FormControl>
                                 </div>
                             </FormItem>

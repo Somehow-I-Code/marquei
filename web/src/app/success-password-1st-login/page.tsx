@@ -22,6 +22,7 @@ export default async function SuccessPasswordFirstLogin() {
 
                 <div className="flex flex-col p-6 gap-2">
                     <Button className="font-bold text-base">
+                        {/* TODO: Adicionar caminho quando a aplicação estiver fazendo agendamentos */}
                         <Link href="">VAMOS LÁ!</Link>
                     </Button>
                     <Button

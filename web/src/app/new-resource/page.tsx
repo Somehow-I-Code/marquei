@@ -4,7 +4,7 @@ import CompanyLogo from "../components/company-logo";
 import FormTitle from "../components/form-title";
 import NewResourceForm, {
     NewResourceFormSchema,
-} from "./components/newResourceForm";
+} from "./components/new-resource-form";
 
 async function getCategories(): Promise<CategoriesResponse> {
     const response = await fetch("http://api:8080/categories");

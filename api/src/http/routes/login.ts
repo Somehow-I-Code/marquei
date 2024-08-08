@@ -4,14 +4,11 @@ import jwt from "jsonwebtoken";
 import z from "zod";
 import profileRepository from "../../repositories/profiles";
 import { LoginInput, loginSchema } from "../../validators/login-form";
+import { getJwtSecret } from "./utils/get-jwt-secret";
 
 export async function login(server: FastifyInstance) {
     server.post("/login", async (request, reply) => {
-        if (typeof process.env.JWT_SECRET !== "string") {
-            return reply
-                .status(500)
-                .send({ message: "Configuração de token não aplicada" });
-        }
+        const secretKey = getJwtSecret();
 
         let credentials: LoginInput;
 
@@ -45,7 +42,7 @@ export async function login(server: FastifyInstance) {
                 companyId: profile.companyId,
                 firstLogin: profile.firstLogin,
             },
-            process.env.JWT_SECRET,
+            secretKey,
         );
 
         return reply.status(200).send({ token });

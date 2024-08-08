@@ -6,22 +6,18 @@ import profileRepository from "../../repositories/profiles";
 import { changePasswordSchema } from "../../validators/change-password";
 import { ChangePasswordInput } from "./../../validators/change-password";
 import { getToken } from "../routes/utils/get-token";
+import { getJwtSecret } from "./utils/get-jwt-secret";
 
 export async function changePassword(server: FastifyInstance) {
     server.patch("/change-password", async (request, reply) => {
         const token = getToken(request.headers);
-
-        if (typeof process.env.JWT_SECRET !== "string") {
-            return reply
-                .status(500)
-                .send({ message: "Configuração de token não aplicada" });
-        }
+        const secretKey = getJwtSecret();
 
         if (!token) {
             return reply.send({ message: "Falta token na requisição" });
         }
 
-        const decoded = jwt.verify(token, process.env.JWT_SECRET) as {
+        const decoded = jwt.verify(token, secretKey) as {
             id: number;
             firstLogin: boolean;
         };
@@ -101,7 +97,7 @@ export async function changePassword(server: FastifyInstance) {
                 companyId: updatedProfile.companyId,
                 firstLogin: updatedProfile.firstLogin,
             },
-            process.env.JWT_SECRET,
+            secretKey,
         );
 
         return reply.status(200).send({ token: refreshedToken });

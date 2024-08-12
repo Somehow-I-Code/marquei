@@ -4,22 +4,18 @@ import { verify } from "jsonwebtoken";
 import profileRepository from "../../repositories/profiles";
 import { createProfileSchema } from "../../validators/profile";
 import { getToken } from "../routes/utils/get-token";
+import { getJwtSecret } from "./utils/get-jwt-secret";
 
 export async function createProfile(server: FastifyInstance) {
     server.post("/profiles", async (request, reply) => {
         const token = getToken(request.headers);
+        const secretKey = getJwtSecret();
 
         if (!token) {
             return reply.status(400).send({ message: "Token inválido!" });
         }
 
-        if (process.env.JWT_SECRET === undefined) {
-            return reply
-                .status(500)
-                .send({ message: "JWT secret não configurado!" });
-        }
-
-        const profile = verify(token, process.env.JWT_SECRET) as {
+        const profile = verify(token, secretKey) as {
             level: Level;
             companyId: number;
         };

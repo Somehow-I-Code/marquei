@@ -5,22 +5,18 @@ import { ZodError } from "zod";
 import profileRepository from "../../repositories/profiles";
 import { SudoLoginInput, sudoLoginSchema } from "../../validators/sudo-login";
 import { getToken } from "./utils/get-token";
+import { getJwtSecret } from "./utils/get-jwt-secret";
 
 export async function sudoLogin(server: FastifyInstance) {
     server.post("/sudo-login", async (request, reply) => {
         const sudoToken = getToken(request.headers);
+        const secretKey = getJwtSecret();
 
         if (!sudoToken) {
             return reply.status(400).send({ message: "Token inválido!" });
         }
 
-        if (process.env.JWT_SECRET === undefined) {
-            return reply
-                .status(500)
-                .send({ message: "JWT secret não configurado!" });
-        }
-
-        const sudoProfile = verify(sudoToken, process.env.JWT_SECRET) as {
+        const sudoProfile = verify(sudoToken, secretKey) as {
             level: Level;
         };
 
@@ -64,7 +60,7 @@ export async function sudoLogin(server: FastifyInstance) {
                 level: profile.level,
                 companyId: profile.companyId,
             },
-            process.env.JWT_SECRET,
+            secretKey,
         );
 
         return reply.status(200).send({ token });

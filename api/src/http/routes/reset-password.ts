@@ -7,16 +7,13 @@ import {
     resetPasswordSchema,
 } from "../../validators/reset-password";
 import emailService from "../../services/email";
+import { getJwtSecret } from "./utils/get-jwt-secret";
 
 const _1_HOUR = 1000 * 60 * 60;
 
 export async function resetPassword(server: FastifyInstance) {
     server.post("/reset-password", async (request, reply) => {
-        if (process.env.JWT_SECRET === undefined) {
-            return reply
-                .status(500)
-                .send({ message: "JWT SECRET não configurado" });
-        }
+        const secretKey = getJwtSecret();
 
         let resetPasswordEmail: ResetPassword;
 
@@ -44,10 +41,9 @@ export async function resetPassword(server: FastifyInstance) {
                 email: profile.email,
                 expiresAt: Date.now() + _1_HOUR,
             },
-            process.env.JWT_SECRET,
+            secretKey,
         );
         emailService.sendResetPasswordLink(token);
         return reply.status(200).send({ token });
     });
 }
-

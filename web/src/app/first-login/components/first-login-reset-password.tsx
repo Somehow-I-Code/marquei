@@ -1,5 +1,6 @@
 "use client";
 
+import PasswordInput from "@/app/components/password-input";
 import { Button } from "@/components/ui/button";
 import {
     Form,
@@ -62,31 +63,7 @@ export default function FirstLoginForm() {
                         <FormItem className="flex flex-col">
                             <FormLabel>Nova Senha</FormLabel>
                             <FormControl>
-                                <div className="flex justify-between items-center">
-                                    <Input
-                                        id="newPassword"
-                                        type={
-                                            showPassword.newPassword
-                                                ? "text"
-                                                : "password"
-                                        }
-                                        placeholder="Digite sua nova senha"
-                                        {...field}
-                                    />
-                                    <button
-                                        type="button"
-                                        onClick={() =>
-                                            passwordVisibility("newPassword")
-                                        }
-                                        className="absolute right-8"
-                                    >
-                                        {showPassword.newPassword ? (
-                                            <EyeOff size={20} />
-                                        ) : (
-                                            <Eye size={20} />
-                                        )}
-                                    </button>
-                                </div>
+                                <PasswordInput placeholder="Digite sua nova senha" />
                             </FormControl>
                             <FormMessage />
                         </FormItem>
@@ -100,31 +77,7 @@ export default function FirstLoginForm() {
                         <FormItem className="flex flex-col">
                             <FormLabel>Repetir Senha</FormLabel>
                             <FormControl>
-                                <div className="flex justify-between items-center">
-                                    <Input
-                                        id="repeatPassword"
-                                        type={
-                                            showPassword.repeatPassword
-                                                ? "text"
-                                                : "password"
-                                        }
-                                        placeholder="Repita sua nova senha"
-                                        {...field}
-                                    />
-                                    <button
-                                        type="button"
-                                        onClick={() =>
-                                            passwordVisibility("repeatPassword")
-                                        }
-                                        className="absolute right-8"
-                                    >
-                                        {showPassword.repeatPassword ? (
-                                            <EyeOff size={20} />
-                                        ) : (
-                                            <Eye size={20} />
-                                        )}
-                                    </button>
-                                </div>
+                                <PasswordInput placeholder="Repita sua nova senha" />
                             </FormControl>
                             <FormMessage />
                         </FormItem>

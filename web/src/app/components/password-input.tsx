@@ -8,12 +8,16 @@ export default function PasswordInput(props: PasswordInputProps) {
     const [showPassword, setShowPassword] = useState(false);
 
     return (
-        <div className="flex justify-between items-center">
-            <Input {...props} type={showPassword ? "text" : "password"} />
+        <div className="relative flex items-center">
+            <Input
+                {...props}
+                type={showPassword ? "text" : "password"}
+                className="pr-10"
+            />
             <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-8"
+                className="absolute right-2"
             >
                 {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
             </button>

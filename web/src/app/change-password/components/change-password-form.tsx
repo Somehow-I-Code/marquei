@@ -1,4 +1,5 @@
 "use client";
+import PasswordInput from "@/app/components/password-input";
 import { Button } from "@/components/ui/button";
 import {
     Form,
@@ -8,14 +9,11 @@ import {
     FormLabel,
     FormMessage,
 } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
 import { ToastAction } from "@/components/ui/toast";
 import { useToast } from "@/components/ui/use-toast";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Eye, EyeOff } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
@@ -48,19 +46,6 @@ export default function ChangePasswordForm({
             repeatPassword: "",
         },
     });
-
-    const [showPassword, setShowPassword] = useState({
-        currentPassword: false,
-        newPassword: false,
-        repeatPassword: false,
-    });
-
-    const passwordVisibility = (fieldName: keyof ChangePasswordFormSchema) => {
-        setShowPassword({
-            ...showPassword,
-            [fieldName]: !showPassword[fieldName],
-        });
-    };
 
     const { toast } = useToast();
 
@@ -108,33 +93,7 @@ export default function ChangePasswordForm({
                         <FormItem className="flex flex-col">
                             <FormLabel>Senha antiga</FormLabel>
                             <FormControl>
-                                <div className="flex justify-between items-center">
-                                    <Input
-                                        id="currentPassword"
-                                        type={
-                                            showPassword.currentPassword
-                                                ? "text"
-                                                : "password"
-                                        }
-                                        placeholder="Digite sua senha atual"
-                                        {...field}
-                                    />
-                                    <button
-                                        type="button"
-                                        onClick={() =>
-                                            passwordVisibility(
-                                                "currentPassword",
-                                            )
-                                        }
-                                        className="absolute right-8"
-                                    >
-                                        {showPassword.currentPassword ? (
-                                            <EyeOff size={20} />
-                                        ) : (
-                                            <Eye size={20} />
-                                        )}
-                                    </button>
-                                </div>
+                                <PasswordInput placeholder="Digite sua senha atual" />
                             </FormControl>
                             <FormMessage />
                         </FormItem>
@@ -148,31 +107,7 @@ export default function ChangePasswordForm({
                         <FormItem className="flex flex-col">
                             <FormLabel>Nova senha</FormLabel>
                             <FormControl>
-                                <div className="flex justify-between items-center">
-                                    <Input
-                                        id="newPassword"
-                                        type={
-                                            showPassword.newPassword
-                                                ? "text"
-                                                : "password"
-                                        }
-                                        placeholder="Digite sua nova senha"
-                                        {...field}
-                                    />
-                                    <button
-                                        type="button"
-                                        onClick={() =>
-                                            passwordVisibility("newPassword")
-                                        }
-                                        className="absolute right-8"
-                                    >
-                                        {showPassword.newPassword ? (
-                                            <EyeOff size={20} />
-                                        ) : (
-                                            <Eye size={20} />
-                                        )}
-                                    </button>
-                                </div>
+                                <PasswordInput placeholder="Digite sua nova senha" />
                             </FormControl>
                             <FormMessage />
                         </FormItem>
@@ -186,31 +121,7 @@ export default function ChangePasswordForm({
                         <FormItem className="flex flex-col mb-2">
                             <FormLabel>Repita a nova senha</FormLabel>
                             <FormControl>
-                                <div className="flex justify-between items-center">
-                                    <Input
-                                        id="repeatPassword"
-                                        type={
-                                            showPassword.repeatPassword
-                                                ? "text"
-                                                : "password"
-                                        }
-                                        placeholder="Repita sua nova senha"
-                                        {...field}
-                                    />
-                                    <button
-                                        type="button"
-                                        onClick={() =>
-                                            passwordVisibility("repeatPassword")
-                                        }
-                                        className="absolute right-8"
-                                    >
-                                        {showPassword.repeatPassword ? (
-                                            <EyeOff size={20} />
-                                        ) : (
-                                            <Eye size={20} />
-                                        )}
-                                    </button>
-                                </div>
+                                <PasswordInput placeholder="Repita sua nova senha" />
                             </FormControl>
                             <FormMessage />
                         </FormItem>
@@ -232,3 +143,4 @@ export default function ChangePasswordForm({
         </Form>
     );
 }
+

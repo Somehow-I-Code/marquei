@@ -10,10 +10,7 @@ import {
     FormLabel,
     FormMessage,
 } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Eye, EyeOff } from "lucide-react";
-import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
@@ -36,18 +33,6 @@ export default function FirstLoginForm() {
             repeatPassword: "",
         },
     });
-
-    const [showPassword, setShowPassword] = useState({
-        newPassword: false,
-        repeatPassword: false,
-    });
-
-    const passwordVisibility = (fieldName: keyof FirstLoginFormSchema) => {
-        setShowPassword({
-            ...showPassword,
-            [fieldName]: !showPassword[fieldName],
-        });
-    };
 
     function onSubmit(data: FirstLoginFormSchema) {}
     return (

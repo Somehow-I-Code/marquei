@@ -9,14 +9,11 @@ import {
     FormLabel,
     FormMessage,
 } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
 import { ToastAction } from "@/components/ui/toast";
 import { useToast } from "@/components/ui/use-toast";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Eye, EyeOff } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
@@ -49,19 +46,6 @@ export default function ChangePasswordForm({
             repeatPassword: "",
         },
     });
-
-    const [showPassword, setShowPassword] = useState({
-        currentPassword: false,
-        newPassword: false,
-        repeatPassword: false,
-    });
-
-    const passwordVisibility = (fieldName: keyof ChangePasswordFormSchema) => {
-        setShowPassword({
-            ...showPassword,
-            [fieldName]: !showPassword[fieldName],
-        });
-    };
 
     const { toast } = useToast();
 
@@ -159,3 +143,4 @@ export default function ChangePasswordForm({
         </Form>
     );
 }
+

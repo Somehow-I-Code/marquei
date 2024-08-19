@@ -2,11 +2,20 @@ import { prisma } from "../lib/prisma";
 import { CreateCompanyInput } from "../validators/company";
 
 class CompanyRepository {
-    async create({ name, isActive }: CreateCompanyInput) {
+    async create({
+        name,
+        isActive,
+        city,
+        nickname,
+        representativeName,
+    }: CreateCompanyInput) {
         const company = await prisma.company.create({
             data: {
                 name,
                 isActive,
+                city,
+                nickname,
+                representativeName,
             },
         });
 

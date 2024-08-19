@@ -30,9 +30,7 @@ const formSchema = z.object({
     name: z.string().min(1, {
         message: "O nome do usuário não pode estar em branco",
     }),
-    occupation: z.string().min(1, {
-        message: "O cargo de ocupação não pode estar em branco",
-    }),
+    occupation: z.string(),
     email: z.string().email({
         message: "Digite um e-mail válido",
     }),

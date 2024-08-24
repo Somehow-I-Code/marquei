@@ -45,7 +45,7 @@ export default async function ProfilesList() {
             </div>
 
             <div className="space-y-6">
-                <Label htmlFor="procurar e-mail">Procurar e-mail</Label>
+                <Label htmlFor="procurar e-mail">Procurar perfil</Label>
                 <div className="flex">
                     <Input
                         className="rounded-r-none"

@@ -3,21 +3,22 @@ POST {{host}}/login
 Content-Type: application/json
 
 {
-    "email": "userdasilva@email.com",
-    "password": "gTQ2k9Xm2e"
+    "email": "sudoGisele@marquei.com",
+    "password": "UHU31zqmv7"
 }
 
 ###
 
-@authToken = {{login.response.body.$.token}}
+@authToken = Bearer {{login.response.body.$.token}}
 
 POST {{host}}/profiles
 Content-Type: application/json
 Authorization: {{authToken}}
 
 {
-    "name": "User da Silva",
-    "occupation": "Recepcionista",
-    "email": "userdasilva@email.com",
-    "level": "ADMIN"
+    "name": "Admin 01",
+    "occupation": "Gerente",
+    "email": "admin01@marquei.com",
+    "level": "ADMIN",
+    "companyId": 1
 }

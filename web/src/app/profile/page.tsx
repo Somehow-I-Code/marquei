@@ -1,16 +1,37 @@
 import { Button } from "@/components/ui/button";
 import { ProfilesResponse } from "@/types/profiles";
+import { cookies } from "next/headers";
 import Link from "next/link";
+import { redirect } from "next/navigation";
 import UserImage from "./assets/user.svg";
 
+function getSession() {
+    const session = cookies().get("session")?.value;
+
+    if (!session) {
+        return null;
+    }
+
+    return session;
+}
+
+async function doLogout() {
+    const logoutSession = cookies().delete("session");
+
+    return logoutSession;
+}
+
 async function getProfile(): Promise<ProfilesResponse> {
-    //TODO: Buscar o token do cookie da sessão
-    const token =
-        "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFuYUB0ZXh0LmNvbSIsImxldmVsIjoiVVNFUiIsImlhdCI6MTcxNzAwNDA4OX0.l_HNrXszwsP_xrQNjA95RHEYMvNGAF5cfd_KEGkbcrc";
+    const session = getSession();
+
+    if (!session) {
+        return redirect("/login");
+    }
 
     const response = await fetch("http://api:8080/profile", {
         headers: {
-            authorization: token,
+            "content-type": "application/json",
+            authorization: `Bearer ${session}`,
         },
     });
 
@@ -64,8 +85,12 @@ export default async function ProfilePage() {
                 >
                     <Link href="/">VOLTAR</Link>
                 </Button>
-                <Button variant="destructive" className="font-bold text-base">
-                    SAIR
+                <Button
+                    onClick={doLogout}
+                    variant="destructive"
+                    className="font-bold text-base"
+                >
+                    <Link href="/login">SAIR</Link>
                 </Button>
             </div>
         </section>

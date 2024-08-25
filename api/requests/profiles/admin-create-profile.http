@@ -2,9 +2,9 @@ POST {{host}}/admin/profiles
 Content-Type: application/json
 
 {
-    "name": "Marquei ADMIN",
+    "name": "Gisele SUDO",
     "occupation": "DEV",
-    "email": "sudo@marquei.com",
+    "email": "sudoGisele@marquei.com",
     "level": "SUDO",
     "companyId": 1
 }

@@ -4,6 +4,7 @@ import { cookies } from "next/headers";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import UserImage from "./assets/user.svg";
+import LogoutButton from "./components/logout-button";
 
 function getSession() {
     const session = cookies().get("session")?.value;
@@ -16,13 +17,15 @@ function getSession() {
 }
 
 async function doLogout() {
-    const logoutSession = cookies().delete("session");
+    "use server";
+    cookies().delete("session");
 
-    return logoutSession;
+    redirect("/login");
 }
 
 async function getProfile(): Promise<ProfilesResponse> {
     const session = getSession();
+    console.log(session);
 
     if (!session) {
         return redirect("/login");
@@ -85,13 +88,7 @@ export default async function ProfilePage() {
                 >
                     <Link href="/">VOLTAR</Link>
                 </Button>
-                <Button
-                    onClick={doLogout}
-                    variant="destructive"
-                    className="font-bold text-base"
-                >
-                    <Link href="/login">SAIR</Link>
-                </Button>
+                <LogoutButton doLogout={doLogout} />
             </div>
         </section>
     );

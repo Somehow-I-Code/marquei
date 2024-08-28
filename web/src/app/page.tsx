@@ -6,6 +6,9 @@ import CategoriesList from "./components/categories-list";
 import CompanyLogo from "./components/company-logo";
 import ResourcesList from "./components/resources-list";
 import Salute from "./components/salute";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
+import Scheduling from "./home/assets/scheduling.svg";
 
 async function getHello() {
     const response = await fetch("http://api:8080/hello");
@@ -71,6 +74,25 @@ export default async function Home() {
                 <CompanyLogo />
                 <Salute>{greeting?.hello || "Usuário"}</Salute>
             </header>
+
+            <section>
+                <div className="w-full max-w-sm mx-auto text-wrap bg-slate-100 p-4 rounded-lg">
+                    <p className="text-gray-950 text-base font-semibold p-2">
+                        Ahh não! Você ainda não tem nenhum recurso para agendar.
+                    </p>
+                </div>
+
+                <div className="flex justify-center items-center p-6">
+                    <Scheduling />
+                </div>
+
+                <div className="flex justify-center items-center p-2">
+                    <Button className="px-8 py-6 text-sm font-bold">
+                        {/* TODO: Vai para tela de agendamento */}
+                        <Link href="">CRIAR PRIMEIRO AGENDAMENTO</Link>
+                    </Button>
+                </div>
+            </section>
 
             <section className="flex flex-col gap-6 pb-28">
                 <CategoriesList list={categoriesList} />

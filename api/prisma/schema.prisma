@@ -56,12 +56,15 @@ enum Level {
 }
 
 model Company {
-  id        Int        @id @default(autoincrement())
-  name      String
-  isActive  Boolean
-  createdAt DateTime   @default(now())
-  updatedAt DateTime   @default(now())
-  profile   Profile[]
-  resource  Resource[]
-  category  Category[]
+  id                 Int        @id @default(autoincrement())
+  name               String
+  isActive           Boolean
+  city               String?
+  nickname           String?
+  representativeName String?
+  createdAt          DateTime   @default(now())
+  updatedAt          DateTime   @default(now())
+  profile            Profile[]
+  resource           Resource[]
+  category           Category[]
 }

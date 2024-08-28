@@ -24,6 +24,9 @@ const FormSchema = z.object({
         message: "O nome da empresa não pode estar vazio",
     }),
     isActive: z.boolean(),
+    city: z.string(),
+    nickname: z.string(),
+    representativeName: z.string(),
 });
 
 export type NewCompanyFormSchema = z.infer<typeof FormSchema>;
@@ -38,6 +41,9 @@ export default function NewCompanyForm({ createCompany }: NewCompanyFormProps) {
         defaultValues: {
             name: "",
             isActive: true,
+            city: "",
+            nickname: "",
+            representativeName: "",
         },
     });
 
@@ -116,6 +122,69 @@ export default function NewCompanyForm({ createCompany }: NewCompanyFormProps) {
                                             onCheckedChange={field.onChange}
                                         />
                                     </FormControl>
+                                </div>
+                            </FormItem>
+                        )}
+                    />
+
+                    <FormField
+                        control={form.control}
+                        name="city"
+                        render={({ field }) => (
+                            <FormItem>
+                                <div className="flex flex-col gap-2">
+                                    <FormLabel>Cidade</FormLabel>
+                                    <FormControl>
+                                        <Input
+                                            id="city"
+                                            type="text"
+                                            placeholder="Ituiutaba, Uberlândia..."
+                                            {...field}
+                                        />
+                                    </FormControl>
+                                    <FormMessage />
+                                </div>
+                            </FormItem>
+                        )}
+                    />
+
+                    <FormField
+                        control={form.control}
+                        name="nickname"
+                        render={({ field }) => (
+                            <FormItem>
+                                <div className="flex flex-col gap-2">
+                                    <FormLabel>Apelido</FormLabel>
+                                    <FormControl>
+                                        <Input
+                                            id="nickname"
+                                            type="text"
+                                            placeholder="SPA das unhas, CI&E..."
+                                            {...field}
+                                        />
+                                    </FormControl>
+                                    <FormMessage />
+                                </div>
+                            </FormItem>
+                        )}
+                    />
+
+                    <FormField
+                        control={form.control}
+                        name="representativeName"
+                        render={({ field }) => (
+                            <FormItem>
+                                <div className="flex flex-col gap-2">
+                                    <FormLabel>Nome do representante</FormLabel>
+                                    <FormControl>
+                                        <Input
+                                            id="representativeName"
+                                            type="text"
+                                            placeholder="Josefina, Alceu..."
+                                            {...field}
+                                        />
+                                    </FormControl>
+                                    <FormMessage />
                                 </div>
                             </FormItem>
                         )}

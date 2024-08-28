@@ -157,7 +157,7 @@ export default function NewResourceForm({
                                                                 category.id,
                                                             )}
                                                         >
-                                                            {category.title}
+                                                            {category.name}
                                                         </SelectItem>
                                                     );
                                                 })}

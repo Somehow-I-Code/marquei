@@ -35,7 +35,7 @@ type LoginFormProps = {
 
 export default function LoginForm({ login }: LoginFormProps) {
     const { toast } = useToast();
-    const router = useRouter();
+    const router = useRouter;
     const form = useForm<LoginFormSchema>({
         resolver: zodResolver(FormSchema),
         defaultValues: {
@@ -88,7 +88,10 @@ export default function LoginForm({ login }: LoginFormProps) {
                         <FormItem className="pb-2 relative">
                             <FormLabel className="font-bold">Senha</FormLabel>
                             <FormControl>
-                                <PasswordInput placeholder="Digite sua senha"/>
+                                <PasswordInput
+                                    placeholder="Digite sua senha"
+                                    {...field}
+                                />
                             </FormControl>
                             <FormMessage />
                         </FormItem>
@@ -107,4 +110,3 @@ export default function LoginForm({ login }: LoginFormProps) {
         </Form>
     );
 }
-

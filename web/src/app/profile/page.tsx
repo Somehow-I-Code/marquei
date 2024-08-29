@@ -25,7 +25,6 @@ async function doLogout() {
 
 async function getProfile(): Promise<ProfilesResponse> {
     const session = getSession();
-    console.log(session);
 
     if (!session) {
         return redirect("/login");

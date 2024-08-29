@@ -14,7 +14,6 @@ import { Input } from "@/components/ui/input";
 import { useToast } from "@/components/ui/use-toast";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
@@ -35,7 +34,6 @@ type LoginFormProps = {
 
 export default function LoginForm({ login }: LoginFormProps) {
     const { toast } = useToast();
-    const router = useRouter();
     const form = useForm<LoginFormSchema>({
         resolver: zodResolver(FormSchema),
         defaultValues: {
@@ -88,7 +86,10 @@ export default function LoginForm({ login }: LoginFormProps) {
                         <FormItem className="pb-2 relative">
                             <FormLabel className="font-bold">Senha</FormLabel>
                             <FormControl>
-                                <PasswordInput placeholder="Digite sua senha"/>
+                                <PasswordInput
+                                    placeholder="Digite sua senha"
+                                    {...field}
+                                />
                             </FormControl>
                             <FormMessage />
                         </FormItem>
@@ -107,4 +108,3 @@ export default function LoginForm({ login }: LoginFormProps) {
         </Form>
     );
 }
-

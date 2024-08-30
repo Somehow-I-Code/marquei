@@ -88,7 +88,10 @@ export default function LoginForm({ login }: LoginFormProps) {
                         <FormItem className="pb-2 relative">
                             <FormLabel className="font-bold">Senha</FormLabel>
                             <FormControl>
-                                <PasswordInput placeholder="Digite sua senha"/>
+                                <PasswordInput
+                                    placeholder="Digite sua senha"
+                                    {...field}
+                                />
                             </FormControl>
                             <FormMessage />
                         </FormItem>
@@ -107,4 +110,3 @@ export default function LoginForm({ login }: LoginFormProps) {
         </Form>
     );
 }
-

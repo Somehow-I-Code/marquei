@@ -16,5 +16,6 @@ Content-Type: application/json
 Authorization: {{authToken}}
 
 {
-    "title": "Médicos"
+    "name": "Médicos",
+    "companyId": 1
 }

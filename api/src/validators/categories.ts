@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 export const createCategory = z.object({
-    title: z.string({
+    name: z.string({
         required_error: "Nome da categoria é obrigatório!",
         invalid_type_error: "Nome da categoria é obrigatório!",
     }),

@@ -9,7 +9,7 @@ export default async function NewCategory() {
         "use server";
 
         const body = {
-            title: data.name,
+            name: data.name,
         };
 
         const response = await fetch("http://api:8080/categories", {

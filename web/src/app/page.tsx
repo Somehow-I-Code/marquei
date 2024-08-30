@@ -21,7 +21,7 @@ function transformResources(resources: ResourceResponse) {
         id,
         name,
         description,
-        category: category.title,
+        category: category.name,
     }));
 }
 

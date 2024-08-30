@@ -48,7 +48,10 @@ export default function FirstLoginForm() {
                         <FormItem className="flex flex-col">
                             <FormLabel>Nova Senha</FormLabel>
                             <FormControl>
-                                <PasswordInput placeholder="Digite sua nova senha" />
+                                <PasswordInput
+                                    placeholder="Digite sua nova senha"
+                                    {...field}
+                                />
                             </FormControl>
                             <FormMessage />
                         </FormItem>
@@ -62,7 +65,10 @@ export default function FirstLoginForm() {
                         <FormItem className="flex flex-col">
                             <FormLabel>Repetir Senha</FormLabel>
                             <FormControl>
-                                <PasswordInput placeholder="Repita sua nova senha" />
+                                <PasswordInput
+                                    placeholder="Repita sua nova senha"
+                                    {...field}
+                                />
                             </FormControl>
                             <FormMessage />
                         </FormItem>
@@ -81,4 +87,3 @@ export default function FirstLoginForm() {
         </Form>
     );
 }
-

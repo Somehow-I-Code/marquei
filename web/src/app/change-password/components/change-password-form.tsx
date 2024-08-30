@@ -93,7 +93,10 @@ export default function ChangePasswordForm({
                         <FormItem className="flex flex-col">
                             <FormLabel>Senha antiga</FormLabel>
                             <FormControl>
-                                <PasswordInput placeholder="Digite sua senha atual" />
+                                <PasswordInput
+                                    placeholder="Digite sua senha atual"
+                                    {...field}
+                                />
                             </FormControl>
                             <FormMessage />
                         </FormItem>
@@ -107,7 +110,10 @@ export default function ChangePasswordForm({
                         <FormItem className="flex flex-col">
                             <FormLabel>Nova senha</FormLabel>
                             <FormControl>
-                                <PasswordInput placeholder="Digite sua nova senha" />
+                                <PasswordInput
+                                    placeholder="Digite sua nova senha"
+                                    {...field}
+                                />
                             </FormControl>
                             <FormMessage />
                         </FormItem>
@@ -121,7 +127,10 @@ export default function ChangePasswordForm({
                         <FormItem className="flex flex-col mb-2">
                             <FormLabel>Repita a nova senha</FormLabel>
                             <FormControl>
-                                <PasswordInput placeholder="Repita sua nova senha" />
+                                <PasswordInput
+                                    placeholder="Repita sua nova senha"
+                                    {...field}
+                                />
                             </FormControl>
                             <FormMessage />
                         </FormItem>
@@ -143,4 +152,3 @@ export default function ChangePasswordForm({
         </Form>
     );
 }
-

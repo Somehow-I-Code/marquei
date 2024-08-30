@@ -13,7 +13,7 @@ export type ResourceResponse = Array<{
     categoryId: number;
     category: {
         id: number;
-        title: string;
+        name: string;
         createdAt: string;
         updatedAt: string;
     };

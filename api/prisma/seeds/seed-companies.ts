@@ -23,7 +23,7 @@ function createRandomCompany(ammount: number) {
     }));
 }
 
-async function saveRandomCompanies(companies: CreateCompanyInput[]) {
+async function saveRandomCompanies(companies: Array<CreateCompanyInput>) {
     const randomCompanies = await prisma.$transaction(
         companies.map((company) => prisma.company.create({ data: company })),
     );

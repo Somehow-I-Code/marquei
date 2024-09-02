@@ -3,8 +3,8 @@ POST {{host}}/login
 Content-Type: application/json
 
 {
-    "email": "userdasilva@email.com",
-    "password": "gTQ2k9Xm2e"
+    "email": "admin@marquei.com",
+    "password": "1234567890"
 }
 
 ###
@@ -13,11 +13,12 @@ Content-Type: application/json
 
 POST {{host}}/profiles
 Content-Type: application/json
-Authorization: {{authToken}}
+Authorization: Bearer {{authToken}}
 
 {
     "name": "User da Silva",
     "occupation": "Recepcionista",
     "email": "userdasilva@email.com",
-    "level": "ADMIN"
+    "level": "ADMIN",
+    "companyId": 1
 }

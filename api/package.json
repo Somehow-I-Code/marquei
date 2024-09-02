@@ -7,7 +7,7 @@
         "**/*": "prettier --write --ignore-unknown"
     },
     "prisma": {
-        "seed": "tsx prisma/seed.ts"
+        "seed": "tsx prisma/seeds/seed.ts"
     },
     "scripts": {
         "build": "tsc -p tsconfig.json",

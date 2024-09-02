@@ -3,20 +3,24 @@ POST {{host}}/login
 Content-Type: application/json
 
 {
-    "email": "userdasilva@email.com",
-    "password": "gTQ2k9Xm2e"
+    "email": "user@marquei.com",
+    "password": "1234567890"
 }
 
 ###
 
 @authToken = Bearer {{login.response.body.$.token}}
+# essa request não vai funcionar sempre pq tem que checar se a categoryId e companyId
+# batem com os valores que estão no banco (checar em localhost:5555 na tabela company
+# quais são os ids da categories registradas)
 
 POST {{host}}/resources
 Content-Type: application/json
-Authorization: {{authToken}}
+Authorization: Bearer {{authToken}}
 
 {
     "name": "Dr. Hudson Dodói",
     "description": "Ortopedista",
-    "categoryId": 1
+    "categoryId": 1,
+    "companyId": 2
 }

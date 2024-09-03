@@ -3,8 +3,8 @@ POST {{host}}/login
 Content-Type: application/json
 
 {
-    "email": "sudodasilva@email.com",
-    "password": "0FhozlBFb2"
+    "email": "sudo@marquei.com",
+    "password": "1234567890"
 }
 
 ###
@@ -16,5 +16,5 @@ Authorization: {{authToken}}
 Content-Type: application/json
 
 {
-    "email": "admindasilva@email.com"
+    "email": "admin@marquei.com"
 }

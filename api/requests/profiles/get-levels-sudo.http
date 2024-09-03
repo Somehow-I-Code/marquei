@@ -3,8 +3,8 @@ POST {{host}}/login
 Content-Type: application/json
 
 {
-    "email": "userdasudo@email.com",
-    "password": "k4zZmUVaeU"
+    "email": "sudo@marquei.com",
+    "password": "1234567890"
 }
 
 ###

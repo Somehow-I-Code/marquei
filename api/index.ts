@@ -1,5 +1,4 @@
 import Fastify from "fastify";
-import { adminCreateProfile } from "./src/http/routes/admin-create-profile";
 import { changePassword } from "./src/http/routes/change-password";
 import { createCategories } from "./src/http/routes/create-categories";
 import { createCompany } from "./src/http/routes/create-company";
@@ -28,7 +27,6 @@ server.register(getLevels);
 server.register(login);
 server.register(getProfile);
 server.register(resetPassword);
-server.register(adminCreateProfile);
 server.register(changePassword);
 server.register(sudoLogin);
 server.register(createCompany);

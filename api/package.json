@@ -6,6 +6,9 @@
     "lint-staged": {
         "**/*": "prettier --write --ignore-unknown"
     },
+    "prisma": {
+        "seed": "tsx prisma/seeds/seed.ts"
+    },
     "scripts": {
         "build": "tsc -p tsconfig.json",
         "start": "node index.js",
@@ -30,6 +33,7 @@
         "zod": "^3.22.4"
     },
     "devDependencies": {
+        "@faker-js/faker": "^8.4.1",
         "@tsconfig/node20": "^20.1.2",
         "@types/bcrypt": "^5.0.2",
         "@types/jsonwebtoken": "^9.0.6",

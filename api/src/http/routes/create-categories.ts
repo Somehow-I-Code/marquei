@@ -17,11 +17,11 @@ export async function createCategories(server: FastifyInstance) {
 
         const { name, companyId } = createCategory.parse(request.body);
 
-        const profileSameCompany = verify(token, secretKey) as {
+        const profile = verify(token, secretKey) as {
             companyId: number;
         };
 
-        if (profileSameCompany.companyId !== companyId) {
+        if (profile.companyId !== companyId) {
             return reply.status(401).send({
                 message: "Você não tem permissão para executar esta operação!",
             });

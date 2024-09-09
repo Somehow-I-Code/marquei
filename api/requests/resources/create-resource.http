@@ -18,5 +18,6 @@ Authorization: {{authToken}}
 {
     "name": "Dr. Hudson Dodói",
     "description": "Ortopedista",
-    "categoryId": 1
+    "categoryId": 1,
+    "companyId": 1
 }

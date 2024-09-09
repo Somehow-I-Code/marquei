@@ -18,11 +18,11 @@ export async function createResources(server: FastifyInstance) {
         const { name, description, categoryId, companyId } =
             createResource.parse(request.body);
 
-        const profileSameCompany = verify(token, secretKey) as {
+        const profile = verify(token, secretKey) as {
             companyId: number;
         };
 
-        if (profileSameCompany.companyId !== companyId) {
+        if (profile.companyId !== companyId) {
             return reply.status(401).send({
                 message: "Você não tem permissão para executar esta operação!",
             });

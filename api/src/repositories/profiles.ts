@@ -74,6 +74,15 @@ class ProfileRepository {
 
         return updatedProfile;
     }
+
+    async findAll(companyId: number) {
+        const profilesList = await prisma.profile.findMany({
+            where: {
+                companyId,
+            },
+        });
+        return profilesList;
+    }
 }
 
 const profileRepository = new ProfileRepository();

@@ -13,8 +13,4 @@ Content-Type: application/json
 
 POST {{host}}/profiles-list
 Authorization: {{authToken}}
-Content-Type: application/json
 
-{
-    "email": "rafaelsudo@marquei.com"
-}

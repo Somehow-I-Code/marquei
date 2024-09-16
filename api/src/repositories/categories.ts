@@ -13,8 +13,12 @@ class CategoriesRepository {
         return category;
     }
 
-    async findAll() {
-        const categories = await prisma.category.findMany();
+    async findAll(companyId: number) {
+        const categories = await prisma.category.findMany({
+            where: {
+                companyId,
+            },
+        });
 
         return categories;
     }

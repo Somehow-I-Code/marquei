@@ -11,6 +11,6 @@ Content-Type: application/json
 
 @authToken = Baerer {{login.response.body.$.token}}
 
-POST {{host}}/profiles-list
+GET {{host}}/profiles-list
 Authorization: {{authToken}}
 

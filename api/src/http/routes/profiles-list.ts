@@ -6,7 +6,7 @@ import { getJwtSecret } from "./utils/get-jwt-secret";
 import { getToken } from "./utils/get-token";
 
 export async function ProfilesList(server: FastifyInstance) {
-    server.post("/profiles-list", async (request, reply) => {
+    server.get("/profiles-list", async (request, reply) => {
         const token = getToken(request.headers);
         const secretKey = getJwtSecret();
 
@@ -27,11 +27,14 @@ export async function ProfilesList(server: FastifyInstance) {
             userProfile.level === Level.ADMIN ||
             userProfile.level === Level.SUDO
         ) {
+            const isSudo = userProfile.level == Level.SUDO;
             const profile = await profileRepository.findAll(
                 userProfile.companyId,
+                isSudo,
             );
 
             return reply.status(200).send(profile);
         }
     });
 }
+

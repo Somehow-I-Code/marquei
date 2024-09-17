@@ -80,14 +80,13 @@ class ProfileRepository {
             return prisma.profile.findMany({
                 where: { companyId },
             });
-        } else {
-            return prisma.profile.findMany({
-                where: {
-                    companyId,
-                    level: { not: "SUDO" },
-                },
-            });
         }
+        return prisma.profile.findMany({
+            where: {
+                companyId,
+                level: { not: "SUDO" },
+            },
+        });
     }
 }
 

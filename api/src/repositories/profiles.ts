@@ -77,9 +77,7 @@ class ProfileRepository {
 
     async findAll(companyId: number, isSudo: boolean) {
         if (isSudo) {
-            return prisma.profile.findMany({
-                where: { companyId },
-            });
+            return prisma.profile.findMany();
         }
         return prisma.profile.findMany({
             where: {

@@ -23,16 +23,13 @@ export async function ProfilesList(server: FastifyInstance) {
                 message: "Você não tem permissão para acessar esta tela!",
             });
         }
-        userProfile.level === Level.ADMIN || userProfile.level === Level.SUDO;
-        {
-            const isSudo = userProfile.level == Level.SUDO;
-            const profiles = await profileRepository.findAll(
-                userProfile.companyId,
-                isSudo,
-            );
 
-            return reply.status(200).send(profiles);
-        }
+        const isSudo = userProfile.level == Level.SUDO;
+        const profiles = await profileRepository.findAll(
+            userProfile.companyId,
+            isSudo,
+        );
+        return reply.status(200).send(profiles);
     });
 }
 

@@ -1,0 +1,16 @@
+# @name login
+POST {{host}}/login
+Content-Type: application/json
+
+{
+    "email": "rafaelsudo@marquei.com",
+    "password": "RcjJVsWgh3"
+}
+
+###
+
+@authToken = Baerer {{login.response.body.$.token}}
+
+GET {{host}}/profiles-list
+Authorization: {{authToken}}
+

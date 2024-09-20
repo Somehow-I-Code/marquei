@@ -74,7 +74,20 @@ class ProfileRepository {
 
         return updatedProfile;
     }
+
+    async findAll(companyId: number, isSudo: boolean) {
+        if (isSudo) {
+            return prisma.profile.findMany();
+        }
+        return prisma.profile.findMany({
+            where: {
+                companyId,
+                level: { not: "SUDO" },
+            },
+        });
+    }
 }
 
 const profileRepository = new ProfileRepository();
 export default profileRepository;
+

@@ -14,4 +14,9 @@ export const createProfileSchema = z.object({
     }),
 });
 
+export const toggleProfileSchema = z.object({
+    profileId: z.string().pipe(z.coerce.number()),
+});
+
 export type CreateProfileInput = z.infer<typeof createProfileSchema>;
+export type ToggleProfileInput = z.infer<typeof toggleProfileSchema>;

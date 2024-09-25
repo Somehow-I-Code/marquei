@@ -38,6 +38,7 @@ model Resource {
 model Profile {
   id         Int      @id @default(autoincrement())
   name       String
+  isActive   Boolean  @default(true)
   occupation String?
   email      String   @unique
   password   String

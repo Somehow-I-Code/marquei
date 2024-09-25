@@ -1,0 +1,14 @@
+# @name login
+POST {{host}}/login
+Content-Type: application/json
+
+{
+    "email": "admin@marquei.com",
+    "password": "1234567890"
+}
+
+###
+@authToken = Bearer {{login.response.body.$.token}}
+
+PATCH  {{host}}/profile/deactivate/40
+Authorization: {{authToken}}

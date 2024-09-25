@@ -74,6 +74,24 @@ class ProfileRepository {
 
         return updatedProfile;
     }
+
+    async toggleProfile(
+        id: number,
+        companyId: number | undefined,
+        newState: boolean,
+    ) {
+        const updatedProfile = await prisma.profile.update({
+            where: {
+                id,
+                companyId,
+            },
+            data: {
+                isActive: newState,
+            },
+        });
+
+        return updatedProfile;
+    }
 }
 
 const profileRepository = new ProfileRepository();

@@ -6,6 +6,8 @@ import Link from "next/link";
 import CompanyLogo from "../components/company-logo";
 import ProfileCard from "../components/profile-card";
 import Salute from "../components/salute";
+import getSession from "../utis/get-session";
+import { redirect } from "next/navigation";
 
 async function getHello() {
     const response = await fetch("http://api:8080/hello");
@@ -14,6 +16,14 @@ async function getHello() {
 }
 
 export default async function ProfilesList() {
+    const session = getSession();
+
+    if (!session) {
+        return redirect("/login");
+    }
+
+    //TODO: Quando fazer a busca DB colocar no headers o authorization
+
     const greeting = await getHello();
     return (
         <section className="my-12 mx-6 flex flex-col gap-12">
@@ -54,4 +64,3 @@ export default async function ProfilesList() {
         </section>
     );
 }
-

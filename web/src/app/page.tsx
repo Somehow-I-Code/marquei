@@ -1,6 +1,5 @@
 import { Button } from "@/components/ui/button";
 import { ResourceResponse, Resources } from "@/types/resources";
-import { cookies } from "next/headers";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import BottomFloatingMenu from "./components/bottom-floating-menu";
@@ -9,6 +8,7 @@ import CompanyLogo from "./components/company-logo";
 import ResourcesList from "./components/resources-list";
 import Salute from "./components/salute";
 import Scheduling from "./home/assets/scheduling.svg";
+import getSession from "./utis/get-session";
 
 async function getHello() {
     const response = await fetch("http://api:8080/hello");
@@ -23,16 +23,6 @@ function transformResources(resources: ResourceResponse) {
         description,
         category: category.name,
     }));
-}
-
-function getSession() {
-    const session = cookies().get("session")?.value;
-
-    if (!session) {
-        return null;
-    }
-
-    return session;
 }
 
 async function getResources(token: string): Promise<Resources> {

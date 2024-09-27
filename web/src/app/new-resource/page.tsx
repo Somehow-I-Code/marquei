@@ -5,6 +5,8 @@ import FormTitle from "../components/form-title";
 import NewResourceForm, {
     NewResourceFormSchema,
 } from "./components/new-resource-form";
+import getSession from "../utis/get-session";
+import { redirect } from "next/navigation";
 
 async function getCategories(): Promise<CategoriesResponse> {
     const response = await fetch("http://api:8080/categories");
@@ -15,6 +17,11 @@ async function getCategories(): Promise<CategoriesResponse> {
 
 export default async function NewResource() {
     const categories = await getCategories();
+    const session = getSession();
+
+    if (!session) {
+        return redirect("/login");
+    }
 
     async function createResource(data: NewResourceFormSchema) {
         "use server";
@@ -28,6 +35,7 @@ export default async function NewResource() {
             method: "post",
             headers: {
                 "content-type": "application/json",
+                Authorization: `Bearer ${session}`,
             },
             body: JSON.stringify(body),
         });

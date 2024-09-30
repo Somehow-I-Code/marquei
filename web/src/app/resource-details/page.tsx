@@ -32,8 +32,8 @@ export default function ResourceDetails() {
             </div>
 
             <div>
-                TODO: lembrar de adicionar os dados que estão sendo passados em
-                resources
+                {/* //TODO: lembrar de adicionar os dados que estão sendo passados em
+                resources */}
                 <BottomFloatingMenu resources={{}} />
             </div>
         </section>

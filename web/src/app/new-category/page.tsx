@@ -3,8 +3,16 @@ import CompanyLogo from "../components/company-logo";
 import NewCategoryForm, {
     NewCategoryFormSchema,
 } from "./component/new-category-form";
+import getSession from "../utis/get-session";
+import { redirect } from "next/navigation";
 
 export default async function NewCategory() {
+    const session = getSession();
+
+    if (!session) {
+        return redirect("/login");
+    }
+
     async function createCategory(data: NewCategoryFormSchema) {
         "use server";
 
@@ -16,6 +24,7 @@ export default async function NewCategory() {
             method: "post",
             headers: {
                 "content-type": "application/json",
+                Authorization: `Bearer ${session}`,
             },
             body: JSON.stringify(body),
         });

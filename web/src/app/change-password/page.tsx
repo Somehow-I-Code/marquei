@@ -3,18 +3,8 @@ import CompanyLogo from "../components/company-logo";
 import ChangePasswordForm, {
     ChangePasswordFormSchema,
 } from "./components/change-password-form";
-import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
-
-function getSession() {
-    const session = cookies().get("session")?.value;
-
-    if (!session) {
-        return null;
-    }
-
-    return session;
-}
+import getSession from "../utis/get-session";
 
 export default async function ChangePasswordPage() {
     const session = getSession();
@@ -34,7 +24,7 @@ export default async function ChangePasswordPage() {
             method: "PATCH",
             headers: {
                 "content-type": "application/json",
-                authorization: `Bearer ${session}`,
+                Authorization: `Bearer ${session}`,
             },
             body: JSON.stringify(body),
         });

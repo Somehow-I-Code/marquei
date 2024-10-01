@@ -4,8 +4,16 @@ import FormTitle from "../components/form-title";
 import NewCompanyForm, {
     NewCompanyFormSchema,
 } from "./components/new-company-form";
+import { redirect } from "next/navigation";
+import getSession from "../utis/get-session";
 
 export default async function NewCompany() {
+    const session = getSession();
+
+    if (!session) {
+        return redirect("/login");
+    }
+
     async function createCompany(data: NewCompanyFormSchema) {
         "use server";
 
@@ -17,6 +25,7 @@ export default async function NewCompany() {
             method: "post",
             headers: {
                 "content-type": "application/json",
+                Authorization: `Bearer ${session}`,
             },
             body: JSON.stringify(body),
         });

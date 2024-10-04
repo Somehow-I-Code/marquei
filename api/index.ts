@@ -9,6 +9,7 @@ import { getLevels } from "./src/http/routes/get-levels";
 import { getProfile } from "./src/http/routes/get-profile";
 import { getResources } from "./src/http/routes/get-resources";
 import { login } from "./src/http/routes/login";
+import { updateProfileActivate } from "./src/http/routes/profile-activate";
 import { updateProfile } from "./src/http/routes/profile-deactivate";
 import { resetPassword } from "./src/http/routes/reset-password";
 import { sudoLogin } from "./src/http/routes/sudo-login";
@@ -32,6 +33,7 @@ server.register(changePassword);
 server.register(sudoLogin);
 server.register(createCompany);
 server.register(updateProfile);
+server.register(updateProfileActivate);
 
 server.listen({ port: 8080, host: "0.0.0.0" }, (err, address) => {
     if (err) {

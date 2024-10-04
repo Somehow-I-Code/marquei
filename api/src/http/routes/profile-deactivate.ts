@@ -1,5 +1,6 @@
 import { FastifyInstance } from "fastify";
-import { HttpError, toggleProfile } from "./utils/toggle-profile";
+import HttpError from "./utils/http-error";
+import { toggleProfile } from "./utils/toggle-profile";
 
 export async function updateProfile(server: FastifyInstance) {
     server.patch("/profile/deactivate/:profileId", async (request, reply) => {

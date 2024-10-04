@@ -1,7 +1,8 @@
 import { FastifyInstance } from "fastify";
-import { HttpError, toggleProfile } from "./utils/toggle-profile";
+import HttpError from "./utils/http-error";
+import { toggleProfile } from "./utils/toggle-profile";
 
-export async function updateProfile(server: FastifyInstance) {
+export async function updateProfileActivate(server: FastifyInstance) {
     server.patch("/profile/activate/:profileId", async (request, reply) => {
         try {
             const res = await toggleProfile(request, true);

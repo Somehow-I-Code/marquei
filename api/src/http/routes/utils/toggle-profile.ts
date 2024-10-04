@@ -9,16 +9,7 @@ import {
 } from "../../../validators/profile";
 import { getJwtSecret } from "./get-jwt-secret";
 import { getToken } from "./get-token";
-
-export class HttpError extends Error {
-    code: number;
-
-    constructor(code: number, message: string) {
-        super(message);
-        this.name = "HttpError";
-        this.code = code;
-    }
-}
+import HttpError from "./http-error";
 
 export async function toggleProfile(
     request: FastifyRequest,
@@ -47,27 +38,21 @@ export async function toggleProfile(
 
     let { profileId } = userProfileParams;
 
-    if (userProfile.level === Level.USER) {
-        throw new HttpError(
-            401,
-            "Você não tem permissão para acessar essa tela!",
-        );
-    }
-
     try {
         const companyId =
             userProfile.level === Level.SUDO
                 ? undefined
                 : userProfile.companyId;
 
-        const updatedProfileSUDO = await profileRepository.toggleProfile(
+        const updatedProfile = await profileRepository.toggleProfile(
+            userProfile,
             profileId,
             companyId,
             newState,
         );
 
-        throw updatedProfileSUDO;
-    } catch {
-        throw new HttpError(404, "Perfil não encontrado!");
+        return updatedProfile;
+    } catch (e) {
+        throw new HttpError(404, "Perfil não encontrado");
     }
 }

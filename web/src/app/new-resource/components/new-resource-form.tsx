@@ -29,13 +29,13 @@ import { z } from "zod";
 
 const formSchema = z.object({
     name: z.string().min(1, {
-        message: "O nome do recurso não pode estar em branco",
+        message: "O nome do recurso não pode estar em branco.",
     }),
     category: z.string().min(1, {
-        message: "Selecione uma das categorias da lista",
+        message: "Selecione uma das categorias da lista.",
     }),
     description: z.string().max(1000, {
-        message: "A descrição está muito longa",
+        message: "A descrição está muito longa.",
     }),
 });
 

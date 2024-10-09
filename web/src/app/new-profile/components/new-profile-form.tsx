@@ -28,14 +28,14 @@ import { z } from "zod";
 
 const formSchema = z.object({
     name: z.string().min(1, {
-        message: "O nome do usuário não pode estar em branco",
+        message: "O nome do usuário não pode estar em branco.",
     }),
     occupation: z.string(),
     email: z.string().email({
-        message: "Digite um e-mail válido",
+        message: "Digite um e-mail válido.",
     }),
     level: z.string().min(1, {
-        message: "Selecione um dos níveis de perfil da lista",
+        message: "Selecione um dos níveis de perfil da lista.",
     }),
 });
 
@@ -63,9 +63,11 @@ export default function NewProfileForm({
     function getLevelMessage(level: string) {
         switch (level) {
             case "USER":
-                return "Gerencia agendamentos e recursos";
+                return "Gerencia agendamentos e recursos.";
             case "ADMIN":
-                return "Gerencia agendamentos, recursos e outros usuários";
+                return "Gerencia agendamentos, recursos e outros usuários.";
+            case "SUDO":
+                return "Gerencia agendamentos, recursos, empresa e outros usuários geral.";
             default:
                 return null;
         }

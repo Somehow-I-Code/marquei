@@ -32,7 +32,7 @@ export async function resetPassword(server: FastifyInstance) {
         const profile = await profileRepository.findByEmail(email);
 
         if (!profile) {
-            return reply.status(404).send({ message: "Email não encontrado" });
+            return reply.status(404).send({ message: "Email não encontrado." });
         }
 
         const token = jwt.sign(

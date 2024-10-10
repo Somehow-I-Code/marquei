@@ -19,13 +19,13 @@ import { z } from "zod";
 
 const FormSchema = z.object({
     currentPassword: z.string().min(8, {
-        message: "A senha atual deve conter no mínimo 8 letras ou números",
+        message: "A senha atual deve conter no mínimo 8 caracteres, incluindo letras ou números.",
     }),
     newPassword: z.string().min(8, {
-        message: "A senha nova deve conter no mínimo 8 letras ou números",
+        message: "A senha nova deve conter no mínimo 8 caracteres, incluindo letras ou números.",
     }),
     repeatPassword: z.string().min(8, {
-        message: "A senha repetida deve conter no mínimo 8 letras ou números",
+        message: "A senha repetida deve conter no mínimo 8 caracteres, incluindo letras ou números.",
     }),
 });
 
@@ -59,13 +59,13 @@ export default function ChangePasswordForm({
 
             toast({
                 title: "Ótimo!",
-                description: "Senha alterada com sucesso",
+                description: "Senha alterada com sucesso.",
                 action: (
                     <ToastAction
                         onClick={() => router.push("/profile")}
                         altText="Ir para o perfil"
                     >
-                        Ir para o perfil
+                        Ir para o perfil.
                     </ToastAction>
                 ),
             });

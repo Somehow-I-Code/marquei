@@ -1,25 +1,54 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Plus, Search } from "lucide-react";
 import Link from "next/link";
+import { useState } from "react";
 import CompanyLogo from "../components/company-logo";
 import ProfileCard from "../components/profile-card";
-import Salute from "../components/salute";
 
-async function getHello() {
-    const response = await fetch("http://api:8080/hello");
-    const data = await response.json();
-    return data;
-}
+const profiles = [
+    {
+        id: 1,
+        name: "Maria da Silva",
+        email: "mariadasilva@marquei.com",
+        level: "ADMIN",
+        occupation: "Gerente",
+    },
+    {
+        id: 2,
+        name: "José Gomes",
+        email: "josegomes@marquei.com",
+        level: "USER",
+        occupation: "Gerente",
+    },
+    {
+        id: 3,
+        name: "João da Silva",
+        email: "joaodasilva@marcado.com",
+        level: "USER",
+        occupation: "Atendente",
+    },
+];
 
-export default async function ProfilesList() {
-    const greeting = await getHello();
+export default function ProfilesList() {
+    const [search, setSearch] = useState("");
+    const [filter, setFilter] = useState("");
+
+    function updateSearch(event: React.ChangeEvent<HTMLInputElement>) {
+        setSearch(event.target.value);
+    }
+
+    function handleSearch() {
+        setFilter(search);
+    }
+
     return (
         <section className="my-12 mx-6 flex flex-col gap-12">
             <div className="flex justify-between items-end">
                 <CompanyLogo />
-                <Salute>{greeting?.hello || "Usuário"}</Salute>
             </div>
 
             <div className="flex justify-between items-center">
@@ -44,13 +73,54 @@ export default async function ProfilesList() {
                     <Input
                         className="rounded-r-none"
                         placeholder="Busque por um perfil"
+                        value={search}
+                        onChange={updateSearch}
                     />
-                    <Button className="bg-indigo-950 rounded-sm rounded-l-none">
+                    <Button
+                        onClick={handleSearch}
+                        className="bg-indigo-950 rounded-sm rounded-l-none"
+                    >
                         <Search />
                     </Button>
                 </div>
             </div>
-            <ProfileCard />
+            {profiles
+                .filter((profile) => {
+                    if (!filter) {
+                        return profile;
+                    }
+                    if (
+                        profile.name
+                            .toLowerCase()
+                            .includes(filter.toLowerCase())
+                    ) {
+                        return profile;
+                    }
+                    if (
+                        profile.email
+                            .toLowerCase()
+                            .includes(filter.toLowerCase())
+                    ) {
+                        return profile;
+                    }
+                    if (
+                        profile.level
+                            .toLowerCase()
+                            .includes(filter.toLowerCase())
+                    ) {
+                        return profile;
+                    }
+                    if (
+                        profile.occupation
+                            .toLowerCase()
+                            .includes(filter.toLowerCase())
+                    ) {
+                        return profile;
+                    }
+                })
+                .map((profile) => {
+                    return <ProfileCard key={profile.id} profile={profile} />;
+                })}
         </section>
     );
 }

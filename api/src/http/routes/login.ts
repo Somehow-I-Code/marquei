@@ -25,13 +25,13 @@ export async function login(server: FastifyInstance) {
         const profile = await profileRepository.findByEmail(email);
 
         if (!profile) {
-            return reply.status(401).send({ message: "Credenciais inválidas" });
+            return reply.status(401).send({ message: "Credenciais inválidas." });
         }
 
         const passwordMatch = await bcrypt.compare(password, profile.password);
 
         if (!passwordMatch) {
-            return reply.status(401).send({ message: "Credenciais inválidas" });
+            return reply.status(401).send({ message: "Credenciais inválidas." });
         }
 
         const token = jwt.sign(

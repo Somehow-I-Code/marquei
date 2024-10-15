@@ -11,7 +11,7 @@ export async function getProfile(server: FastifyInstance) {
 
         if (!token) {
             //TODO: Adicionar isso ao middleware de autorização
-            return reply.send({ message: "Falta token na requisição" });
+            return reply.send({ message: "Token inválido!" });
         }
 
         const decoded = jwt.verify(token, secretKey) as {

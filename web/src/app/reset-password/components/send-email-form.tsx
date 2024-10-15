@@ -10,7 +10,7 @@ import { z } from "zod"
 
 const FormSchema = z.object({
     email: z.string().email({
-        message: "Digite um e-mail válido."
+        message: "Email inválido."
     })
 })
 

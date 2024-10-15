@@ -32,7 +32,7 @@ const formSchema = z.object({
     }),
     occupation: z.string(),
     email: z.string().email({
-        message: "Digite um e-mail válido.",
+        message: "Email inválido.",
     }),
     level: z.string().min(1, {
         message: "Selecione um dos níveis de perfil da lista.",

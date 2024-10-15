@@ -19,13 +19,13 @@ import { z } from "zod";
 
 const FormSchema = z.object({
     currentPassword: z.string().min(8, {
-        message: "A senha atual deve conter no mínimo 8 caracteres, incluindo letras ou números.",
+        message: "A senha atual deve conter no mínimo 8 caracteres.",
     }),
     newPassword: z.string().min(8, {
-        message: "A senha nova deve conter no mínimo 8 caracteres, incluindo letras ou números.",
+        message: "A senha nova deve conter no mínimo 8 caracteres.",
     }),
     repeatPassword: z.string().min(8, {
-        message: "A senha repetida deve conter no mínimo 8 caracteres, incluindo letras ou números.",
+        message: "A senha repetida deve conter no mínimo 8 caracteres.",
     }),
 });
 

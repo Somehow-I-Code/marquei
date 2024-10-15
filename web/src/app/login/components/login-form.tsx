@@ -19,10 +19,10 @@ import { z } from "zod";
 
 const FormSchema = z.object({
     email: z.string().email({
-        message: "Digite um e-mail válido.",
+        message: "Email inválido.",
     }),
     password: z.string().min(8, {
-        message: "A senha deve conter no mínimo 8 caracteres, incluindo letras ou números.",
+        message: "A senha deve conter no mínimo 8 caracteres.",
     }),
 });
 

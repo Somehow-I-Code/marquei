@@ -35,7 +35,7 @@ const formSchema = z.object({
         message: "Selecione uma das categorias da lista.",
     }),
     description: z.string().max(1000, {
-        message: "A descrição está muito longa.",
+        message: "A descrição está muito longa. Máximo de 1000 caracteres.",
     }),
 });
 

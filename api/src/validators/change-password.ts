@@ -4,14 +4,14 @@ export const changePasswordSchema = z.object({
     currentPassword: z
         .string()
         .min(8, {
-            message: "A senha atual deve conter no mínimo 8 caracteres, incluindo letras e números.",
+            message: "A senha atual deve conter no mínimo 8 caracteres.",
         })
         .optional(),
     newPassword: z
         .string()
-        .min(8, { message: "A senha nova deve conter no mínimo 8 caracteres, incluindo letras e números." }),
+        .min(8, { message: "A senha nova deve conter no mínimo 8 caracteres." }),
     repeatPassword: z.string().min(8, {
-        message: "A senha repetida deve conter no mínimo 8 caracteres, incluindo letras e números.",
+        message: "A senha repetida deve conter no mínimo 8 caracteres.",
     }),
 });
 

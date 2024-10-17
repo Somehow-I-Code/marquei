@@ -1,13 +1,11 @@
-"use client";
-
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Plus, Search } from "lucide-react";
 import Link from "next/link";
-import { useState } from "react";
 import CompanyLogo from "../components/company-logo";
 import ProfileCard from "../components/profile-card";
+import Salute from "../components/salute";
 
 const profiles = [
     {
@@ -33,22 +31,26 @@ const profiles = [
     },
 ];
 
-export default function ProfilesList() {
-    const [search, setSearch] = useState("");
-    const [filter, setFilter] = useState("");
+async function getHello() {
+    const response = await fetch("http://api:8080/hello");
+    const data = await response.json();
+    return data;
+}
 
-    function updateSearch(event: React.ChangeEvent<HTMLInputElement>) {
-        setSearch(event.target.value);
-    }
+type ProfileListParams = {
+    searchParams: {
+        q: string | undefined;
+    };
+};
 
-    function handleSearch() {
-        setFilter(search);
-    }
-
+export default async function ProfilesList({ searchParams }: ProfileListParams) {
+    const { q } = searchParams;
+    const greeting = await getHello();
     return (
         <section className="my-12 mx-6 flex flex-col gap-12">
             <div className="flex justify-between items-end">
                 <CompanyLogo />
+                <Salute>{greeting?.hello || "Usuário"}</Salute>
             </div>
 
             <div className="flex justify-between items-center">
@@ -70,53 +72,38 @@ export default function ProfilesList() {
                     Procurar perfil
                 </Label>
                 <div className="flex">
-                    <Input
-                        className="rounded-r-none"
-                        placeholder="Busque por um perfil"
-                        value={search}
-                        onChange={updateSearch}
-                    />
-                    <Button
-                        onClick={handleSearch}
-                        className="bg-indigo-950 rounded-sm rounded-l-none"
-                    >
-                        <Search />
-                    </Button>
+                    <form className="flex flex-grow">
+                        <Input
+                            className="rounded-r-none"
+                            name="q"
+                            placeholder="Busque por um perfil"
+                        />
+                        <Button className="bg-indigo-950 rounded-sm rounded-l-none">
+                            <Search />
+                        </Button>
+                    </form>
                 </div>
             </div>
             {profiles
                 .filter((profile) => {
-                    if (!filter) {
-                        return profile;
+                    if (!q) {
+                        return true;
                     }
-                    if (
-                        profile.name
-                            .toLowerCase()
-                            .includes(filter.toLowerCase())
-                    ) {
-                        return profile;
-                    }
-                    if (
-                        profile.email
-                            .toLowerCase()
-                            .includes(filter.toLowerCase())
-                    ) {
-                        return profile;
-                    }
-                    if (
-                        profile.level
-                            .toLowerCase()
-                            .includes(filter.toLowerCase())
-                    ) {
-                        return profile;
-                    }
-                    if (
-                        profile.occupation
-                            .toLowerCase()
-                            .includes(filter.toLowerCase())
-                    ) {
-                        return profile;
-                    }
+                    const formattedFilter = q.toLowerCase();
+                    const searchableKeys = [
+                        "name",
+                        "email",
+                        "level",
+                        "occupation",
+                    ] as Array<keyof typeof profile>;
+                    const profileMatchFilter = searchableKeys.find((key) => {
+                        const value = profile[key];
+                        return (
+                            typeof value === "string" &&
+                            value.toLowerCase().includes(formattedFilter)
+                        );
+                    });
+                    return profileMatchFilter;
                 })
                 .map((profile) => {
                     return <ProfileCard key={profile.id} profile={profile} />;

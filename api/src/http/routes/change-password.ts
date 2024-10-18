@@ -62,7 +62,7 @@ export async function changePassword(server: FastifyInstance) {
 
             if (currentPassword === newPassword) {
                 return reply.status(400).send({
-                    message: "A nova senha não pode ser igual à antiga senha.",
+                    message: "A nova senha não pode ser igual à senha antiga.",
                 });
             }
         }
@@ -74,13 +74,13 @@ export async function changePassword(server: FastifyInstance) {
 
         if (newPasswordMatch) {
             return reply.status(400).send({
-                message: "A nova senha não pode ser igual à antiga senha.",
+                message: "A nova senha não pode ser igual à senha antiga.",
             });
         }
 
         if (newPassword !== repeatPassword) {
             return reply.status(400).send({
-                message: "A nova senha e a repetida devem ser iguais.",
+                message: "A sua confirmação de senha não bate com a nova senha.",
             });
         }
 

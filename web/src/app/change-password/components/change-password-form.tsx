@@ -25,7 +25,7 @@ const FormSchema = z.object({
         message: "A senha nova deve conter no mínimo 8 caracteres.",
     }),
     repeatPassword: z.string().min(8, {
-        message: "A senha repetida deve conter no mínimo 8 caracteres.",
+        message: "A confirmação de senha deve conter no mínimo 8 caracteres.",
     }),
 });
 

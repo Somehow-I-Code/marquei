@@ -66,8 +66,6 @@ export default function NewProfileForm({
                 return "Gerencia agendamentos e recursos.";
             case "ADMIN":
                 return "Gerencia agendamentos, recursos e outros usuários.";
-            case "SUDO":
-                return "Gerencia agendamentos, recursos, empresa e outros usuários geral.";
             default:
                 return null;
         }

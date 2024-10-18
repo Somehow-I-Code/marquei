@@ -6,7 +6,7 @@ export const createProfileSchema = z.object({
         invalid_type_error: "Nome é obrigatório!",
     }),
     occupation: z.string(),
-    email: z.string().email({ message: "E-mail inválido!" }),
+    email: z.string().email({ message: "Email inválido!" }),
     level: z.union([z.literal("USER"), z.literal("ADMIN"), z.literal("SUDO")]),
     companyId: z.number({
         required_error: "Empresa é obrigatório, contate o suporte!",

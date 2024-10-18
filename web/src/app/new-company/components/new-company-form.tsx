@@ -21,7 +21,7 @@ import { z } from "zod";
 
 const FormSchema = z.object({
     name: z.string().min(1, {
-        message: "O nome da empresa não pode estar vazio",
+        message: "O nome da empresa não pode estar vazio.",
     }),
     isActive: z.boolean(),
     city: z.string(),

@@ -38,7 +38,7 @@ export default function SendEmailForm() {
                             <FormControl>
                                 <Input
                                     type="email"
-                                    placeholder="Digite seu e-mail"
+                                    placeholder="Digite seu email"
                                     {...field}
                                 />
                             </FormControl>

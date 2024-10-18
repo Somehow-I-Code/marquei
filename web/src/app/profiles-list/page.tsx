@@ -43,9 +43,33 @@ type ProfileListParams = {
     };
 };
 
-export default async function ProfilesList({ searchParams }: ProfileListParams) {
+export default async function ProfilesList({
+    searchParams,
+}: ProfileListParams) {
     const { q } = searchParams;
     const greeting = await getHello();
+
+    // Filtro separado
+    const filteredResults = profiles.filter((profile) => {
+        if (!q) {
+            return true;
+        }
+        const formattedFilter = q.toLowerCase();
+        const searchableKeys = [
+            "name",
+            "email",
+            "level",
+            "occupation",
+        ] as Array<keyof typeof profile>;
+        return searchableKeys.some((key) => {
+            const value = profile[key];
+            return (
+                typeof value === "string" &&
+                value.toLowerCase().includes(formattedFilter)
+            );
+        });
+    });
+
     return (
         <section className="my-12 mx-6 flex flex-col gap-12">
             <div className="flex justify-between items-end">
@@ -57,7 +81,6 @@ export default async function ProfilesList({ searchParams }: ProfileListParams) 
                 <h1 className="text-2xl font-semibold">Lista de Perfis</h1>
                 <Button className="bg-indigo-950 font-bold gap-2">
                     <Plus />
-
                     <Link className="text-xs" href="/new-profile">
                         NOVO PERFIL
                     </Link>
@@ -84,30 +107,17 @@ export default async function ProfilesList({ searchParams }: ProfileListParams) 
                     </form>
                 </div>
             </div>
-            {profiles
-                .filter((profile) => {
-                    if (!q) {
-                        return true;
-                    }
-                    const formattedFilter = q.toLowerCase();
-                    const searchableKeys = [
-                        "name",
-                        "email",
-                        "level",
-                        "occupation",
-                    ] as Array<keyof typeof profile>;
-                    const profileMatchFilter = searchableKeys.find((key) => {
-                        const value = profile[key];
-                        return (
-                            typeof value === "string" &&
-                            value.toLowerCase().includes(formattedFilter)
-                        );
-                    });
-                    return profileMatchFilter;
-                })
-                .map((profile) => {
-                    return <ProfileCard key={profile.id} profile={profile} />;
-                })}
+
+            {filteredResults.length === 0 ? (
+                <p>
+                    Ops! Não conseguimos encontrar nenhum perfil que corresponda
+                    à sua busca.
+                </p>
+            ) : (
+                filteredResults.map((profile) => (
+                    <ProfileCard key={profile.id} profile={profile} />
+                ))
+            )}
         </section>
     );
 }

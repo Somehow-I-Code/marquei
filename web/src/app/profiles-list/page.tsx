@@ -48,8 +48,6 @@ export default async function ProfilesList({
 }: ProfileListParams) {
     const { q } = searchParams;
     const greeting = await getHello();
-
-    // Filtro separado
     const filteredResults = profiles.filter((profile) => {
         if (!q) {
             return true;

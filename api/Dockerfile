@@ -1,16 +1,30 @@
 FROM node:20.11-alpine3.18
+
+# Create a non-root user with home directory and no password
+RUN adduser -D -s /bin/bash appuser
+
+# Copy package files and install dependencies
+COPY package*.json ./tmp
+RUN cd /tmp && npm ci
+
+# Copy the node_modules to /app
+RUN mkdir -p /app && cp -a /tmp/node_modules /app
+
+# Set working directory and adjust ownership to the non-root user
 WORKDIR /app
+RUN chown -R appuser:appuser /app
 
-COPY package*.json . 
-COPY prisma ./prisma
+# Switch to non-root user
+USER appuser
 
-RUN npm install --no-optional && npm cache clean --force
+# Copy Prisma files with appuser ownership
+COPY --chown=appuser:appuser prisma ./prisma
+
+# Generate Prisma client
 RUN npx prisma generate
-RUN rm -rf prisma
 
-RUN chown -R node:node node_modules/.prisma
+# Clean up Prisma files
+RUN rm -rf ./prisma
 
-#TODO: Revisar necessidade dessa linha
-#USER node
-
+# Expose port 8080
 EXPOSE 8080

@@ -14,7 +14,7 @@ export async function getLevels(server: FastifyInstance) {
         const secretKey = getJwtSecret();
 
         if (!token) {
-            return reply.status(400).send({ message: "Token inválido" });
+            return reply.status(400).send({ message: "Token inválido!" });
         }
 
         const profile = verify(token, secretKey) as {

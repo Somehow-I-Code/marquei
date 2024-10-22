@@ -10,7 +10,7 @@ import { z } from "zod"
 
 const FormSchema = z.object({
     email: z.string().email({
-        message: "Digite um e-mail válido"
+        message: "Email inválido."
     })
 })
 
@@ -38,7 +38,7 @@ export default function SendEmailForm() {
                             <FormControl>
                                 <Input
                                     type="email"
-                                    placeholder="Digite seu e-mail"
+                                    placeholder="Digite seu email"
                                     {...field}
                                 />
                             </FormControl>

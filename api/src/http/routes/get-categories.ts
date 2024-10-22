@@ -10,7 +10,7 @@ export async function getCategories(server: FastifyInstance) {
         const secretKey = getJwtSecret();
 
         if (!token) {
-            return reply.send({ message: "Token inválido" });
+            return reply.send({ message: "Token inválido!" });
         }
 
         const profile = verify(token, secretKey) as {

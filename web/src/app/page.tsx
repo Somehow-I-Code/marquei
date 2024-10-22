@@ -10,12 +10,6 @@ import Salute from "./components/salute";
 import Scheduling from "./home/assets/scheduling.svg";
 import getSession from "./utis/get-session";
 
-async function getHello() {
-    const response = await fetch("http://api:8080/hello");
-    const data = await response.json();
-    return data;
-}
-
 function transformResources(resources: ResourceResponse) {
     return resources.map(({ id, name, description, category }) => ({
         id,
@@ -57,7 +51,6 @@ export default async function Home() {
         return redirect("/login");
     }
 
-    const greeting = await getHello();
     const resources = await getResources(session);
     const resourcesByCategory = getResourcesByCategory(resources);
     const categoriesList = Object.keys(resourcesByCategory);
@@ -66,7 +59,7 @@ export default async function Home() {
         <>
             <header className="flex justify-between items-end px-6 py-12">
                 <CompanyLogo />
-                <Salute>{greeting?.hello || "Usuário"}</Salute>
+                <Salute>{"Usuário"}</Salute>
             </header>
 
             <section>

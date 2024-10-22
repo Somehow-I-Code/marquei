@@ -15,10 +15,6 @@ import { ProfilesList } from "./src/http/routes/profiles-list";
 
 const server = Fastify();
 
-server.get("/hello", async (request, reply) => {
-    reply.send({ hello: "thiago" });
-});
-
 server.register(createCategories);
 server.register(createResources);
 server.register(createProfile);

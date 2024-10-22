@@ -3,12 +3,12 @@ POST {{host}}/login
 Content-Type: application/json
 
 {
-    "email": "shirley47@hotmail.com",
+    "email": "sudo@marquei.com",
     "password": "1234567890"
 }
 
 ###
 @authToken = Bearer {{login.response.body.$.token}}
 
-PATCH  {{host}}/profile/activate/1
+PATCH  {{host}}/profile/activate/3
 Authorization: {{authToken}}

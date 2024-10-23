@@ -17,10 +17,6 @@ import { sudoLogin } from "./src/http/routes/sudo-login";
 
 const server = Fastify();
 
-server.get("/hello", async (request, reply) => {
-    reply.send({ hello: "thiago" });
-});
-
 server.register(createCategories);
 server.register(createResources);
 server.register(createProfile);

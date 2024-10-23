@@ -31,12 +31,6 @@ const profiles = [
     },
 ];
 
-async function getHello() {
-    const response = await fetch("http://api:8080/hello");
-    const data = await response.json();
-    return data;
-}
-
 type ProfileListParams = {
     searchParams: {
         q: string | undefined;
@@ -47,7 +41,6 @@ export default async function ProfilesList({
     searchParams,
 }: ProfileListParams) {
     const { q } = searchParams;
-    const greeting = await getHello();
     const filteredResults = profiles.filter((profile) => {
         if (!q) {
             return true;
@@ -72,7 +65,7 @@ export default async function ProfilesList({
         <section className="my-12 mx-6 flex flex-col gap-12">
             <div className="flex justify-between items-end">
                 <CompanyLogo />
-                <Salute>{greeting?.hello || "Usuário"}</Salute>
+                <Salute>{"Usuário"}</Salute>
             </div>
 
             <div className="flex justify-between items-center">

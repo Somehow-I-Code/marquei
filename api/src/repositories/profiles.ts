@@ -1,3 +1,4 @@
+import { Level } from "@prisma/client";
 import { hash } from "bcrypt";
 import { prisma } from "../lib/prisma";
 import emailService from "../services/email";
@@ -75,6 +76,34 @@ class ProfileRepository {
         return updatedProfile;
     }
 
+    async toggleProfile(
+        currenUser: { level: Level },
+        id: number,
+        companyId: number | undefined,
+        newState: boolean,
+    ) {
+        const filter: { [key in Level]: Level[] } = {
+            USER: ["USER", "ADMIN", "SUDO"],
+            ADMIN: ["SUDO"],
+            SUDO: [],
+        };
+
+        const updatedProfile = await prisma.profile.update({
+            where: {
+                id,
+                companyId,
+                level: {
+                    notIn: filter[currenUser.level],
+                },
+            },
+            data: {
+                isActive: newState,
+            },
+        });
+
+        return updatedProfile;
+    }
+
     async findAll(companyId: number, isSudo: boolean) {
         if (isSudo) {
             return prisma.profile.findMany();
@@ -90,4 +119,3 @@ class ProfileRepository {
 
 const profileRepository = new ProfileRepository();
 export default profileRepository;
-

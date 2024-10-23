@@ -9,9 +9,11 @@ import { getLevels } from "./src/http/routes/get-levels";
 import { getProfile } from "./src/http/routes/get-profile";
 import { getResources } from "./src/http/routes/get-resources";
 import { login } from "./src/http/routes/login";
+import { updateProfileActivate } from "./src/http/routes/profile-activate";
+import { updateProfile } from "./src/http/routes/profile-deactivate";
+import { ProfilesList } from "./src/http/routes/profiles-list";
 import { resetPassword } from "./src/http/routes/reset-password";
 import { sudoLogin } from "./src/http/routes/sudo-login";
-import { ProfilesList } from "./src/http/routes/profiles-list";
 
 const server = Fastify();
 
@@ -31,6 +33,8 @@ server.register(resetPassword);
 server.register(changePassword);
 server.register(sudoLogin);
 server.register(createCompany);
+server.register(updateProfile);
+server.register(updateProfileActivate);
 server.register(ProfilesList);
 
 server.listen({ port: 8080, host: "0.0.0.0" }, (err, address) => {

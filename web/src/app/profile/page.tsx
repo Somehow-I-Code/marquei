@@ -5,16 +5,7 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import UserImage from "./assets/user.svg";
 import LogoutButton from "./components/logout-button";
-
-function getSession() {
-    const session = cookies().get("session")?.value;
-
-    if (!session) {
-        return null;
-    }
-
-    return session;
-}
+import getSession from "../utis/get-session";
 
 async function doLogout() {
     "use server";
@@ -33,7 +24,7 @@ async function getProfile(): Promise<ProfilesResponse> {
     const response = await fetch("http://api:8080/profile", {
         headers: {
             "content-type": "application/json",
-            authorization: `Bearer ${session}`,
+            Authorization: `Bearer ${session}`,
         },
     });
 

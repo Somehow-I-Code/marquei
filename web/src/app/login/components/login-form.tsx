@@ -19,10 +19,10 @@ import { z } from "zod";
 
 const FormSchema = z.object({
     email: z.string().email({
-        message: "Digite um e-mail válido",
+        message: "Email inválido.",
     }),
     password: z.string().min(8, {
-        message: "Sua senha deve conter no mínimo 8 caracteres",
+        message: "A senha deve conter no mínimo 8 caracteres.",
     }),
 });
 
@@ -71,7 +71,7 @@ export default function LoginForm({ login }: LoginFormProps) {
                             <FormControl>
                                 <Input
                                     type="email"
-                                    placeholder="Digite seu e-mail"
+                                    placeholder="Digite seu email"
                                     {...field}
                                 />
                             </FormControl>

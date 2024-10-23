@@ -1,8 +1,18 @@
+import { redirect } from "next/navigation";
 import CompanyLogo from "../components/company-logo";
 import WelcomeImage from "./assets/welcome.svg";
 import FirstLoginForm from "./components/first-login-reset-password";
+import getSession from "../utis/get-session";
 
 export default async function FirstLogin() {
+    const session = getSession();
+
+    if (!session) {
+        return redirect("/login");
+    }
+
+    //TODO: Fazer o fetch para enviar no BD(DB)
+
     return (
         <section className="py-12 px-6 space-y-12">
             <div className="flex flex-col items-center">
@@ -10,7 +20,7 @@ export default async function FirstLogin() {
                 <CompanyLogo />
             </div>
 
-            <div className="items-center">
+            <div className="flex justify-center items-center">
                 <WelcomeImage />
             </div>
 
@@ -23,4 +33,3 @@ export default async function FirstLogin() {
         </section>
     );
 }
-

@@ -1,5 +1,7 @@
+import { redirect } from "next/navigation";
 import CompanyLogo from "../components/company-logo";
 import FormTitle from "../components/form-title";
+import getSession from "../utis/get-session";
 import NewProfileForm, {
     NewProfileFormSchema,
 } from "./components/new-profile-form";
@@ -13,6 +15,11 @@ async function getLevels() {
 
 export default async function NewProfile() {
     const levels = await getLevels();
+    const session = getSession();
+
+    if (!session) {
+        return redirect("/login");
+    }
 
     async function createProfile(data: NewProfileFormSchema) {
         "use server";
@@ -25,6 +32,7 @@ export default async function NewProfile() {
             method: "post",
             headers: {
                 "content-type": "application/json",
+                Authorization: `Bearer ${session}`,
             },
             body: JSON.stringify(body),
         });

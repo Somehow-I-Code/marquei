@@ -20,8 +20,11 @@ class ResourcesRepository {
         return resource;
     }
 
-    async findAll() {
+    async findAll(companyId: number) {
         const resources = await prisma.resource.findMany({
+            where: {
+                companyId,
+            },
             include: {
                 category: true,
             },

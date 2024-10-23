@@ -22,5 +22,5 @@ Authorization: Bearer {{authToken}}
     "name": "Dr. Hudson Dodói",
     "description": "Ortopedista",
     "categoryId": 1,
-    "companyId": 2
+    "companyId": 1
 }

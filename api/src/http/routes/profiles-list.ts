@@ -4,6 +4,7 @@ import { verify } from "jsonwebtoken";
 import profileRepository from "../../repositories/profiles";
 import { getJwtSecret } from "./utils/get-jwt-secret";
 import { getToken } from "./utils/get-token";
+import httpCodes from "./utils/http-codes";
 
 export async function ProfilesList(server: FastifyInstance) {
     server.get("/profiles-list", async (request, reply) => {
@@ -11,7 +12,7 @@ export async function ProfilesList(server: FastifyInstance) {
         const secretKey = getJwtSecret();
 
         if (!token) {
-            return reply.status(400).send({ message: "Token inválido!" });
+            return reply.status(httpCodes.BAD_REQUEST).send({ message: "Token inválido!" });
         }
 
         const userProfile = verify(token, secretKey) as {
@@ -19,7 +20,7 @@ export async function ProfilesList(server: FastifyInstance) {
             companyId: number;
         };
         if (userProfile.level === Level.USER) {
-            return reply.status(401).send({
+            return reply.status(httpCodes.UNAUTHORIZED).send({
                 message: "Você não tem permissão para acessar esta tela!",
             });
         }
@@ -29,7 +30,7 @@ export async function ProfilesList(server: FastifyInstance) {
             userProfile.companyId,
             isSudo,
         );
-        return reply.status(200).send(profiles);
+        return reply.status(httpCodes.SUCCESS).send(profiles);
     });
 }
 

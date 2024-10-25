@@ -8,6 +8,7 @@ import {
 } from "../../validators/reset-password";
 import emailService from "../../services/email";
 import { getJwtSecret } from "./utils/get-jwt-secret";
+import httpCodes from "./utils/http-codes";
 
 const _1_HOUR = 1000 * 60 * 60;
 
@@ -21,7 +22,7 @@ export async function resetPassword(server: FastifyInstance) {
             resetPasswordEmail = resetPasswordSchema.parse(request.body);
         } catch (e) {
             console.log(e);
-            return reply.code(400).send({
+            return reply.code(httpCodes.BAD_REQUEST).send({
                 error: "ValidationError",
                 message: (e as z.ZodError).issues[0].message,
             });
@@ -32,7 +33,7 @@ export async function resetPassword(server: FastifyInstance) {
         const profile = await profileRepository.findByEmail(email);
 
         if (!profile) {
-            return reply.status(404).send({ message: "Email inválido." });
+            return reply.status(httpCodes.NOT_FOUND).send({ message: "Email inválido." });
         }
 
         const token = jwt.sign(
@@ -44,6 +45,6 @@ export async function resetPassword(server: FastifyInstance) {
             secretKey,
         );
         emailService.sendResetPasswordLink(token);
-        return reply.status(200).send({ token });
+        return reply.status(httpCodes.SUCCESS).send({ token });
     });
 }

@@ -6,6 +6,7 @@ import profileRepository from "../../repositories/profiles";
 import { SudoLoginInput, sudoLoginSchema } from "../../validators/sudo-login";
 import { getToken } from "./utils/get-token";
 import { getJwtSecret } from "./utils/get-jwt-secret";
+import httpCodes from "./utils/http-codes";
 
 export async function sudoLogin(server: FastifyInstance) {
     server.post("/sudo-login", async (request, reply) => {
@@ -13,7 +14,7 @@ export async function sudoLogin(server: FastifyInstance) {
         const secretKey = getJwtSecret();
 
         if (!sudoToken) {
-            return reply.status(400).send({ message: "Token inválido!" });
+            return reply.status(httpCodes.BAD_REQUEST).send({ message: "Token inválido!" });
         }
 
         const sudoProfile = verify(sudoToken, secretKey) as {
@@ -21,7 +22,7 @@ export async function sudoLogin(server: FastifyInstance) {
         };
 
         if (sudoProfile.level !== Level.SUDO) {
-            return reply.status(401).send({
+            return reply.status(httpCodes.UNAUTHORIZED).send({
                 message: "Você não tem permissão para executar esta operação!",
             });
         }
@@ -31,7 +32,7 @@ export async function sudoLogin(server: FastifyInstance) {
         try {
             userData = sudoLoginSchema.parse(request.body);
         } catch (e) {
-            return reply.status(400).send({
+            return reply.status(httpCodes.BAD_REQUEST).send({
                 error: "ValidationError",
                 message: (e as ZodError).issues[0].message,
             });
@@ -43,12 +44,12 @@ export async function sudoLogin(server: FastifyInstance) {
 
         if (!profile) {
             return reply
-                .status(404)
+                .status(httpCodes.NOT_FOUND)
                 .send({ message: "Usuário não encontrado!" });
         }
 
         if (sudoProfile.level === profile.level) {
-            return reply.status(401).send({
+            return reply.status(httpCodes.UNAUTHORIZED).send({
                 message: "Você não tem permissão para executar esta operação!",
             });
         }
@@ -63,6 +64,6 @@ export async function sudoLogin(server: FastifyInstance) {
             secretKey,
         );
 
-        return reply.status(200).send({ token });
+        return reply.status(httpCodes.SUCCESS).send({ token });
     });
 }

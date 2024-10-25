@@ -5,6 +5,7 @@ import profileRepository from "../../repositories/profiles";
 import { createProfileSchema } from "../../validators/profile";
 import { getToken } from "../routes/utils/get-token";
 import { getJwtSecret } from "./utils/get-jwt-secret";
+import httpCodes from "./utils/http-codes";
 
 export async function createProfile(server: FastifyInstance) {
     server.post("/profiles", async (request, reply) => {
@@ -12,7 +13,7 @@ export async function createProfile(server: FastifyInstance) {
         const secretKey = getJwtSecret();
 
         if (!token) {
-            return reply.status(400).send({ message: "Token inválido!" });
+            return reply.status(httpCodes.BAD_REQUEST).send({ message: "Token inválido!" });
         }
 
         const profile = verify(token, secretKey) as {
@@ -34,7 +35,7 @@ export async function createProfile(server: FastifyInstance) {
                 companyId,
             });
 
-            return reply.status(201).send(newProfile);
+            return reply.status(httpCodes.CREATED).send(newProfile);
         }
 
         const isAdmin = profile.level === Level.ADMIN;
@@ -50,10 +51,10 @@ export async function createProfile(server: FastifyInstance) {
                 companyId,
             });
 
-            return reply.status(201).send(newProfile);
+            return reply.status(httpCodes.CREATED).send(newProfile);
         }
 
-        return reply.status(401).send({
+        return reply.status(httpCodes.UNAUTHORIZED).send({
             message: "Você não tem permissão para executar esta operação!",
         });
     });

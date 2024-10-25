@@ -5,6 +5,7 @@ import { createResource } from "../../validators/resources";
 import { getToken } from "./utils/get-token";
 import { verify } from "jsonwebtoken";
 import { getJwtSecret } from "./utils/get-jwt-secret";
+import httpCodes from "./utils/http-codes";
 
 export async function createResources(server: FastifyInstance) {
     server.post("/resources", async (request, reply) => {
@@ -12,7 +13,7 @@ export async function createResources(server: FastifyInstance) {
         const secretKey = getJwtSecret();
 
         if (!token) {
-            return reply.status(400).send({ message: "Token inválido!" });
+            return reply.status(httpCodes.BAD_REQUEST).send({ message: "Token inválido!" });
         }
 
         const { name, description, categoryId, companyId } =
@@ -23,7 +24,7 @@ export async function createResources(server: FastifyInstance) {
         };
 
         if (profile.companyId !== companyId) {
-            return reply.status(401).send({
+            return reply.status(httpCodes.UNAUTHORIZED).send({
                 message: "Você não tem permissão para executar esta operação!",
             });
         }
@@ -35,6 +36,6 @@ export async function createResources(server: FastifyInstance) {
             companyId,
         });
 
-        return reply.status(201).send(resource);
+        return reply.status(httpCodes.CREATED).send(resource);
     });
 }

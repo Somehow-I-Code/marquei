@@ -7,6 +7,7 @@ import { changePasswordSchema } from "../../validators/change-password";
 import { ChangePasswordInput } from "./../../validators/change-password";
 import { getToken } from "../routes/utils/get-token";
 import { getJwtSecret } from "./utils/get-jwt-secret";
+import httpCodes from "./utils/http-codes";
 
 export async function changePassword(server: FastifyInstance) {
     server.patch("/change-password", async (request, reply) => {
@@ -27,7 +28,7 @@ export async function changePassword(server: FastifyInstance) {
         try {
             changePassword = changePasswordSchema.parse(request.body);
         } catch (error) {
-            return reply.status(400).send({
+            return reply.status(httpCodes.BAD_REQUEST).send({
                 message: (error as ZodError).issues[0].message,
             });
         }
@@ -36,7 +37,7 @@ export async function changePassword(server: FastifyInstance) {
 
         if (!profile) {
             return reply
-                .status(404)
+                .status(httpCodes.NOT_FOUND)
                 .send({ message: "Usuário não encontrado!" });
         }
 
@@ -45,7 +46,7 @@ export async function changePassword(server: FastifyInstance) {
         if (decoded.firstLogin === false) {
             if (!currentPassword) {
                 return reply
-                    .status(400)
+                    .status(httpCodes.BAD_REQUEST)
                     .send({ message: "É obrigatório senha atual!" });
             }
 
@@ -56,12 +57,12 @@ export async function changePassword(server: FastifyInstance) {
 
             if (!passwordMatch) {
                 return reply
-                    .status(401)
+                    .status(httpCodes.UNAUTHORIZED)
                     .send({ message: "Senha atual incorreta." });
             }
 
             if (currentPassword === newPassword) {
-                return reply.status(400).send({
+                return reply.status(httpCodes.BAD_REQUEST).send({
                     message: "A nova senha não pode ser igual à senha antiga.",
                 });
             }
@@ -73,13 +74,13 @@ export async function changePassword(server: FastifyInstance) {
         );
 
         if (newPasswordMatch) {
-            return reply.status(400).send({
+            return reply.status(httpCodes.BAD_REQUEST).send({
                 message: "A nova senha não pode ser igual à senha antiga.",
             });
         }
 
         if (newPassword !== repeatPassword) {
-            return reply.status(400).send({
+            return reply.status(httpCodes.BAD_REQUEST).send({
                 message: "A sua confirmação de senha não bate com a nova senha.",
             });
         }
@@ -100,6 +101,6 @@ export async function changePassword(server: FastifyInstance) {
             secretKey,
         );
 
-        return reply.status(200).send({ token: refreshedToken });
+        return reply.status(httpCodes.SUCCESS).send({ token: refreshedToken });
     });
 }

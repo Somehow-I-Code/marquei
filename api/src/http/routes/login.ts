@@ -5,6 +5,7 @@ import z from "zod";
 import profileRepository from "../../repositories/profiles";
 import { LoginInput, loginSchema } from "../../validators/login-form";
 import { getJwtSecret } from "./utils/get-jwt-secret";
+import httpCodes from "./utils/http-codes";
 
 export async function login(server: FastifyInstance) {
     server.post("/login", async (request, reply) => {
@@ -15,7 +16,7 @@ export async function login(server: FastifyInstance) {
         try {
             credentials = loginSchema.parse(request.body);
         } catch (error) {
-            return reply.status(400).send({
+            return reply.status(httpCodes.BAD_REQUEST).send({
                 error: "ValidationError",
                 message: (error as z.ZodError).issues[0].message,
             });
@@ -25,13 +26,13 @@ export async function login(server: FastifyInstance) {
         const profile = await profileRepository.findByEmail(email);
 
         if (!profile) {
-            return reply.status(401).send({ message: "Credenciais inválidas." });
+            return reply.status(httpCodes.UNAUTHORIZED).send({ message: "Credenciais inválidas." });
         }
 
         const passwordMatch = await bcrypt.compare(password, profile.password);
 
         if (!passwordMatch) {
-            return reply.status(401).send({ message: "Credenciais inválidas." });
+            return reply.status(httpCodes.UNAUTHORIZED).send({ message: "Credenciais inválidas." });
         }
 
         const token = jwt.sign(
@@ -45,6 +46,6 @@ export async function login(server: FastifyInstance) {
             secretKey,
         );
 
-        return reply.status(200).send({ token });
+        return reply.status(httpCodes.SUCCESS).send({ token });
     });
 }

@@ -10,6 +10,7 @@ import {
 import { getJwtSecret } from "./get-jwt-secret";
 import { getToken } from "./get-token";
 import HttpError from "./http-error";
+import httpCodes from "./http-codes";
 
 export async function toggleProfile(
     request: FastifyRequest,
@@ -20,7 +21,7 @@ export async function toggleProfile(
 
     if (!token) {
         //TODO: Adicionar isso ao middleware de autorização
-        throw new HttpError(401, "Falta token na requisição!");
+        throw new HttpError(httpCodes.UNAUTHORIZED, "Falta token na requisição!");
     }
 
     const userProfile = verify(token, secretKey) as {
@@ -33,7 +34,7 @@ export async function toggleProfile(
     try {
         userProfileParams = toggleProfileSchema.parse(request.params);
     } catch (error) {
-        throw new HttpError(400, (error as ZodError).issues[0].message);
+        throw new HttpError(httpCodes.BAD_REQUEST, (error as ZodError).issues[0].message);
     }
 
     let { profileId } = userProfileParams;
@@ -53,6 +54,6 @@ export async function toggleProfile(
 
         return updatedProfile;
     } catch (e) {
-        throw new HttpError(404, "Perfil não encontrado");
+        throw new HttpError(httpCodes.NOT_FOUND, "Perfil não encontrado");
     }
 }

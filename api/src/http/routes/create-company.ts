@@ -1,6 +1,7 @@
 import { FastifyInstance } from "fastify";
 import companyRepository from "../../repositories/company";
 import { createCompanySchema } from "./../../validators/company";
+import httpCodes from "./utils/http-codes";
 
 export async function createCompany(server: FastifyInstance) {
     server.post("/company", async (request, reply) => {
@@ -15,6 +16,6 @@ export async function createCompany(server: FastifyInstance) {
             representativeName,
         });
 
-        return reply.status(201).send(company);
+        return reply.status(httpCodes.CREATED).send(company);
     });
 }

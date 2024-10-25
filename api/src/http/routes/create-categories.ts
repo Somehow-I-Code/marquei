@@ -5,6 +5,7 @@ import { createCategory } from "../../validators/categories";
 import { getToken } from "./utils/get-token";
 import { getJwtSecret } from "./utils/get-jwt-secret";
 import { verify } from "jsonwebtoken";
+import httpCodes from "./utils/http-codes";
 
 export async function createCategories(server: FastifyInstance) {
     server.post("/categories", async (request, reply) => {
@@ -12,7 +13,7 @@ export async function createCategories(server: FastifyInstance) {
         const secretKey = getJwtSecret();
 
         if (!token) {
-            return reply.status(400).send({ message: "Token inválido!" });
+            return reply.status(httpCodes.BAD_REQUEST).send({ message: "Token inválido!" });
         }
 
         const { name, companyId } = createCategory.parse(request.body);
@@ -22,7 +23,7 @@ export async function createCategories(server: FastifyInstance) {
         };
 
         if (profile.companyId !== companyId) {
-            return reply.status(401).send({
+            return reply.status(httpCodes.UNAUTHORIZED).send({
                 message: "Você não tem permissão para executar esta operação!",
             });
         }
@@ -32,6 +33,6 @@ export async function createCategories(server: FastifyInstance) {
             companyId,
         });
 
-        return reply.status(201).send(category);
+        return reply.status(httpCodes.CREATED).send(category);
     });
 }

@@ -2,11 +2,11 @@ import { FastifyInstance } from "fastify";
 import jwt from "jsonwebtoken";
 import z from "zod";
 import profileRepository from "../../repositories/profiles";
+import emailService from "../../services/email";
 import {
     ResetPassword,
     resetPasswordSchema,
 } from "../../validators/reset-password";
-import emailService from "../../services/email";
 import { getJwtSecret } from "./utils/get-jwt-secret";
 import httpCodes from "./utils/http-codes";
 
@@ -33,7 +33,9 @@ export async function resetPassword(server: FastifyInstance) {
         const profile = await profileRepository.findByEmail(email);
 
         if (!profile) {
-            return reply.status(httpCodes.NOT_FOUND).send({ message: "Email inválido." });
+            return reply
+                .status(httpCodes.NOT_FOUND)
+                .send({ message: "Email inválido." });
         }
 
         const token = jwt.sign(
@@ -48,3 +50,4 @@ export async function resetPassword(server: FastifyInstance) {
         return reply.status(httpCodes.SUCCESS).send({ token });
     });
 }
+

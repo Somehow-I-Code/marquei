@@ -26,7 +26,7 @@ export default async function CreateNewPassword({
             token: params.token,
         };
 
-        const response = await fetch("http://api:8080/change-password", {
+        const response = await fetch("http://api:8080/create-new-password", {
             method: "PATCH",
             headers: {
                 "content-type": "application/json",
@@ -62,3 +62,4 @@ export default async function CreateNewPassword({
         </section>
     );
 }
+

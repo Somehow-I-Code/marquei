@@ -56,14 +56,6 @@ export default function CreateNewPasswordForm({
             toast({
                 title: "Ótimo!",
                 description: "Senha criada com sucesso.",
-                action: (
-                    <ToastAction
-                        onClick={() => router.push("/login")}
-                        altText="Ir para o login"
-                    >
-                        Ir para o login
-                    </ToastAction>
-                ),
             });
         } catch (e) {
             if (e instanceof Error) {

@@ -39,7 +39,7 @@ export default async function CreateNewPassword({
             throw new Error(data.message);
         }
 
-        revalidatePath("/login");
+        redirect("/login");
     }
 
     return (

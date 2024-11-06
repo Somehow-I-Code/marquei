@@ -21,6 +21,19 @@ class CompanyRepository {
 
         return company;
     }
+
+    async find(level: string, companyId: number) {
+        if (level === "SUDO") {
+            return await prisma.company.findMany();
+        }
+
+        return await prisma.company.findMany({
+            where: {
+                id: companyId,
+            },
+        });
+    }
+
 }
 
 const companyRepository = new CompanyRepository();

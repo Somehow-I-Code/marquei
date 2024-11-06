@@ -52,7 +52,7 @@ export default async function createNewPassword(server: FastifyInstance) {
             });
         }
 
-        const profile = await profileRepository.findById(decoded.id, true);
+        const profile = await profileRepository.findById(decoded.id);
 
         if (!profile) {
             return reply
@@ -69,8 +69,7 @@ export default async function createNewPassword(server: FastifyInstance) {
             });
         }
 
-        const hashedPassword = await bcrypt.hash(newPassword, 10);
-        await profileRepository.updatePassword(profile.id, hashedPassword);
+        await profileRepository.updatePassword(profile.id, newPassword);
 
         return reply
             .status(httpCodes.SUCCESS)

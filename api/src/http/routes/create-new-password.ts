@@ -1,4 +1,3 @@
-import bcrypt from "bcrypt";
 import { FastifyInstance } from "fastify";
 import jwt from "jsonwebtoken";
 import { ZodError } from "zod";
@@ -13,12 +12,17 @@ import httpCodes from "./utils/http-codes";
 export default async function createNewPassword(server: FastifyInstance) {
     server.patch("/create-new-password", async (request, reply) => {
         const secretKey = getJwtSecret();
+        let createNewPassword: CreateNewPasswordInput;
+    
+        try {
+            createNewPassword = createNewPasswordSchema.parse(request.body);
+        } catch (error) {
+            return reply.status(httpCodes.BAD_REQUEST).send({
+                message: (error as ZodError).issues[0].message,
+            });
+        }
 
-        const { token, ...passwordData } = request.body as {
-            token: string;
-            newPassword: string;
-            repeatPassword: string;
-        };
+        const { token, newPassword, repeatPassword } = createNewPassword;
 
         if (!token) {
             return reply
@@ -26,47 +30,31 @@ export default async function createNewPassword(server: FastifyInstance) {
                 .send({ message: "Token inválido!" });
         }
 
-        let decoded;
-        try {
-            decoded = jwt.verify(token, secretKey) as {
-                id: number;
-                expiresAt: number;
-            };
-            if (Date.now() > decoded.expiresAt) {
-                return reply
-                    .status(httpCodes.UNAUTHORIZED)
-                    .send({ message: "Token expirado!" });
-            }
-        } catch (error) {
+        const decoded = jwt.verify(token, secretKey) as {
+            id: number;
+            expiresAt: number;
+        };
+
+        const isTokenExpired = Date.now() > decoded.expiresAt;
+
+        if (isTokenExpired) {
             return reply
                 .status(httpCodes.UNAUTHORIZED)
-                .send({ message: "Token inválido!" });
+                .send({ message: "Token expirado!" });
         }
-
-        let createNewPassword: CreateNewPasswordInput;
-        try {
-            createNewPassword = createNewPasswordSchema.parse(passwordData);
-        } catch (error) {
-            return reply.status(httpCodes.BAD_REQUEST).send({
-                message: (error as ZodError).issues[0].message,
-            });
-        }
-
-        const profile = await profileRepository.findById(decoded.id);
-
-        if (!profile) {
-            return reply
-                .status(httpCodes.NOT_FOUND)
-                .send({ message: "Usuário não encontrado!" });
-        }
-
-        const { newPassword, repeatPassword } = createNewPassword;
 
         if (newPassword !== repeatPassword) {
             return reply.status(httpCodes.BAD_REQUEST).send({
                 message:
                     "A confirmação de senha não coincide com a nova senha.",
             });
+        }
+
+        const profile = await profileRepository.findById(decoded.id);
+        if (!profile) {
+            return reply
+                .status(httpCodes.NOT_FOUND)
+                .send({ message: "Usuário não encontrado!" });
         }
 
         await profileRepository.updatePassword(profile.id, newPassword);
@@ -76,4 +64,5 @@ export default async function createNewPassword(server: FastifyInstance) {
             .send({ message: "Senha atualizada com sucesso!" });
     });
 }
+
 

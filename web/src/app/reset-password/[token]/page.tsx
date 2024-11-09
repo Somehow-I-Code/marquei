@@ -1,6 +1,9 @@
-import { redirect } from "next/navigation";
+import { revalidatePath } from "next/cache";
 import CompanyLogo from "../../components/company-logo";
-import CreateNewPasswordForm from "./components/create-new-password-form";
+import CreateNewPasswordForm, {
+    CreateNewPasswordFormSchema,
+} from "./components/create-new-password-form";
+import { redirect } from "next/navigation";
 
 type CreateNewPasswordProps = {
     params: {
@@ -8,9 +11,35 @@ type CreateNewPasswordProps = {
     };
 };
 
-export default function CreateNewPassword({ params }: CreateNewPasswordProps) {
+export default async function CreateNewPassword({
+    params,
+}: CreateNewPasswordProps) {
     if (!params.token) {
-        redirect("/reset-password");
+        return redirect("/reset-password");
+    }
+
+    async function createNewPassword(data: CreateNewPasswordFormSchema) {
+        "use server";
+
+        const body = {
+            ...data,
+            token: params.token,
+        };
+
+        const response = await fetch("http://api:8080/create-new-password", {
+            method: "PATCH",
+            headers: {
+                "content-type": "application/json",
+            },
+            body: JSON.stringify(body),
+        });
+
+        if (response.status !== 200) {
+            const data = (await response.json()) as { message: string };
+            throw new Error(data.message);
+        }
+
+        redirect("/login");
     }
 
     return (
@@ -25,9 +54,12 @@ export default function CreateNewPassword({ params }: CreateNewPasswordProps) {
                 </h1>
 
                 <div className="py-4">
-                    <CreateNewPasswordForm />
+                    <CreateNewPasswordForm
+                        createNewPassword={createNewPassword}
+                    />
                 </div>
             </div>
         </section>
     );
 }
+

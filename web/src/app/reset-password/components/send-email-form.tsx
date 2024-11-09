@@ -1,42 +1,84 @@
-"use client"
+"use client";
 
 import { Button } from "@/components/ui/button";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import {
+    Form,
+    FormControl,
+    FormField,
+    FormItem,
+    FormLabel,
+    FormMessage,
+} from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
-import { z } from "zod"
+import { z } from "zod";
+import { useToast } from "@/components/ui/use-toast";
 
 const FormSchema = z.object({
     email: z.string().email({
-        message: "Email inválido."
-    })
-})
+        message: "Email inválido.",
+    }),
+});
 
 export type SendEmailFormSchema = z.infer<typeof FormSchema>;
 
-export default function SendEmailForm() {
+type SendEmailFormProps = {
+    requestPasswordReset: (data: SendEmailFormSchema) => void;
+};
+
+export default function SendEmailForm({
+    requestPasswordReset,
+}: SendEmailFormProps) {
     const form = useForm<SendEmailFormSchema>({
         resolver: zodResolver(FormSchema),
         defaultValues: {
-            email: ""
-        }
-    })
+            email: "",
+        },
+    });
 
-    function onSubmit(data: SendEmailFormSchema) {}
+    const { toast } = useToast();
+
+    async function onSubmit(data: SendEmailFormSchema) {
+        try {
+            await requestPasswordReset(data);
+            form.reset();
+
+            toast({
+                title: "Solicitação enviada!",
+                description:
+                    "Verifique seu email para continuar com a recuperação de senha.",
+            });
+        } catch (e) {
+            toast({
+                variant: "destructive",
+                title: "Erro na solicitação!",
+                description:
+                    e instanceof Error
+                        ? e.message
+                        : "Ocorreu um erro ao tentar solicitar a recuperação de senha.",
+            });
+        }
+    }
 
     return (
         <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)}>
+            <form
+                onSubmit={form.handleSubmit(onSubmit)}
+                className="flex flex-col gap-6"
+            >
                 <FormField
                     control={form.control}
                     name="email"
                     render={({ field }) => (
-                        <FormItem className="pb-4">
-                            <FormLabel className="font-bold">E-mail</FormLabel>
+                        <FormItem className="flex flex-col gap-2">
+                            <FormLabel htmlFor="email" className="font-bold">
+                                E-mail
+                            </FormLabel>
                             <FormControl>
                                 <Input
+                                    id="email"
                                     type="email"
                                     placeholder="Digite seu email"
                                     {...field}
@@ -46,10 +88,10 @@ export default function SendEmailForm() {
                         </FormItem>
                     )}
                 />
-                <div className="space-y-2 flex flex-col">
+                <div className="flex flex-col gap-2">
                     <Button
                         type="submit"
-                        className="bg-indigo-950 rounded-full text-base"
+                        className="bg-indigo-950 rounded-full font-bold text-base"
                     >
                         SOLICITAR RECUPERAÇÃO
                     </Button>

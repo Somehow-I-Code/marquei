@@ -4,6 +4,7 @@ export type Profile = {
     occupation: string;
     email: string;
     level: string;
+    companyId: number;
 };
 
 export type ProfilesResponse = Profile & {

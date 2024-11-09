@@ -5,27 +5,56 @@ import getSession from "../utis/get-session";
 import NewProfileForm, {
     NewProfileFormSchema,
 } from "./components/new-profile-form";
+import { Company } from "@/types/companies";
+import { jwtDecode } from "jwt-decode";
+import { notFound } from "next/navigation";
 
-async function getLevels() {
-    const response = await fetch("http://api:8080/levels");
+async function getLevels(token: string): Promise<Array<string>> {
+    const response = await fetch("http://api:8080/levels", {
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+    });
+    const data = await response.json();
+
+    return data;
+}
+
+async function getCompanies(token: string): Promise<Array<Company>> {
+    const response = await fetch("http://api:8080/companies", {
+        headers: {
+            Authorization: `Bearer ${token}`,
+        }
+    })
     const data = await response.json();
 
     return data;
 }
 
 export default async function NewProfile() {
-    const levels = await getLevels();
     const session = getSession();
 
     if (!session) {
         return redirect("/login");
     }
 
+    const decoded = jwtDecode(session) as {
+        level: string;
+    };
+    
+    if (decoded.level === "USER") {
+        return notFound();
+    }
+
+    const levels = await getLevels(session);
+    const companies = await getCompanies(session);
+        
     async function createProfile(data: NewProfileFormSchema) {
         "use server";
 
         const body = {
             ...data,
+            companyId: Number(data.companyId),
         };
 
         const response = await fetch("http://api:8080/profiles", {
@@ -52,8 +81,7 @@ export default async function NewProfile() {
             </div>
             <div className="p-6 flex flex-col gap-8">
                 <FormTitle>Novo perfil</FormTitle>
-
-                <NewProfileForm levels={levels} createProfile={createProfile} />
+                <NewProfileForm levels={levels} createProfile={createProfile} companies={companies} />
             </div>
         </section>
     );

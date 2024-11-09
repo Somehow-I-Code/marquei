@@ -15,6 +15,7 @@ import { updateProfile } from "./src/http/routes/profile-deactivate";
 import { ProfilesList } from "./src/http/routes/profiles-list";
 import { resetPassword } from "./src/http/routes/reset-password";
 import { sudoLogin } from "./src/http/routes/sudo-login";
+import { getCompanies } from "./src/http/routes/get-companies";
 
 const server = Fastify();
 
@@ -34,6 +35,7 @@ server.register(updateProfile);
 server.register(updateProfileActivate);
 server.register(ProfilesList);
 server.register(CreateNewPassword);
+server.register(getCompanies);
 
 server.listen({ port: 8080, host: "0.0.0.0" }, (err, address) => {
     if (err) {

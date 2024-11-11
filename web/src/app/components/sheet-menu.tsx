@@ -1,17 +1,19 @@
 import { SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
 import Link from "next/link";
-import Home from "../user-menu/assests/home.svg";
-import Categories from "../user-menu/assests/categories.svg";
-import Resources from "../user-menu/assests/resources.svg";
-import ManagerProfiles from "../user-menu/assests/manager-profiles.svg";
-import Profile from "../user-menu/assests/profile.svg";
-import Logout from "../user-menu/assests/logout.svg";
-import Company from "../user-menu/assests/company.svg";
 import LogoutMenu from "../user-menu/components/logout-sheet-menu";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import getSession from "../utis/get-session";
 import { jwtDecode } from "jwt-decode";
+import {
+    Folder,
+    Home,
+    FileStack,
+    Wrench,
+    CircleUserRound,
+    Building2,
+    LogOut,
+} from "lucide-react";
 
 async function doLogout() {
     "use server";
@@ -47,7 +49,7 @@ export default async function SheetMenu() {
                     </div>
 
                     <div className="flex items-center gap-2 font-medium">
-                        <Resources />
+                        <FileStack />
                         <span>Recursos</span>
                     </div>
 
@@ -56,7 +58,7 @@ export default async function SheetMenu() {
                     </div>
 
                     <div className="flex items-center gap-2 font-medium hover:underline">
-                        <Profile />
+                        <CircleUserRound />
                         <Link href="/profile">Perfil</Link>
                     </div>
                 </div>
@@ -70,12 +72,12 @@ export default async function SheetMenu() {
                     </div>
 
                     <div className="flex items-center gap-2 font-medium hover:underline">
-                        <Categories />
+                        <Folder />
                         <Link href="/new-category">Categorias</Link>
                     </div>
 
                     <div className="flex items-center gap-2 font-medium">
-                        <Resources />
+                        <FileStack />
                         <span>Recursos</span>
                     </div>
 
@@ -89,7 +91,7 @@ export default async function SheetMenu() {
 
                     <div className="flex flex-col items-start gap-4 mt-12">
                         <div className="flex items-center gap-2 font-medium">
-                            <ManagerProfiles />
+                            <Wrench />
                             <span>Gerenciar perfis</span>
                         </div>
 
@@ -102,7 +104,7 @@ export default async function SheetMenu() {
                         </div>
 
                         <div className="flex items-center gap-2 font-medium hover:underline">
-                            <Profile />
+                            <CircleUserRound />
                             <Link href="/profile">Perfil</Link>
                         </div>
                     </div>
@@ -114,17 +116,16 @@ export default async function SheetMenu() {
                     <div className="flex flex-col items-start gap-4 mt-6">
                         <div className="flex items-center gap-2 font-medium hover:underline">
                             <Home />
-                            <span>Tela inicial</span>
-                            {/* <Link href="/">Tela inicial</Link> */}
+                            <Link href="/">Tela inicial</Link>
                         </div>
 
                         <div className="flex items-center gap-2 font-medium hover:underline">
-                            <Categories />
+                            <Folder />
                             <Link href="/new-category">Categorias</Link>
                         </div>
 
                         <div className="flex items-center gap-2 font-medium">
-                            <Resources />
+                            <FileStack />
                             <span>Recursos</span>
                         </div>
 
@@ -140,7 +141,7 @@ export default async function SheetMenu() {
                     </div>
                     <div className="flex flex-col items-start gap-4 mt-12">
                         <div className="flex items-center gap-2 font-medium">
-                            <ManagerProfiles />
+                            <Wrench />
                             <span>Gerenciar perfis</span>
                         </div>
 
@@ -153,13 +154,13 @@ export default async function SheetMenu() {
                         </div>
 
                         <div className="flex items-center gap-2 font-medium hover:underline">
-                            <Profile />
+                            <CircleUserRound />
                             <Link href="/profile">Perfil</Link>
                         </div>
                     </div>
                     <div className="flex flex-col items-start gap-4 mt-12">
                         <div className="flex items-center gap-2 font-medium">
-                            <Company />
+                            <Building2 />
                             <span>Empresa</span>
                         </div>
                         <div className="flex items-center gap-2 px-8 font-medium hover:underline">
@@ -169,8 +170,8 @@ export default async function SheetMenu() {
                 </>
             )}
 
-            <div className="absolute bottom-12 flex items-center gap-2 font-medium hover:underline">
-                <Logout />
+            <div className="absolute bottom-12 flex items-center gap-2 font-medium text-red-500 hover:underline">
+                <LogOut />
                 <LogoutMenu doLogout={doLogout} />
             </div>
         </SheetContent>

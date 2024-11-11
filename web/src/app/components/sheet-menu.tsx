@@ -48,9 +48,18 @@ export default async function SheetMenu() {
                         <Link href="/">Tela inicial</Link>
                     </div>
 
+                    <div className="flex items-center gap-2 font-medium hover:underline">
+                        <Folder />
+                        <Link href="/new-category">Categorias</Link>
+                    </div>
+
                     <div className="flex items-center gap-2 font-medium">
                         <FileStack />
                         <span>Recursos</span>
+                    </div>
+
+                    <div className="flex items-center gap-2 px-8 font-medium hover:underline">
+                        <Link href="/new-resource">Novo recurso</Link>
                     </div>
 
                     <div className="flex items-center gap-2 px-8 font-medium hover:underline">

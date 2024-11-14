@@ -1,4 +1,9 @@
-import { SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
+import {
+    SheetClose,
+    SheetContent,
+    SheetHeader,
+    SheetTitle,
+} from "@/components/ui/sheet";
 import Link from "next/link";
 import LogoutMenu from "../user-menu/components/logout-sheet-menu";
 import { cookies } from "next/headers";
@@ -43,9 +48,13 @@ export default async function SheetMenu() {
 
             {decoded.level === "USER" && (
                 <div className="flex flex-col items-start gap-4 mt-6">
-                    <div className="flex items-center gap-2 font-medium hover:underline">
+                    <div className="flex items-center gap-2  hover:underline">
                         <Home />
-                        <Link href="/">Tela inicial</Link>
+                        <Link href="/">
+                            <SheetClose className="font-medium hover:underline">
+                                Tela Inicial
+                            </SheetClose>
+                        </Link>
                     </div>
 
                     <div className="flex items-center gap-2 font-medium hover:underline">
@@ -77,7 +86,11 @@ export default async function SheetMenu() {
                 <div className="flex flex-col items-start gap-4 mt-6">
                     <div className="flex items-center gap-2 font-medium hover:underline">
                         <Home />
-                        <Link href="/">Tela inicial</Link>
+                        <Link href="/">
+                            <SheetClose className="font-medium hover:underline">
+                                Tela Inicial
+                            </SheetClose>
+                        </Link>
                     </div>
 
                     <div className="flex items-center gap-2 font-medium hover:underline">
@@ -125,7 +138,11 @@ export default async function SheetMenu() {
                     <div className="flex flex-col items-start gap-4 mt-6">
                         <div className="flex items-center gap-2 font-medium hover:underline">
                             <Home />
-                            <Link href="/">Tela inicial</Link>
+                            <Link href="/">
+                                <SheetClose className="font-medium hover:underline">
+                                    Tela Inicial
+                                </SheetClose>
+                            </Link>
                         </div>
 
                         <div className="flex items-center gap-2 font-medium hover:underline">

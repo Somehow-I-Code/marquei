@@ -10,8 +10,11 @@ import {
     FormLabel,
     FormMessage,
 } from "@/components/ui/form";
+import { ToastAction } from "@/components/ui/toast";
+import { useToast } from "@/components/ui/use-toast";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
@@ -26,7 +29,13 @@ const FormSchema = z.object({
 
 export type CreateNewPasswordFormSchema = z.infer<typeof FormSchema>;
 
-export default function CreateNewPasswordForm() {
+type CreateNewPasswordFormProps = {
+    createNewPassword: (data: CreateNewPasswordFormSchema) => Promise<void>;
+};
+
+export default function CreateNewPasswordForm({
+    createNewPassword,
+}: CreateNewPasswordFormProps) {
     const form = useForm<CreateNewPasswordFormSchema>({
         resolver: zodResolver(FormSchema),
         defaultValues: {
@@ -35,7 +44,29 @@ export default function CreateNewPasswordForm() {
         },
     });
 
-    function onSubmit(data: CreateNewPasswordFormSchema) {}
+    const { toast } = useToast();
+    const router = useRouter();
+
+    async function onSubmit(data: CreateNewPasswordFormSchema) {
+        try {
+            await createNewPassword(data);
+
+            form.reset();
+
+            toast({
+                title: "Ótimo!",
+                description: "Senha criada com sucesso.",
+            });
+        } catch (e) {
+            if (e instanceof Error) {
+                toast({
+                    variant: "destructive",
+                    title: "Algo não deu certo!",
+                    description: e.message,
+                });
+            }
+        }
+    }
 
     return (
         <Form {...form}>

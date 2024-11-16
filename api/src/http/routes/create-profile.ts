@@ -13,7 +13,9 @@ export async function createProfile(server: FastifyInstance) {
         const secretKey = getJwtSecret();
 
         if (!token) {
-            return reply.status(httpCodes.BAD_REQUEST).send({ message: "Token inválido!" });
+            return reply
+                .status(httpCodes.BAD_REQUEST)
+                .send({ message: "Token inválido!" });
         }
 
         const profile = verify(token, secretKey) as {

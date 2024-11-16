@@ -1,0 +1,15 @@
+# @name login
+POST {{host}}/login
+Content-Type: application/json
+
+{
+    "email": "regan.cole9@gmail.com",
+    "password": "1234567890"
+}
+
+###
+
+@authToken = Bearer {{login.response.body.$.token}}
+
+DELETE  {{host}}/profiles/35
+Authorization: {{authToken}}

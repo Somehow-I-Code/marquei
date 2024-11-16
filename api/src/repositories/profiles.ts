@@ -106,14 +106,63 @@ class ProfileRepository {
 
     async findAll(companyId: number, isSudo: boolean) {
         if (isSudo) {
-            return prisma.profile.findMany();
+            return prisma.profile.findMany({
+                select: {
+                    id: true,
+                    name: true,
+                    email: true,
+                    level: true,
+                    occupation: true,
+                },
+            });
         }
         return prisma.profile.findMany({
+            select: {
+                id: true,
+                name: true,
+                email: true,
+                level: true,
+                occupation: true,
+            },
             where: {
                 companyId,
                 level: { not: "SUDO" },
             },
         });
+    }
+
+    async delete(id: number, currentUser: { level: Level; companyId: number }) {
+        try {
+            if (currentUser.level === Level.SUDO) {
+                const deletedProfile = await prisma.profile.delete({
+                    select: {
+                        id: true,
+                    },
+                    where: {
+                        id,
+                    },
+                });
+
+                return deletedProfile;
+            }
+
+            const deletedProfile = await prisma.profile.delete({
+                select: {
+                    id: true,
+                },
+                where: {
+                    id,
+                    companyId: currentUser.companyId,
+                    level: {
+                        not: Level.SUDO,
+                    },
+                },
+            });
+
+            return deletedProfile;
+        } catch {
+            return null;
+        }
     }
 }
 

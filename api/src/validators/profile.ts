@@ -18,5 +18,13 @@ export const toggleProfileSchema = z.object({
     profileId: z.string().pipe(z.coerce.number()),
 });
 
+export const deleteProfileSchema = z.object({
+    id: z.coerce.number({
+        required_error: "Id do perfil é obrigatório!",
+        invalid_type_error: "Id tem que ser um número, contate o suporte!",
+    }),
+});
+
 export type CreateProfileInput = z.infer<typeof createProfileSchema>;
 export type ToggleProfileInput = z.infer<typeof toggleProfileSchema>;
+export type DeleteProfileInput = z.infer<typeof deleteProfileSchema>;

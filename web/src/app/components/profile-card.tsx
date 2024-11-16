@@ -1,3 +1,5 @@
+"use client";
+
 import {
     Accordion,
     AccordionContent,
@@ -6,12 +8,14 @@ import {
 } from "@/components/ui/accordion";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import {
     Card,
     CardContent,
     CardFooter,
     CardHeader,
 } from "@/components/ui/card";
+import { useToast } from "@/components/ui/use-toast";
 import Link from "next/link";
 
 type ProfileCardProps = {
@@ -22,9 +26,15 @@ type ProfileCardProps = {
         level: string;
         occupation: string;
     };
+    deleteProfile: (id: number) => void;
 };
 
-export default function ProfileCard({ profile }: ProfileCardProps) {
+export default function ProfileCard({
+    profile,
+    deleteProfile,
+}: ProfileCardProps) {
+    const { toast } = useToast();
+
     function generateInitials() {
         const names = profile.name.split(" ");
         const reversedNames = names.toReversed();
@@ -32,6 +42,26 @@ export default function ProfileCard({ profile }: ProfileCardProps) {
 
         return initials.toUpperCase();
     }
+
+    async function handleDeleteProfile() {
+        try {
+            await deleteProfile(profile.id);
+
+            toast({
+                title: "Perfil excluído!",
+                description: "O perfil foi excluído com sucesso.",
+            });
+        } catch (e) {
+            if (e instanceof Error) {
+                toast({
+                    variant: "destructive",
+                    title: "Erro ao excluir perfil!",
+                    description: e.message,
+                });
+            }
+        }
+    }
+
     return (
         <div className="px-2">
             <Card className="border-slate-400">
@@ -82,7 +112,13 @@ export default function ProfileCard({ profile }: ProfileCardProps) {
                                     </h1>
                                 </div>
 
-                                <Link href="">Excluir perfil</Link>
+                                <Button
+                                    variant="danger"
+                                    className="rounded-lg"
+                                    onClick={handleDeleteProfile}
+                                >
+                                    Excluir perfil
+                                </Button>
                             </AccordionContent>
                         </AccordionItem>
                     </Accordion>
@@ -91,4 +127,3 @@ export default function ProfileCard({ profile }: ProfileCardProps) {
         </div>
     );
 }
-

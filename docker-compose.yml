@@ -25,6 +25,11 @@ services:
     command: npm run dev
     depends_on:
       - db
+    environment:
+      - JWT_SECRET=some-random-value-here
+      - DATABASE_URL=postgresql://docker:docker@db:5432/marquei
+      - SLACK_HOOK_PASSWORDS=https://hooks.slack.com/services/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
+      - SLACK_HOOK_RESET_PASSWORD=https://hooks.slack.com/services/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
   db:
     image: postgres:16.2
     ports:

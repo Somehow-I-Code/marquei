@@ -1,8 +1,10 @@
 import { redirect } from "next/navigation";
 import CompanyLogo from "../components/company-logo";
-import WelcomeImage from "./assets/welcome.svg";
-import FirstLoginForm from "./components/first-login-reset-password";
 import getSession from "../utis/get-session";
+import WelcomeImage from "./assets/welcome.svg";
+import FirstLoginForm, {
+    FirstLoginFormSchema,
+} from "./components/first-login-reset-password";
 
 export default async function FirstLogin() {
     const session = getSession();
@@ -11,7 +13,29 @@ export default async function FirstLogin() {
         return redirect("/login");
     }
 
-    //TODO: Fazer o fetch para enviar no BD(DB)
+    async function firstLoginResetPassword(data: FirstLoginFormSchema) {
+        "use server";
+
+        const body = {
+            ...data,
+        };
+
+        const response = await fetch("http://api:8080/change-password", {
+            method: "PATCH",
+            headers: {
+                "content-type": "application/json",
+                Authorization: `Bearer ${session}`,
+            },
+            body: JSON.stringify(body),
+        });
+
+        if (response.status !== 200) {
+            const data = (await response.json()) as { message: string };
+            throw new Error(data.message);
+        }
+
+        redirect("/success-password-first-login");
+    }
 
     return (
         <section className="py-12 px-6 space-y-12">
@@ -28,7 +52,9 @@ export default async function FirstLogin() {
                 <h1 className="font-bold">
                     Antes de continuar, precisamos que você atualize sua senha.
                 </h1>
-                <FirstLoginForm />
+                <FirstLoginForm
+                    firstLoginResetPassword={firstLoginResetPassword}
+                />
             </div>
         </section>
     );

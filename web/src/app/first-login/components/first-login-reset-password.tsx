@@ -10,9 +10,12 @@ import {
     FormLabel,
     FormMessage,
 } from "@/components/ui/form";
+import { useToast } from "@/components/ui/use-toast";
+import { ToastAction } from "@/components/ui/toast";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { useRouter } from "next/navigation";
 
 const FormSchema = z.object({
     newPassword: z.string().min(8, {
@@ -25,7 +28,13 @@ const FormSchema = z.object({
 
 export type FirstLoginFormSchema = z.infer<typeof FormSchema>;
 
-export default function FirstLoginForm() {
+type FirstLoginFormProps = {
+    firstLoginResetPassword: (data: FirstLoginFormSchema) => void;
+};
+
+export default function FirstLoginForm({ 
+    firstLoginResetPassword, 
+}: FirstLoginFormProps) {
     const form = useForm<FirstLoginFormSchema>({
         resolver: zodResolver(FormSchema),
         defaultValues: {
@@ -34,7 +43,29 @@ export default function FirstLoginForm() {
         },
     });
 
-    function onSubmit(data: FirstLoginFormSchema) {}
+    const { toast } = useToast();
+
+    async function onSubmit(data: FirstLoginFormSchema) {
+        try {
+            await firstLoginResetPassword(data);
+
+            form.reset();
+
+            toast({
+                title: "Ótimo!",
+                description: "Senha atualizada com sucesso.",
+            });
+        } catch (e) {
+            if (e instanceof Error) {
+                toast({
+                    variant: "destructive",
+                    title: "Algo não deu certo!",
+                    description: e.message,
+                });
+            }
+        }
+    }
+
     return (
         <Form {...form}>
             <form
@@ -46,7 +77,7 @@ export default function FirstLoginForm() {
                     name="newPassword"
                     render={({ field }) => (
                         <FormItem className="flex flex-col">
-                            <FormLabel>Nova Senha</FormLabel>
+                            <FormLabel>Nova senha</FormLabel>
                             <FormControl>
                                 <PasswordInput
                                     placeholder="Digite sua nova senha"
@@ -63,7 +94,7 @@ export default function FirstLoginForm() {
                     name="repeatPassword"
                     render={({ field }) => (
                         <FormItem className="flex flex-col">
-                            <FormLabel>Repetir Senha</FormLabel>
+                            <FormLabel>Repita a nova senha</FormLabel>
                             <FormControl>
                                 <PasswordInput
                                     placeholder="Repita sua nova senha"

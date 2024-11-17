@@ -18,13 +18,13 @@ export default async function SuccessPasswordFirstLogin() {
             </div>
 
             <div>
-                <p className="flex flex col gap-y-12 p-12 items-center justify-center font-sans font-extrabold text-3xl text-indigo-950">
+                <p className="flex col gap-y-12 p-12 items-center justify-center font-sans font-extrabold text-3xl text-indigo-950">
                     Tudo certinho!
                 </p>
             </div>
 
             <div>
-                <p className="flex flex col gap-6 items-center justify-center text-base font-bold text-indigo-950">
+                <p className="flex col gap-6 items-center justify-center text-base font-bold text-indigo-950">
                     Pronto para começar a agendar?
                 </p>
 

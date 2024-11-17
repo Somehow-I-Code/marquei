@@ -46,6 +46,8 @@ export async function login(server: FastifyInstance) {
             secretKey,
         );
 
-        return reply.status(httpCodes.SUCCESS).send({ token });
+        return reply
+            .status(httpCodes.SUCCESS)
+            .send({ token, firstLogin: profile.firstLogin });
     });
 }

@@ -6,11 +6,11 @@ type LogoutMenuProps = {
 
 export default function LogoutMenu({ doLogout }: LogoutMenuProps) {
     return (
-        <span
+        <button
             className="font-bold font-medium text-red-500"
             onClick={async () => doLogout()}
         >
             Sair
-        </span>
+        </button>
     );
 }

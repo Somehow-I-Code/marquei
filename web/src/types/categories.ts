@@ -1,6 +1,7 @@
 export type Category = {
     id: number;
     name: string;
+    companyId: number;
 };
 
 export type CategoriesResponse = Array<

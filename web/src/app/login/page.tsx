@@ -21,11 +21,18 @@ export default function LoginPage() {
             throw new Error(data.message);
         }
 
-        const data = (await response.json()) as { token: string };
+        const data = (await response.json()) as {
+            token: string;
+            firstLogin: boolean;
+        };
         cookies().set("session", data.token, {
             expires: new Date(Date.now() + _30_DAYS),
         });
-        redirect("/");
+        if (data.firstLogin) {
+            redirect("/first-login");
+        } else {
+            redirect("/");
+        }
     }
 
     return (

@@ -28,8 +28,6 @@ export default async function NewCategory() {
             companyId: Number(data.companyId),
         };
 
-        console.log("Checando:", body);
-
         const response = await fetch("http://api:8080/categories", {
             method: "post",
             headers: {

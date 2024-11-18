@@ -107,6 +107,23 @@ export default function NewCategoryForm({
                     )}
                 />
 
+                <FormField
+                    control={form.control}
+                    name="companyId"
+                    render={({ field }) => (
+                        <FormItem>
+                            <FormControl>
+                                <Input
+                                    id="companyId"
+                                    type="hidden"
+                                    {...field}
+                                />
+                            </FormControl>
+                            <FormMessage />
+                        </FormItem>
+                    )}
+                />
+
                 <div className="flex flex-col gap-2">
                     <Button type="submit" className="text-base font-bold">
                         SALVAR

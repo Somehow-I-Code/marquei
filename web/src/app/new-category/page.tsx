@@ -25,7 +25,7 @@ export default async function NewCategory() {
 
         const body = {
             ...data,
-            companyId: Number(data.companyId),
+            companyId,
         };
 
         const response = await fetch("http://api:8080/categories", {
@@ -55,10 +55,7 @@ export default async function NewCategory() {
                     Nova Categoria
                 </h1>
 
-                <NewCategoryForm
-                    createCategory={createCategory}
-                    companyId={companyId}
-                />
+                <NewCategoryForm createCategory={createCategory} />
             </div>
         </section>
     );

@@ -22,27 +22,21 @@ const FormSchema = z.object({
     name: z.string().min(1, {
         message: "O nome da categoria não pode estar vazio.",
     }),
-    companyId: z.string().min(1, {
-        message: "Empresa é obrigatório, contate o suporte!",
-    }),
 });
 
 export type NewCategoryFormSchema = z.infer<typeof FormSchema>;
 
 type NewCategoryFormProps = {
     createCategory: (data: NewCategoryFormSchema) => Promise<void>;
-    companyId: number;
 };
 
 export default function NewCategoryForm({
     createCategory,
-    companyId,
 }: NewCategoryFormProps) {
     const form = useForm<NewCategoryFormSchema>({
         resolver: zodResolver(FormSchema),
         defaultValues: {
             name: "",
-            companyId: String(companyId),
         },
     });
 
@@ -102,23 +96,6 @@ export default function NewCategoryForm({
                                 />
                             </FormControl>
 
-                            <FormMessage />
-                        </FormItem>
-                    )}
-                />
-
-                <FormField
-                    control={form.control}
-                    name="companyId"
-                    render={({ field }) => (
-                        <FormItem>
-                            <FormControl>
-                                <Input
-                                    id="companyId"
-                                    type="hidden"
-                                    {...field}
-                                />
-                            </FormControl>
                             <FormMessage />
                         </FormItem>
                     )}

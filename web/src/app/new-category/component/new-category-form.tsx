@@ -27,7 +27,7 @@ const FormSchema = z.object({
 export type NewCategoryFormSchema = z.infer<typeof FormSchema>;
 
 type NewCategoryFormProps = {
-    createCategory: (data: NewCategoryFormSchema) => void;
+    createCategory: (data: NewCategoryFormSchema) => Promise<void>;
 };
 
 export default function NewCategoryForm({
@@ -100,6 +100,7 @@ export default function NewCategoryForm({
                         </FormItem>
                     )}
                 />
+
                 <div className="flex flex-col gap-2">
                     <Button type="submit" className="text-base font-bold">
                         SALVAR

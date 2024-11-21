@@ -5,6 +5,7 @@ import NewCategoryForm, {
 } from "./component/new-category-form";
 import getSession from "../utis/get-session";
 import { redirect } from "next/navigation";
+import { jwtDecode } from "jwt-decode";
 
 export default async function NewCategory() {
     const session = getSession();
@@ -13,11 +14,18 @@ export default async function NewCategory() {
         return redirect("/login");
     }
 
+    const decoded = jwtDecode(session) as {
+        companyId: number;
+    };
+
+    const companyId = decoded.companyId;
+
     async function createCategory(data: NewCategoryFormSchema) {
         "use server";
 
         const body = {
-            name: data.name,
+            ...data,
+            companyId,
         };
 
         const response = await fetch("http://api:8080/categories", {

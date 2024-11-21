@@ -7,21 +7,33 @@ import NewResourceForm, {
 } from "./components/new-resource-form";
 import getSession from "../utis/get-session";
 import { redirect } from "next/navigation";
+import { jwtDecode } from "jwt-decode";
 
-async function getCategories(): Promise<CategoriesResponse> {
-    const response = await fetch("http://api:8080/categories");
+async function getCategories(token: string): Promise<CategoriesResponse> {
+    const response = await fetch("http://api:8080/categories", {
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+    });
     const data = await response.json();
 
     return data;
 }
 
 export default async function NewResource() {
-    const categories = await getCategories();
     const session = getSession();
 
     if (!session) {
         return redirect("/login");
     }
+
+    const categories = await getCategories(session);
+
+    const decoded = jwtDecode(session) as {
+        companyId: number;
+    };
+
+    const companyId = decoded.companyId;
 
     async function createResource(data: NewResourceFormSchema) {
         "use server";
@@ -29,6 +41,7 @@ export default async function NewResource() {
         const body = {
             ...data,
             categoryId: Number(data.category),
+            companyId,
         };
 
         const response = await fetch("http://api:8080/resources", {

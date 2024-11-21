@@ -2,6 +2,7 @@ export type Resource = {
     name: string;
     description: string;
     category: string;
+    companyId: number;
 };
 
 export type ResourceResponse = Array<{
@@ -11,9 +12,11 @@ export type ResourceResponse = Array<{
     createdAt: string;
     updatedAt: string;
     categoryId: number;
+    companyId: number;
     category: {
         id: number;
         name: string;
+        companyId: number;
         createdAt: string;
         updatedAt: string;
     };

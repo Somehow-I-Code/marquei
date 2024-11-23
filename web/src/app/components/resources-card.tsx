@@ -17,7 +17,7 @@ export default function ResourcesCard({ resource }: ResourceCardProps) {
                             {resource.name}
                         </h2>
 
-                        <p className="text-slate-500 text-xs">
+                        <p className="text-slate-500 text-xs line-clamp-2">
                             {resource.description}
                         </p>
                     </div>

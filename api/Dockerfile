@@ -1,16 +1,18 @@
 FROM node:20.11-alpine3.18
+
+RUN addgroup -S appgroup && adduser -S appuser -G appgroup
+
 WORKDIR /app
+RUN chown -R appuser:appgroup /app
 
-COPY package*.json . 
-COPY prisma ./prisma
+COPY --chown=appuser:appgroup package*.json . 
+RUN npm ci && npm cache clean --force
+RUN chown -R appuser:appgroup /app/node_modules
 
-RUN npm install --no-optional && npm cache clean --force
-RUN npx prisma generate
-RUN rm -rf prisma
+COPY --chown=appuser:appgroup . .
 
-RUN chown -R node:node node_modules/.prisma
-
-#TODO: Revisar necessidade dessa linha
-#USER node
+USER appuser
 
 EXPOSE 8080
+
+CMD ["sh", "start.sh"]

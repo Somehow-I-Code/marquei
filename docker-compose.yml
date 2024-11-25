@@ -1,6 +1,7 @@
 services:
   web:
     image: marquei-web
+    container_name: marquei-web
     build:
       context: ./web
       dockerfile: Dockerfile
@@ -14,6 +15,7 @@ services:
       - api
   api:
     image: marquei-api
+    container_name: marquei-api
     build:
       context: ./api
       dockerfile: Dockerfile
@@ -22,14 +24,11 @@ services:
     volumes:
       - ./api:/app
       - /app/node_modules
-    command: npm run dev
+    command: sh start.sh
     depends_on:
       - db
-    environment:
-      - JWT_SECRET=some-random-value-here
-      - DATABASE_URL=postgresql://docker:docker@db:5432/marquei
-      - SLACK_HOOK_PASSWORDS=https://hooks.slack.com/services/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
-      - SLACK_HOOK_RESET_PASSWORD=https://hooks.slack.com/services/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
+    env_file:
+      - ./api/.env
   db:
     image: postgres:16.2
     ports:

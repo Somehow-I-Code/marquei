@@ -15,6 +15,8 @@ help:
 	@echo "    make containers.stop                     - Stop and remove containers"
 	@echo "    make containers.start                    - Start the containers"
 	@echo "    make containers.start.detached           - Start the containers in detached mode"
+	@echo "    make containers.log.web                  - See the logs of the web container"
+	@echo "    make containers.log.api                  - See the logs of the api container"
 	@echo " Access commands:"
 	@echo "    make access.web                          - Access the web container"
 	@echo "    make access.api                          - Access the api container"

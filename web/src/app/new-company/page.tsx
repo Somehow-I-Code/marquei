@@ -4,14 +4,23 @@ import FormTitle from "../components/form-title";
 import NewCompanyForm, {
     NewCompanyFormSchema,
 } from "./components/new-company-form";
-import { redirect } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import getSession from "../utis/get-session";
+import { jwtDecode } from "jwt-decode";
 
 export default async function NewCompany() {
     const session = getSession();
 
     if (!session) {
         return redirect("/login");
+    }
+
+    const decoded = jwtDecode(session) as {
+        level: string;
+    };
+
+    if (decoded.level === "USER" || decoded.level === "ADMIN") {
+        return notFound();
     }
 
     async function createCompany(data: NewCompanyFormSchema) {

@@ -55,6 +55,14 @@ containers.start:
 containers.start.detached:
 	docker compose up -d
 
+.PHONY: containers.log.web
+containers.log.web:
+	docker logs -f $(WEB_CONTAINER_NAME)
+
+.PHONY: containers.log.api
+containers.log.api:
+	docker logs -f $(API_CONTAINER_NAME)
+
 .PHONY: access.web
 access.web:
 	docker container exec -it $(WEB_CONTAINER_NAME) sh

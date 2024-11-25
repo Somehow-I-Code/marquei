@@ -14,6 +14,10 @@ help:
 	@echo "    make containers.rebuild                  - Rebuild containers without cache"
 	@echo "    make containers.stop                     - Stop and remove containers"
 	@echo "    make containers.start                    - Start the containers"
+	@echo "    make containers.start.detached           - Start the containers in detached mode"
+	@echo " Access commands:"
+	@echo "    make access.web                          - Access the web container"
+	@echo "    make access.api                          - Access the api container"
 
 # Group target for Prisma commands
 .PHONY: prisma
@@ -47,10 +51,14 @@ containers.stop:
 containers.start:
 	docker compose up
 
+.PHONY: containers.start.detached
+containers.start.detached:
+	docker compose up -d
+
 .PHONY: access.web
 access.web:
 	docker container exec -it $(WEB_CONTAINER_NAME) sh
 
 .PHONY: access.api
-access.web:
+access.api:
 	docker container exec -it $(API_CONTAINER_NAME) sh

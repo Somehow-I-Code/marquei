@@ -1,6 +1,6 @@
 # Variables
-CONTAINER_NAME=marquei-api
-PRISMA_CMD=npx prisma
+API_CONTAINER_NAME=marquei-api
+WEB_CONTAINER_NAME=marquei-api
 
 # Default target
 .PHONY: help
@@ -21,18 +21,18 @@ prisma: help
 
 .PHONY: prisma.generate
 prisma.generate:
-	docker container exec $(CONTAINER_NAME) $(PRISMA_CMD) generate
+	docker container exec $(API_CONTAINER_NAME) npx prisma generate
 
 .PHONY: prisma.migrate.new
 prisma.migrate.new:
 ifndef NAME
 	$(error NAME is required, e.g., make prisma new migration NAME=myMigration)
 endif
-	docker container exec $(CONTAINER_NAME) $(PRISMA_CMD) migrate dev --name $(NAME)
+	docker container exec $(API_CONTAINER_NAME) npx prisma migrate dev --name $(NAME)
 
 .PHONY: prisma.migrate.reset
 prisma.migrate.reset:
-	docker container exec $(CONTAINER_NAME) $(PRISMA_CMD) migrate reset --force
+	docker container exec $(API_CONTAINER_NAME) npx prisma migrate reset --force
 
 # Docker commands
 .PHONY: containers.rebuild
@@ -46,3 +46,11 @@ containers.stop:
 .PHONY: containers.start
 containers.start:
 	docker compose up
+
+.PHONY: access.web
+access.web:
+	docker container exec -it $(WEB_CONTAINER_NAME) sh
+
+.PHONY: access.api
+access.web:
+	docker container exec -it $(API_CONTAINER_NAME) sh

@@ -10,7 +10,7 @@ services:
     volumes:
       - ./web:/app
       - /app/node_modules
-    command: npm run dev
+    command: sh start.sh
     depends_on:
       - api
   api:

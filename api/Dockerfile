@@ -1,16 +1,16 @@
 FROM node:20.11-alpine3.18
+
 WORKDIR /app
+RUN chown -R node:node /app
 
-COPY package*.json . 
-COPY prisma ./prisma
+COPY --chown=node:node package*.json . 
+RUN npm install 
+RUN chown -R node:node /app/node_modules
 
-RUN npm install --no-optional && npm cache clean --force
-RUN npx prisma generate
-RUN rm -rf prisma
+COPY --chown=node:node . .
 
-RUN chown -R node:node node_modules/.prisma
-
-#TODO: Revisar necessidade dessa linha
-#USER node
+USER node
 
 EXPOSE 8080
+
+CMD ["sh", "start.sh"]

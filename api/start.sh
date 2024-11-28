@@ -7,7 +7,7 @@ echo "installing dependencies and starting the server"
 npm install
 
 # generate prisma client javascript files
-npx prisma generate
+npx prisma generate > /dev/null
 
 # start the server and watch for changes in package.json and package-lock.json
 # if those files are changed, reinstall the dependencies

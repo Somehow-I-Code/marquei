@@ -1,17 +1,15 @@
 FROM node:20.11-alpine3.18
 
-RUN addgroup -S appgroup && adduser -S appuser -G appgroup
-
 WORKDIR /app
-RUN chown -R appuser:appgroup /app
+RUN chown -R node:node /app
 
-COPY --chown=appuser:appgroup package*.json .
-RUN npm ci && npm cache clean --force
-RUN chown -R appuser:appgroup /app/node_modules
+COPY --chown=node:node package*.json .
+RUN npm install
+RUN chown -R node:node /app/node_modules
 
-COPY --chown=appuser:appgroup . .
+COPY --chown=node:node . .
 
-USER appuser
+USER node
 
 EXPOSE 3001
 

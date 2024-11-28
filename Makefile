@@ -11,7 +11,7 @@ help:
 	@echo "    make prisma.migrate.new NAME=myMigration - Create a new migration with a dynamic name"
 	@echo "    make prisma.migrate.reset                - Reset and regenerate models"
 	@echo "  Docker commands:"
-	@echo "    make containers.rebuild                  - Rebuild containers without cache"
+	@echo "    make containers.build                    - Build the containers"
 	@echo "    make containers.stop                     - Stop and remove containers"
 	@echo "    make containers.start                    - Start the containers"
 	@echo "    make containers.start.detached           - Start the containers in detached mode"
@@ -57,10 +57,10 @@ prisma.migrate.reset:
 # Use this command to rebuild the containers without cache
 # If you change the Dockerfile or the docker-compose.yml file you should run this command
 
-# command: make containers.rebuild
-.PHONY: containers.rebuild
-containers.rebuild:
-	docker compose build --no-cache
+# command: make containers.build
+.PHONY: containers.build
+containers.build:
+	docker compose build
 
 # Use this command to stop and remove the containers
 # If you want to stop the containers you should run this command

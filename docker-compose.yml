@@ -9,7 +9,7 @@ services:
       - "3001:3001"
     volumes:
       - ./web:/app
-      - /app/node_modules
+      - web_node_modules:/app/node_modules
     command: sh start.sh
     depends_on:
       - api
@@ -23,7 +23,7 @@ services:
       - "8080:8080"
     volumes:
       - ./api:/app
-      - /app/node_modules
+      - api_node_modules:/app/node_modules
     command: sh start.sh
     depends_on:
       - db
@@ -55,3 +55,5 @@ services:
 
 volumes:
   marquei_pg_data:
+  web_node_modules:
+  api_node_modules:

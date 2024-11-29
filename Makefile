@@ -1,6 +1,6 @@
 # Variables
 API_CONTAINER_NAME=marquei-api
-WEB_CONTAINER_NAME=marquei-api
+WEB_CONTAINER_NAME=marquei-web
 
 # Default target
 .PHONY: help

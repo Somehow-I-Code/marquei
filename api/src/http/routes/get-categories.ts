@@ -1,10 +1,10 @@
 import { FastifyInstance } from "fastify";
 import categoriesRepository from "../../repositories/categories";
 import { findLoggedUser } from "../middlewares/find-logged-user";
+import { refreshToken } from "../middlewares/refresh-token";
 import { LoggedRequest } from "../middlewares/types/request";
 import { verifyToken } from "../middlewares/verify-token";
 import httpCodes from "./utils/http-codes";
-import { refreshToken } from "../middlewares/refresh-token";
 
 export async function getCategories(server: FastifyInstance) {
     server.get(

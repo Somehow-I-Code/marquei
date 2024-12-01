@@ -7,6 +7,8 @@ import { LoginInput, loginSchema } from "../../validators/login-form";
 import { getJwtSecret } from "./utils/get-jwt-secret";
 import httpCodes from "./utils/http-codes";
 
+const _24_HOURS = 60 * 60 * 24 * 1000;
+
 export async function login(server: FastifyInstance) {
     server.post("/login", async (request, reply) => {
         const secretKey = getJwtSecret();
@@ -26,13 +28,17 @@ export async function login(server: FastifyInstance) {
         const profile = await profileRepository.findByEmail(email);
 
         if (!profile) {
-            return reply.status(httpCodes.UNAUTHORIZED).send({ message: "Credenciais inválidas." });
+            return reply
+                .status(httpCodes.UNAUTHORIZED)
+                .send({ message: "Credenciais inválidas." });
         }
 
         const passwordMatch = await bcrypt.compare(password, profile.password);
 
         if (!passwordMatch) {
-            return reply.status(httpCodes.UNAUTHORIZED).send({ message: "Credenciais inválidas." });
+            return reply
+                .status(httpCodes.UNAUTHORIZED)
+                .send({ message: "Credenciais inválidas." });
         }
 
         const token = jwt.sign(
@@ -42,6 +48,8 @@ export async function login(server: FastifyInstance) {
                 level: profile.level,
                 companyId: profile.companyId,
                 firstLogin: profile.firstLogin,
+                iat: Date.now(),
+                exp: Date.now() + _24_HOURS,
             },
             secretKey,
         );

@@ -3,10 +3,10 @@ import { verify } from "jsonwebtoken";
 
 import { getJwtSecret } from "../routes/utils/get-jwt-secret";
 import httpCodes from "../routes/utils/http-codes";
-import { Request } from "./types/Request";
+import { LoggedRequest } from "./types/request";
 
 export function verifyToken(
-    request: Request,
+    request: LoggedRequest,
     reply: FastifyReply,
     next: (err?: Error) => void,
 ) {

@@ -42,18 +42,10 @@ class ProfileRepository {
         return profile;
     }
 
-    async findById(id: number, includePassword = false) {
+    async findById(id: number) {
         const profile = await prisma.profile.findUnique({
             where: {
                 id,
-            },
-            select: {
-                id: true,
-                name: true,
-                occupation: true,
-                email: true,
-                level: true,
-                password: includePassword,
             },
         });
 

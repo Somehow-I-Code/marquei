@@ -2,18 +2,13 @@ import { FastifyReply } from "fastify";
 import profileRepository from "../../repositories/profiles";
 import httpCodes from "../routes/utils/http-codes";
 import { LoggedRequest } from "./types/request";
+import { authenticatedRequest } from "./validator/requests";
 
 export async function findLoggedUser(
     request: LoggedRequest,
     reply: FastifyReply,
 ) {
-    const { userId } = request;
-
-    if (!userId) {
-        return reply.status(httpCodes.UNAUTHORIZED).send({
-            message: "Faltando token de autenticação",
-        });
-    }
+    const { userId } = authenticatedRequest.parse(request);
 
     const profile = await profileRepository.findById(userId);
 
@@ -31,4 +26,3 @@ export async function findLoggedUser(
 
     request.profile = profile;
 }
-

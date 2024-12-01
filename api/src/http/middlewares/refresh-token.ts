@@ -1,21 +1,18 @@
+import { FastifyReply } from "fastify";
 import { sign } from "jsonwebtoken";
 import { getJwtSecret } from "../routes/utils/get-jwt-secret";
 import httpCodes from "../routes/utils/http-codes";
 import { LoggedRequest } from "./types/request";
-import { FastifyReply } from "fastify";
+import { userIdentifiedRequest } from "./validator/requests";
+
+const _24_HOURS = 60 * 60 * 24 * 1000;
 
 export function refreshToken(
     request: LoggedRequest,
     reply: FastifyReply,
     next: (err?: Error) => void,
 ) {
-    const { profile } = request;
-
-    if (!profile) {
-        return reply
-            .status(httpCodes.UNAUTHORIZED)
-            .send({ message: "Perfil logado inválido!" });
-    }
+    const { profile } = userIdentifiedRequest.parse(request);
 
     const { password, ...profileWithoutPassword } = profile;
 
@@ -33,7 +30,7 @@ export function refreshToken(
         {
             ...profileWithoutPassword,
             iat: Date.now(),
-            exp: Date.now() + 60 * 60 * 24 * 1000,
+            exp: Date.now() + _24_HOURS,
         },
         secretKey,
     );

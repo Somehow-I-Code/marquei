@@ -4,15 +4,16 @@ import { findLoggedUser } from "../middlewares/find-logged-user";
 import { LoggedRequest } from "../middlewares/types/request";
 import { verifyToken } from "../middlewares/verify-token";
 import httpCodes from "./utils/http-codes";
+import { refreshToken } from "../middlewares/refresh-token";
 
 export async function getCategories(server: FastifyInstance) {
     server.get(
         "/categories",
         {
-            preHandler: [verifyToken, findLoggedUser],
+            preHandler: [verifyToken, findLoggedUser, refreshToken],
         },
         async (request: LoggedRequest, reply) => {
-            const { profile } = request;
+            const { profile, refreshedToken } = request;
 
             if (!profile) {
                 return reply.status(httpCodes.UNAUTHORIZED).send({
@@ -24,7 +25,7 @@ export async function getCategories(server: FastifyInstance) {
                 profile.companyId,
             );
 
-            return reply.send(categories);
+            return reply.send({ categories, refreshedToken });
         },
     );
 }

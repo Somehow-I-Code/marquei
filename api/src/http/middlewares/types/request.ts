@@ -16,4 +16,5 @@ export type LoggedRequest = FastifyRequest & {
         companyId: number;
         firstLogin: boolean;
     };
+    refreshedToken?: string;
 };

@@ -1,26 +1,25 @@
-import { verify } from "jsonwebtoken";
 import { FastifyInstance } from "fastify";
+
 import categoriesRepository from "../../repositories/categories";
-import { getToken } from "./utils/get-token";
-import { getJwtSecret } from "./utils/get-jwt-secret";
+import { verifyToken } from "../middlewares/verify-token";
 
 export async function getCategories(server: FastifyInstance) {
-    server.get("/categories", async (request, reply) => {
-        const token = getToken(request.headers);
-        const secretKey = getJwtSecret();
+    server.get(
+        "/categories",
+        {
+            preHandler: [verifyToken],
+        },
+        async (request, reply) => {
+            // const profile = verify(token, secretKey) as {
+            //     companyId: number;
+            // };
 
-        if (!token) {
-            return reply.send({ message: "Token inválido!" });
-        }
+            const categories = await categoriesRepository.findAll(
+                // profile.companyId,
+                1, // fake companyId trocar quando implementar o middleware
+            );
 
-        const profile = verify(token, secretKey) as {
-            companyId: number;
-        };
-
-        const categories = await categoriesRepository.findAll(
-            profile.companyId,
-        );
-
-        return reply.send(categories);
-    });
+            return reply.send(categories);
+        },
+    );
 }

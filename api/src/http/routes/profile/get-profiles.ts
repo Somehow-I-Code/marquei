@@ -3,8 +3,7 @@ import { FastifyInstance } from "fastify";
 
 import { adminRoute } from "@middlewares/admin-route";
 import { findLoggedUser } from "@middlewares/find-logged-user";
-import { refreshToken } from "@middlewares/refresh-token";
-import { refreshedTokenRequest } from "@middlewares/validator/requests";
+import { userIdentifiedRequest } from "@middlewares/validator/requests";
 import { verifyToken } from "@middlewares/verify-token";
 import profileRepository from "@repositories/profiles";
 import { SUCCESS } from "@routes/utils/http-codes";
@@ -13,11 +12,10 @@ export async function getProfiles(server: FastifyInstance) {
     server.get(
         "/profiles",
         {
-            preHandler: [verifyToken, findLoggedUser, adminRoute, refreshToken],
+            preHandler: [verifyToken, findLoggedUser, adminRoute],
         },
         async (request, reply) => {
-            const { profile, refreshedToken } =
-                refreshedTokenRequest.parse(request);
+            const { profile } = userIdentifiedRequest.parse(request);
 
             const isSudo = profile.level === Level.SUDO;
 
@@ -26,7 +24,7 @@ export async function getProfiles(server: FastifyInstance) {
                 isSudo,
             );
 
-            return reply.status(SUCCESS).send({ profiles, refreshedToken });
+            return reply.status(SUCCESS).send({ profiles });
         },
     );
 }

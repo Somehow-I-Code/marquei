@@ -1,25 +1,38 @@
 import { FastifyInstance } from "fastify";
-import jwt from "jsonwebtoken";
-import profileRepository from "../../../repositories/profiles";
-import { getJwtSecret } from "../utils/get-jwt-secret";
-import { getToken } from "../utils/get-token";
+
+import { findLoggedUser } from "@middlewares/find-logged-user";
+import { refreshToken } from "@middlewares/refresh-token";
+import { refreshedTokenRequest } from "@middlewares/validator/requests";
+import { verifyToken } from "@middlewares/verify-token";
+import profileRepository from "@repositories/profiles";
+import { NOT_FOUND } from "@routes/utils/http-codes";
 
 export async function getProfile(server: FastifyInstance) {
-    server.get("/profile", async (request, reply) => {
-        const token = getToken(request.headers);
-        const secretKey = getJwtSecret();
+    server.get(
+        "/profile",
+        {
+            preHandler: [verifyToken, findLoggedUser, refreshToken],
+        },
+        async (request, reply) => {
+            const { profile: loggedInProfile, refreshedToken } =
+                refreshedTokenRequest.parse(request);
 
-        if (!token) {
-            //TODO: Adicionar isso ao middleware de autorização
-            return reply.send({ message: "Token inválido!" });
-        }
+            const profile = await profileRepository.findById(
+                loggedInProfile.id,
+            );
 
-        const decoded = jwt.verify(token, secretKey) as {
-            id: number;
-        };
+            if (!profile) {
+                return reply.status(NOT_FOUND).send({
+                    message: "Perfil não encontrado na base de dados",
+                });
+            }
 
-        const profile = await profileRepository.findById(decoded.id);
+            const { password, ...profileWithoutPassword } = profile;
 
-        return reply.send(profile);
-    });
+            return reply.send({
+                profile: profileWithoutPassword,
+                refreshedToken,
+            });
+        },
+    );
 }

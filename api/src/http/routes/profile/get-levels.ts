@@ -1,34 +1,30 @@
 import { Level } from "@prisma/client";
 import { FastifyInstance } from "fastify";
-import { verify } from "jsonwebtoken";
-import { getToken } from "../../routes/utils/get-token";
-import { getJwtSecret } from "../utils/get-jwt-secret";
-import httpCodes from "../utils/http-codes";
+
+import { findLoggedUser } from "@middlewares/find-logged-user";
+import { userIdentifiedRequest } from "@middlewares/validator/requests";
+import { verifyToken } from "@middlewares/verify-token";
 
 function removeSudoFromLevels(levels: Array<string>) {
     return levels.filter((level) => level !== Level.SUDO);
 }
 
 export async function getLevels(server: FastifyInstance) {
-    server.get("/levels", async (request, reply) => {
-        const token = getToken(request.headers);
-        const secretKey = getJwtSecret();
+    server.get(
+        "/levels",
+        {
+            preHandler: [verifyToken, findLoggedUser],
+        },
+        async (request, reply) => {
+            const { profile } = userIdentifiedRequest.parse(request);
 
-        if (!token) {
-            return reply
-                .status(httpCodes.BAD_REQUEST)
-                .send({ message: "Token inválido!" });
-        }
+            const levels = Object.keys(Level);
 
-        const profile = verify(token, secretKey) as {
-            level: Level;
-        };
+            if (profile.level === Level.SUDO) {
+                return reply.send(levels);
+            }
 
-        const levels = Object.keys(Level);
-        if (profile.level === Level.SUDO) {
-            return reply.send(levels);
-        }
-
-        return reply.send(removeSudoFromLevels(levels));
-    });
+            return reply.send(removeSudoFromLevels(levels));
+        },
+    );
 }

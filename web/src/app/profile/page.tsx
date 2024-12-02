@@ -3,9 +3,9 @@ import { ProfilesResponse } from "@/types/profiles";
 import { cookies } from "next/headers";
 import Link from "next/link";
 import { redirect } from "next/navigation";
+import getSession from "../utis/get-session";
 import UserImage from "./assets/user.svg";
 import LogoutButton from "./components/logout-button";
-import getSession from "../utis/get-session";
 
 async function doLogout() {
     "use server";
@@ -34,7 +34,7 @@ async function getProfile(): Promise<ProfilesResponse> {
 }
 
 export default async function ProfilePage() {
-    const profile = await getProfile();
+    const { profile } = await getProfile();
 
     return (
         <section>

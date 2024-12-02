@@ -1,13 +1,14 @@
-import { redirect } from "next/navigation";
+import { Company } from "@/types/companies";
+import { jwtDecode } from "jwt-decode";
+import { revalidatePath } from "next/cache";
+import { cookies } from "next/headers";
+import { notFound, redirect } from "next/navigation";
 import CompanyLogo from "../components/company-logo";
 import FormTitle from "../components/form-title";
 import getSession from "../utis/get-session";
 import NewProfileForm, {
     NewProfileFormSchema,
 } from "./components/new-profile-form";
-import { Company } from "@/types/companies";
-import { jwtDecode } from "jwt-decode";
-import { notFound } from "next/navigation";
 
 async function getLevels(token: string): Promise<Array<string>> {
     const response = await fetch("http://api:8080/levels", {
@@ -24,8 +25,8 @@ async function getCompanies(token: string): Promise<Array<Company>> {
     const response = await fetch("http://api:8080/companies", {
         headers: {
             Authorization: `Bearer ${token}`,
-        }
-    })
+        },
+    });
     const data = await response.json();
 
     return data;
@@ -41,14 +42,14 @@ export default async function NewProfile() {
     const decoded = jwtDecode(session) as {
         level: string;
     };
-    
+
     if (decoded.level === "USER") {
         return notFound();
     }
 
     const levels = await getLevels(session);
     const companies = await getCompanies(session);
-        
+
     async function createProfile(data: NewProfileFormSchema) {
         "use server";
 
@@ -58,7 +59,7 @@ export default async function NewProfile() {
         };
 
         const response = await fetch("http://api:8080/profiles", {
-            method: "post",
+            method: "POST",
             headers: {
                 "content-type": "application/json",
                 Authorization: `Bearer ${session}`,
@@ -71,7 +72,10 @@ export default async function NewProfile() {
             throw new Error(error.message);
         }
 
-        // TODO: revalidar a tela com a lista de todos os perfis
+        const { refreshedToken } = await response.json();
+        cookies().set("session", refreshedToken);
+
+        revalidatePath("/profiles");
     }
 
     return (
@@ -81,7 +85,11 @@ export default async function NewProfile() {
             </div>
             <div className="p-6 flex flex-col gap-8">
                 <FormTitle>Novo perfil</FormTitle>
-                <NewProfileForm levels={levels} createProfile={createProfile} companies={companies} />
+                <NewProfileForm
+                    levels={levels}
+                    createProfile={createProfile}
+                    companies={companies}
+                />
             </div>
         </section>
     );

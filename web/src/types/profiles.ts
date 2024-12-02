@@ -7,7 +7,15 @@ export type Profile = {
     companyId: number;
 };
 
-export type ProfilesResponse = Profile & {
+export type FullProfile = Profile & {
     createdAt: string;
     updatedAt: string;
+};
+
+export type ProfilesResponse = {
+    profile: FullProfile;
+};
+
+export type AllProfilesResponse = {
+    profiles: Array<FullProfile>;
 };

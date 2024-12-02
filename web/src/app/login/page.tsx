@@ -8,6 +8,7 @@ const _30_DAYS = 30 * 24 * 60 * 60 * 1000;
 export default function LoginPage() {
     async function login(credentials: LoginFormSchema) {
         "use server";
+
         const response = await fetch("http://api:8080/login", {
             method: "POST",
             body: JSON.stringify(credentials),
@@ -25,9 +26,11 @@ export default function LoginPage() {
             token: string;
             firstLogin: boolean;
         };
+
         cookies().set("session", data.token, {
             expires: new Date(Date.now() + _30_DAYS),
         });
+
         if (data.firstLogin) {
             redirect("/first-login");
         } else {

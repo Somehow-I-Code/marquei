@@ -114,7 +114,10 @@ class ProfileRepository {
         });
     }
 
-    async delete(id: number, currentUser: { level: Level; companyId: number }) {
+    async delete(
+        id: number,
+        currentUser: { level: string; companyId: number },
+    ) {
         try {
             if (currentUser.level === Level.SUDO) {
                 const deletedProfile = await prisma.profile.delete({

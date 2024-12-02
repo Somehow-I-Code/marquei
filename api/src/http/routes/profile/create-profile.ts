@@ -14,7 +14,7 @@ export async function createProfile(server: FastifyInstance) {
     server.post(
         "/profiles",
         {
-            preHandler: [verifyToken, findLoggedUser, refreshToken, adminRoute],
+            preHandler: [verifyToken, findLoggedUser, adminRoute, refreshToken],
         },
         async (request, reply) => {
             const { profile, refreshedToken } =

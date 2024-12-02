@@ -1,8 +1,8 @@
 import { FastifyInstance } from "fastify";
 import jwt from "jsonwebtoken";
-import profileRepository from "../../repositories/profiles";
-import { getToken } from "./utils/get-token";
-import { getJwtSecret } from "./utils/get-jwt-secret";
+import profileRepository from "../../../repositories/profiles";
+import { getJwtSecret } from "../utils/get-jwt-secret";
+import { getToken } from "../utils/get-token";
 
 export async function getProfile(server: FastifyInstance) {
     server.get("/profile", async (request, reply) => {

@@ -1,10 +1,11 @@
 import { Level } from "@prisma/client";
 import { FastifyInstance } from "fastify";
 import { verify } from "jsonwebtoken";
-import profileRepository from "../../repositories/profiles";
-import { getJwtSecret } from "./utils/get-jwt-secret";
-import { getToken } from "./utils/get-token";
-import httpCodes from "./utils/http-codes";
+
+import profileRepository from "@repositories/profiles";
+import { getJwtSecret } from "@routes/utils/get-jwt-secret";
+import { getToken } from "@routes/utils/get-token";
+import httpCodes from "@routes/utils/http-codes";
 
 export async function getProfiles(server: FastifyInstance) {
     server.get("/profiles", async (request, reply) => {

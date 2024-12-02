@@ -1,9 +1,9 @@
 import { FastifyInstance } from "fastify";
-import HttpError from "./utils/http-error";
-import { toggleProfile } from "./utils/toggle-profile";
-import httpCodes from "./utils/http-codes";
+import httpCodes from "../utils/http-codes";
+import HttpError from "../utils/http-error";
+import { toggleProfile } from "../utils/toggle-profile";
 
-export async function updateProfile(server: FastifyInstance) {
+export async function deactivateProfile(server: FastifyInstance) {
     server.patch("/profile/deactivate/:profileId", async (request, reply) => {
         try {
             const res = await toggleProfile(request, false);
@@ -13,7 +13,9 @@ export async function updateProfile(server: FastifyInstance) {
                 return reply.status(e.code).send({ message: e.message });
             }
 
-            return reply.status(httpCodes.SERVER_ERROR).send({ message: "Algo deu errado!" });
+            return reply
+                .status(httpCodes.SERVER_ERROR)
+                .send({ message: "Algo deu errado!" });
         }
     });
 }

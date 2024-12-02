@@ -3,14 +3,14 @@ import jwt from "jsonwebtoken";
 import { ZodError } from "zod";
 
 import { Level } from "@prisma/client";
-import profileRepository from "../../repositories/profiles";
+import profileRepository from "../../../repositories/profiles";
 import {
     DeleteProfileInput,
     deleteProfileSchema,
-} from "../../validators/profile";
-import { getJwtSecret } from "./utils/get-jwt-secret";
-import { getToken } from "./utils/get-token";
-import httpCodes from "./utils/http-codes";
+} from "../../../validators/profile";
+import { getJwtSecret } from "../utils/get-jwt-secret";
+import { getToken } from "../utils/get-token";
+import httpCodes from "../utils/http-codes";
 
 export async function deleteProfile(server: FastifyInstance) {
     server.delete("/profiles/:id", async (request, reply) => {

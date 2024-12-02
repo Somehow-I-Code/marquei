@@ -1,9 +1,9 @@
 import { Level } from "@prisma/client";
 import { FastifyInstance } from "fastify";
 import { verify } from "jsonwebtoken";
-import { getToken } from "../routes/utils/get-token";
-import { getJwtSecret } from "./utils/get-jwt-secret";
-import httpCodes from "./utils/http-codes";
+import { getToken } from "../../routes/utils/get-token";
+import { getJwtSecret } from "../utils/get-jwt-secret";
+import httpCodes from "../utils/http-codes";
 
 function removeSudoFromLevels(levels: Array<string>) {
     return levels.filter((level) => level !== Level.SUDO);
@@ -15,7 +15,9 @@ export async function getLevels(server: FastifyInstance) {
         const secretKey = getJwtSecret();
 
         if (!token) {
-            return reply.status(httpCodes.BAD_REQUEST).send({ message: "Token inválido!" });
+            return reply
+                .status(httpCodes.BAD_REQUEST)
+                .send({ message: "Token inválido!" });
         }
 
         const profile = verify(token, secretKey) as {

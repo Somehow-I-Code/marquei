@@ -1,33 +1,24 @@
 import { Level } from "@prisma/client";
 import { hash } from "bcrypt";
-import { prisma } from "../lib/prisma";
-import emailService from "../services/email";
-import { CreateProfileInput } from "../validators/profile";
-import generatePassword from "./utils/generateRandomPassword";
+
+import { prisma } from "@lib/prisma";
+import generatePassword from "@repositories/utils/generateRandomPassword";
+import emailService from "@services/email";
+import { CreateProfileInput } from "@validators/profile";
 
 class ProfileRepository {
-    async create({
-        name,
-        occupation,
-        email,
-        level,
-        companyId,
-    }: CreateProfileInput) {
+    async create(data: CreateProfileInput) {
         const password = generatePassword();
         const passwordHash = await hash(password, 10);
 
         const profile = await prisma.profile.create({
             data: {
-                name,
-                occupation,
-                email,
+                ...data,
                 password: passwordHash,
-                level,
-                companyId,
             },
         });
 
-        emailService.sendEmailWithPassword(email, password);
+        emailService.sendEmailWithPassword(data.email, password);
 
         return profile;
     }

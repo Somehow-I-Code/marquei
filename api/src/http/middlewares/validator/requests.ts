@@ -12,7 +12,7 @@ export const userIdentifiedRequest = authenticatedRequest.extend({
         occupation: z.string().nullable(),
         email: z.string(),
         password: z.string(),
-        level: z.string(),
+        level: z.enum(["SUDO", "ADMIN", "USER"]),
         createdAt: z.date(),
         updatedAt: z.date(),
         companyId: z.number(),

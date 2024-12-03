@@ -1,19 +1,18 @@
 import { revalidatePath } from "next/cache";
-import CompanyLogo from "../components/company-logo";
-import ChangePasswordForm, {
-    ChangePasswordFormSchema,
-} from "./components/change-password-form";
 import { redirect } from "next/navigation";
-import getSession from "../utis/get-session";
+import getSession from "../../utis/get-session";
+import UpdatePasswordForm, {
+    UpdatePasswordFormSchema,
+} from "./components/update-password-form";
 
-export default async function ChangePasswordPage() {
+export default async function UpdatePasswordPage() {
     const session = getSession();
 
     if (!session) {
         return redirect("/login");
     }
 
-    async function changePassword(data: ChangePasswordFormSchema) {
+    async function updatePassword(data: UpdatePasswordFormSchema) {
         "use server";
 
         const body = {
@@ -38,18 +37,12 @@ export default async function ChangePasswordPage() {
     }
 
     return (
-        <section>
-            <div className="h-40 px-6 py-12">
-                <CompanyLogo />
-            </div>
+        <div className="flex flex-col p-6 gap-12">
+            <h1 className="text-3xl font-bold text-indigo-950">
+                Alterar sua senha
+            </h1>
 
-            <div className="flex flex-col p-6 gap-12">
-                <h1 className="text-3xl font-bold text-indigo-950">
-                    Alterar sua senha
-                </h1>
-
-                <ChangePasswordForm changePassword={changePassword} />
-            </div>
-        </section>
+            <UpdatePasswordForm updatePassword={updatePassword} />
+        </div>
     );
 }

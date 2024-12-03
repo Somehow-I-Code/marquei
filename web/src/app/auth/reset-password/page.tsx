@@ -1,4 +1,4 @@
-import CompanyLogo from "../components/company-logo";
+import CompanyLogo from "../../components/company-logo";
 import SendEmailForm, {
     SendEmailFormSchema,
 } from "./components/send-email-form";
@@ -41,4 +41,3 @@ export default function ResetPassword() {
         </section>
     );
 }
-

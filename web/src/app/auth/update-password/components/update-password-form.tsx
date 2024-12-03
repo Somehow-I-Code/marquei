@@ -29,16 +29,16 @@ const FormSchema = z.object({
     }),
 });
 
-export type ChangePasswordFormSchema = z.infer<typeof FormSchema>;
+export type UpdatePasswordFormSchema = z.infer<typeof FormSchema>;
 
-type ChangePasswordFormProps = {
-    changePassword: (data: ChangePasswordFormSchema) => void;
+type UpdatePasswordFormProps = {
+    updatePassword: (data: UpdatePasswordFormSchema) => void;
 };
 
 export default function ChangePasswordForm({
-    changePassword,
-}: ChangePasswordFormProps) {
-    const form = useForm<ChangePasswordFormSchema>({
+    updatePassword,
+}: UpdatePasswordFormProps) {
+    const form = useForm<UpdatePasswordFormSchema>({
         resolver: zodResolver(FormSchema),
         defaultValues: {
             currentPassword: "",
@@ -51,9 +51,9 @@ export default function ChangePasswordForm({
 
     const router = useRouter();
 
-    async function onSubmit(data: ChangePasswordFormSchema) {
+    async function onSubmit(data: UpdatePasswordFormSchema) {
         try {
-            await changePassword(data);
+            await updatePassword(data);
 
             form.reset();
 

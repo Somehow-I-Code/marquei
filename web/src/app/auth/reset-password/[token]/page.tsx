@@ -1,9 +1,8 @@
-import { revalidatePath } from "next/cache";
-import CompanyLogo from "../../components/company-logo";
+import { redirect } from "next/navigation";
+import CompanyLogo from "../../../components/company-logo";
 import CreateNewPasswordForm, {
     CreateNewPasswordFormSchema,
 } from "./components/create-new-password-form";
-import { redirect } from "next/navigation";
 
 type CreateNewPasswordProps = {
     params: {
@@ -62,4 +61,3 @@ export default async function CreateNewPassword({
         </section>
     );
 }
-

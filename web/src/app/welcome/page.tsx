@@ -1,24 +1,21 @@
+import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
+
 import CompanyLogo from "../components/company-logo";
-import getSession from "../utis/get-session";
 import WelcomeImage from "./assets/welcome.svg";
 import FirstLoginForm, {
     FirstLoginFormSchema,
 } from "./components/first-login-reset-password";
 
-export default async function FirstLogin() {
-    const session = getSession();
-
-    if (!session) {
-        return redirect("/login");
-    }
-
+export default async function WelcomePage() {
     async function firstLoginResetPassword(data: FirstLoginFormSchema) {
         "use server";
 
         const body = {
             ...data,
         };
+
+        const session = cookies().get("session")?.value;
 
         const response = await fetch("http://api:8080/change-password", {
             method: "PATCH",
@@ -34,7 +31,7 @@ export default async function FirstLogin() {
             throw new Error(data.message);
         }
 
-        redirect("/success-password-first-login");
+        redirect("/welcome/success");
     }
 
     return (

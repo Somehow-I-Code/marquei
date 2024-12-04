@@ -11,11 +11,9 @@ import {
     FormMessage,
 } from "@/components/ui/form";
 import { useToast } from "@/components/ui/use-toast";
-import { ToastAction } from "@/components/ui/toast";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { useRouter } from "next/navigation";
 
 const FormSchema = z.object({
     newPassword: z.string().min(8, {
@@ -32,8 +30,8 @@ type FirstLoginFormProps = {
     firstLoginResetPassword: (data: FirstLoginFormSchema) => void;
 };
 
-export default function FirstLoginForm({ 
-    firstLoginResetPassword, 
+export default function FirstLoginForm({
+    firstLoginResetPassword,
 }: FirstLoginFormProps) {
     const form = useForm<FirstLoginFormSchema>({
         resolver: zodResolver(FormSchema),

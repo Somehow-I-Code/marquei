@@ -2,9 +2,6 @@ import { jwtDecode } from "jwt-decode";
 import { NextRequest, NextResponse } from "next/server";
 
 export function middleware(request: NextRequest) {
-    console.log("Middleware");
-    // return NextResponse.redirect(new URL("/profile", request.url));
-    console.log(request.cookies.get("session"));
     const session = request.cookies.get("session");
 
     if (!session) {
@@ -27,5 +24,5 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-    matcher: "/about",
+    matcher: ["/auth/update-password", "/welcome", "/welcome/success"],
 };

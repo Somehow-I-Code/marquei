@@ -1,16 +1,9 @@
-import { Button } from "@/components/ui/button";
 import Link from "next/link";
+
+import { Button } from "@/components/ui/button";
 import SuccessImage from "./assets/success.svg";
-import getSession from "../utis/get-session";
-import { redirect } from "next/navigation";
 
-export default async function SuccessPasswordFirstLogin() {
-    const session = getSession();
-
-    if (!session) {
-        return redirect("/login");
-    }
-
+export default async function WelcomeSuccess() {
     return (
         <section className="mt-48">
             <div className="flex items-center justify-center ">

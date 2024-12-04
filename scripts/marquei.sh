@@ -54,7 +54,7 @@ marquei() {
         "prisma")
             case "$2" in
                 "generate")
-                    docker container exec $API_CONTAINER npx prisma generate
+                    cd $MARQUEI_FOLDER_PATH && cd api && npx prisma generate && cd .. && docker container exec $API_CONTAINER npx prisma generate
                     ;;
                 "new")
                     case "$3" in
@@ -90,7 +90,7 @@ marquei() {
             echo "    install                                 # Install all dependencies locally"
             echo "    log api                                 # Show the logs of the api container"
             echo "    log web                                 # Show the logs of the web container"
-            echo "    prisma generate                         # Generate prisma client inside the container"
+            echo "    prisma generate                         # Regenerate prisma client files"
             echo "    prisma new migration [MIGRATION_NAME]   # Create a new migration"
             echo "    prisma reset                            # Reset all migrations"
             echo "    run                                     # Run the project"

@@ -1,34 +1,20 @@
 import { revalidatePath } from "next/cache";
-import CompanyLogo from "../components/company-logo";
-import FormTitle from "../components/form-title";
+import { cookies } from "next/headers";
+import CompanyLogo from "../../components/company-logo";
+import FormTitle from "../../components/form-title";
 import NewCompanyForm, {
     NewCompanyFormSchema,
 } from "./components/new-company-form";
-import { notFound, redirect } from "next/navigation";
-import getSession from "../utis/get-session";
-import { jwtDecode } from "jwt-decode";
 
-export default async function NewCompany() {
-    const session = getSession();
-
-    if (!session) {
-        return redirect("/login");
-    }
-
-    const decoded = jwtDecode(session) as {
-        level: string;
-    };
-
-    if (decoded.level === "USER" || decoded.level === "ADMIN") {
-        return notFound();
-    }
-
+export default async function NewCompanyPage() {
     async function createCompany(data: NewCompanyFormSchema) {
         "use server";
 
         const body = {
             ...data,
         };
+
+        const session = cookies().get("session")?.value;
 
         const response = await fetch("http://api:8080/company", {
             method: "post",

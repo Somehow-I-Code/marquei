@@ -2,6 +2,7 @@ import { jwtDecode } from "jwt-decode";
 import { NextRequest, NextResponse } from "next/server";
 
 const ADMIN_ROUTES = ["/category/new", "/profile/new", "/profile/list"];
+const SUDO_ROUTES = ["/company/new"];
 
 export function middleware(request: NextRequest) {
     const session = request.cookies.get("session");
@@ -32,6 +33,16 @@ export function middleware(request: NextRequest) {
         }
     }
 
+    if (SUDO_ROUTES.includes(request.nextUrl.pathname)) {
+        const decoded = jwtDecode(token) as {
+            level: string;
+        };
+
+        if (decoded.level !== "SUDO") {
+            return NextResponse.rewrite(new URL("/404", request.url));
+        }
+    }
+
     return NextResponse.next();
 }
 
@@ -39,6 +50,7 @@ export const config = {
     matcher: [
         "/auth/update-password",
         "/category/new",
+        "/company/new",
         "/profile",
         "/profile/new",
         "/profile/list",

@@ -1,16 +1,15 @@
 import { Company } from "@/types/companies";
-import { jwtDecode } from "jwt-decode";
 import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
-import { notFound, redirect } from "next/navigation";
-import CompanyLogo from "../components/company-logo";
-import FormTitle from "../components/form-title";
-import getSession from "../utis/get-session";
+import CompanyLogo from "../../components/company-logo";
+import FormTitle from "../../components/form-title";
 import NewProfileForm, {
     NewProfileFormSchema,
 } from "./components/new-profile-form";
 
-async function getLevels(token: string): Promise<Array<string>> {
+async function getLevels(): Promise<Array<string>> {
+    const token = cookies().get("session")?.value;
+
     const response = await fetch("http://api:8080/levels", {
         headers: {
             Authorization: `Bearer ${token}`,
@@ -21,7 +20,9 @@ async function getLevels(token: string): Promise<Array<string>> {
     return data;
 }
 
-async function getCompanies(token: string): Promise<Array<Company>> {
+async function getCompanies(): Promise<Array<Company>> {
+    const token = cookies().get("session")?.value;
+
     const response = await fetch("http://api:8080/companies", {
         headers: {
             Authorization: `Bearer ${token}`,
@@ -32,23 +33,9 @@ async function getCompanies(token: string): Promise<Array<Company>> {
     return data;
 }
 
-export default async function NewProfile() {
-    const session = getSession();
-
-    if (!session) {
-        return redirect("/login");
-    }
-
-    const decoded = jwtDecode(session) as {
-        level: string;
-    };
-
-    if (decoded.level === "USER") {
-        return notFound();
-    }
-
-    const levels = await getLevels(session);
-    const companies = await getCompanies(session);
+export default async function NewProfilePage() {
+    const levels = await getLevels();
+    const companies = await getCompanies();
 
     async function createProfile(data: NewProfileFormSchema) {
         "use server";
@@ -57,6 +44,8 @@ export default async function NewProfile() {
             ...data,
             companyId: Number(data.companyId),
         };
+
+        const session = cookies().get("session")?.value;
 
         const response = await fetch("http://api:8080/profiles", {
             method: "POST",
@@ -75,7 +64,7 @@ export default async function NewProfile() {
         const { refreshedToken } = await response.json();
         cookies().set("session", refreshedToken);
 
-        revalidatePath("/profiles");
+        revalidatePath("/profile/list");
     }
 
     return (

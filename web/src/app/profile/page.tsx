@@ -3,7 +3,6 @@ import { ProfilesResponse } from "@/types/profiles";
 import { cookies } from "next/headers";
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import getSession from "../utis/get-session";
 import UserImage from "./assets/user.svg";
 import LogoutButton from "./components/logout-button";
 
@@ -15,11 +14,7 @@ async function doLogout() {
 }
 
 async function getProfile(): Promise<ProfilesResponse> {
-    const session = getSession();
-
-    if (!session) {
-        return redirect("/login");
-    }
+    const session = cookies().get("session")?.value;
 
     const response = await fetch("http://api:8080/profile", {
         headers: {

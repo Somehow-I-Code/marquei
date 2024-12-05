@@ -1,35 +1,22 @@
 import { revalidatePath } from "next/cache";
-import CompanyLogo from "../components/company-logo";
+import { cookies } from "next/headers";
+import CompanyLogo from "../../components/company-logo";
 import NewCategoryForm, {
     NewCategoryFormSchema,
 } from "./component/new-category-form";
-import getSession from "../utis/get-session";
-import { redirect } from "next/navigation";
-import { jwtDecode } from "jwt-decode";
 
-export default async function NewCategory() {
-    const session = getSession();
-
-    if (!session) {
-        return redirect("/login");
-    }
-
-    const decoded = jwtDecode(session) as {
-        companyId: number;
-    };
-
-    const companyId = decoded.companyId;
-
+export default async function NewCategoryPage() {
     async function createCategory(data: NewCategoryFormSchema) {
         "use server";
 
+        const session = cookies().get("session")?.value;
+
         const body = {
             ...data,
-            companyId,
         };
 
         const response = await fetch("http://api:8080/categories", {
-            method: "post",
+            method: "POST",
             headers: {
                 "content-type": "application/json",
                 Authorization: `Bearer ${session}`,

@@ -3,23 +3,25 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Plus, Search } from "lucide-react";
 import Link from "next/link";
-import { redirect } from "next/navigation";
 
 import { AllProfilesResponse } from "@/types/profiles";
 import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
-import CompanyLogo from "../components/company-logo";
-import ProfileCard from "../components/profile-card";
-import Salute from "../components/salute";
-import getSession from "../utis/get-session";
+import CompanyLogo from "../../components/company-logo";
+import ProfileCard from "../../components/profile-card";
+import Salute from "../../components/salute";
 
-async function getProfiles(token: string): Promise<AllProfilesResponse> {
+async function getProfiles(): Promise<AllProfilesResponse> {
+    const token = cookies().get("session")?.value;
+
     const response = await fetch("http://api:8080/profiles", {
         headers: {
             Authorization: `Bearer ${token}`,
         },
     });
+
     const data = await response.json();
+
     return data;
 }
 
@@ -29,19 +31,15 @@ type ProfileListParams = {
     };
 };
 
-export default async function ProfilesList({
+export default async function ProfilesListPage({
     searchParams,
 }: ProfileListParams) {
-    const session = getSession();
-
-    if (!session) {
-        return redirect("/login");
-    }
-
-    const { profiles } = await getProfiles(session);
+    const { profiles } = await getProfiles();
 
     async function deleteProfile(id: number) {
         "use server";
+
+        const session = cookies().get("session")?.value;
 
         const response = await fetch(`http://api:8080/profiles/${id}`, {
             method: "delete",
@@ -58,7 +56,7 @@ export default async function ProfilesList({
         const { refreshedToken } = await response.json();
 
         cookies().set("session", refreshedToken);
-        revalidatePath("/profiles-list");
+        revalidatePath("/profile/list");
     }
 
     const { q } = searchParams;

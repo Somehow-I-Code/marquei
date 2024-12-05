@@ -9,11 +9,12 @@ import Salute from "./components/salute";
 import getSession from "./utis/get-session";
 
 function transformResources(resources: ResourceResponse) {
-    return resources.map(({ id, name, description, category }) => ({
+    return resources.map(({ id, name, description, category, companyId }) => ({
         id,
         name,
         description,
         category: category.name,
+        companyId,
     }));
 }
 

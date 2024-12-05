@@ -8,8 +8,8 @@ import { AllProfilesResponse } from "@/types/profiles";
 import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
 import CompanyLogo from "../../components/company-logo";
-import ProfileCard from "../../components/profile-card";
 import Salute from "../../components/salute";
+import ProfileCard from "./components/profile-card";
 
 async function getProfiles(): Promise<AllProfilesResponse> {
     const token = cookies().get("session")?.value;

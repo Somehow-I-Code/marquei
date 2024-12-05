@@ -1,8 +1,8 @@
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import Scheduling from "../home/assets/scheduling.svg";
-import CompanyLogo from "./company-logo";
-import Salute from "./salute";
+import CompanyLogo from "../../../components/company-logo";
+import Salute from "../../../components/salute";
+import Scheduling from "../resource/list/assets/scheduling.svg";
 
 export default function EmptyResourcesList() {
     return (
@@ -33,4 +33,3 @@ export default function EmptyResourcesList() {
         </>
     );
 }
-

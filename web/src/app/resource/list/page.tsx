@@ -1,11 +1,11 @@
 import { ResourceResponse, Resources } from "@/types/resources";
 import { cookies } from "next/headers";
 import BottomFloatingMenu from "../../components/bottom-floating-menu";
-import CategoriesList from "../../components/categories-list";
 import CompanyLogo from "../../components/company-logo";
-import EmptyResourcesList from "../../components/empty-resources-list";
-import ResourcesList from "../../components/resources-list";
 import Salute from "../../components/salute";
+import CategoriesList from "./components/categories-list";
+import EmptyResourcesList from "./components/empty-resources-list";
+import ResourcesList from "./components/resources-list";
 
 function transformResources(resources: ResourceResponse) {
     return resources.map(({ id, name, description, companyId, category }) => ({

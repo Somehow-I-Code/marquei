@@ -1,23 +1,18 @@
 import { revalidatePath } from "next/cache";
-import { redirect } from "next/navigation";
-import getSession from "../../utis/get-session";
+import { cookies } from "next/headers";
 import UpdatePasswordForm, {
     UpdatePasswordFormSchema,
 } from "./components/update-password-form";
 
 export default async function UpdatePasswordPage() {
-    const session = getSession();
-
-    if (!session) {
-        return redirect("/login");
-    }
-
     async function updatePassword(data: UpdatePasswordFormSchema) {
         "use server";
 
         const body = {
             ...data,
         };
+
+        const session = cookies().get("session")?.value;
 
         const response = await fetch("http://api:8080/change-password", {
             method: "PATCH",

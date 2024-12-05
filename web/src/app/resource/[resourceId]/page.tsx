@@ -1,17 +1,9 @@
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import BottomFloatingMenu from "../components/bottom-floating-menu";
-import CompanyLogo from "../components/company-logo";
-import getSession from "../utis/get-session";
-import { redirect } from "next/navigation";
+import BottomFloatingMenu from "../../components/bottom-floating-menu";
+import CompanyLogo from "../../components/company-logo";
 
-export default function ResourceDetails() {
-    const session = getSession();
-
-    if (!session) {
-        return redirect("/login");
-    }
-
+export default function ResourcePage() {
     //TODO: Na buscar de DB colocar no headers o authorization.
 
     return (

@@ -20,7 +20,7 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import { ToastAction } from "@/components/ui/toast";
 import { useToast } from "@/components/ui/use-toast";
-import { CategoriesResponse } from "@/types/categories";
+import { Category } from "@/types/categories";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -42,7 +42,7 @@ const formSchema = z.object({
 export type NewResourceFormSchema = z.infer<typeof formSchema>;
 
 type NewResourceFormProps = {
-    categories: CategoriesResponse;
+    categories: Array<Category>;
     createResource: (data: NewResourceFormSchema) => void;
 };
 

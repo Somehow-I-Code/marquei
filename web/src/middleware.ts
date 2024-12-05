@@ -54,6 +54,8 @@ export const config = {
         "/profile",
         "/profile/new",
         "/profile/list",
+        "/resources/:path",
+        "/resource/new",
         "/welcome",
         "/welcome/success",
     ],

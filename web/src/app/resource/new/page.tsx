@@ -1,15 +1,15 @@
 import { CategoriesResponse } from "@/types/categories";
 import { revalidatePath } from "next/cache";
-import CompanyLogo from "../components/company-logo";
-import FormTitle from "../components/form-title";
+import { cookies } from "next/headers";
+import CompanyLogo from "../../components/company-logo";
+import FormTitle from "../../components/form-title";
 import NewResourceForm, {
     NewResourceFormSchema,
 } from "./components/new-resource-form";
-import getSession from "../utis/get-session";
-import { redirect } from "next/navigation";
-import { jwtDecode } from "jwt-decode";
 
-async function getCategories(token: string): Promise<CategoriesResponse> {
+async function getCategories(): Promise<CategoriesResponse> {
+    const token = cookies().get("session")?.value;
+
     const response = await fetch("http://api:8080/categories", {
         headers: {
             Authorization: `Bearer ${token}`,
@@ -20,20 +20,8 @@ async function getCategories(token: string): Promise<CategoriesResponse> {
     return data;
 }
 
-export default async function NewResource() {
-    const session = getSession();
-
-    if (!session) {
-        return redirect("/login");
-    }
-
-    const categories = await getCategories(session);
-
-    const decoded = jwtDecode(session) as {
-        companyId: number;
-    };
-
-    const companyId = decoded.companyId;
+export default async function NewResourcePage() {
+    const { categories } = await getCategories();
 
     async function createResource(data: NewResourceFormSchema) {
         "use server";
@@ -41,8 +29,9 @@ export default async function NewResource() {
         const body = {
             ...data,
             categoryId: Number(data.category),
-            companyId,
         };
+
+        const session = cookies().get("session")?.value;
 
         const response = await fetch("http://api:8080/resources", {
             method: "post",

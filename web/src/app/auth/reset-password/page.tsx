@@ -6,6 +6,7 @@ import SendEmailForm, {
 export default function ResetPassword() {
     async function requestPasswordReset(data: SendEmailFormSchema) {
         "use server";
+
         const response = await fetch("http://api:8080/reset-password", {
             method: "POST",
             headers: {

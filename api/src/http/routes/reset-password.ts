@@ -46,8 +46,9 @@ export async function resetPassword(server: FastifyInstance) {
             },
             secretKey,
         );
+
         emailService.sendResetPasswordLink(token);
+
         return reply.status(httpCodes.SUCCESS).send({ token });
     });
 }
-

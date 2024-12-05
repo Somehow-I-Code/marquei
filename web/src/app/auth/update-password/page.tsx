@@ -1,4 +1,3 @@
-import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
 import UpdatePasswordForm, {
     UpdatePasswordFormSchema,
@@ -27,8 +26,6 @@ export default async function UpdatePasswordPage() {
             const data = (await response.json()) as { message: string };
             throw new Error(data.message);
         }
-
-        revalidatePath("/profile");
     }
 
     return (

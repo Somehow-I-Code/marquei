@@ -34,7 +34,7 @@ export default async function NewResourcePage() {
         const session = cookies().get("session")?.value;
 
         const response = await fetch("http://api:8080/resources", {
-            method: "post",
+            method: "POST",
             headers: {
                 "content-type": "application/json",
                 Authorization: `Bearer ${session}`,
@@ -47,7 +47,7 @@ export default async function NewResourcePage() {
             throw new Error(error.message);
         }
 
-        revalidatePath("/");
+        revalidatePath("/resource/list");
     }
 
     return (

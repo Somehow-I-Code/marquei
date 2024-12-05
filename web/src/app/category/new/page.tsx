@@ -29,7 +29,7 @@ export default async function NewCategoryPage() {
             throw new Error(error.message);
         }
 
-        revalidatePath("/");
+        revalidatePath("/resource/list");
     }
 
     return (

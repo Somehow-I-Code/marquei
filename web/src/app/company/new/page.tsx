@@ -1,4 +1,3 @@
-import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
 import CompanyLogo from "../../components/company-logo";
 import FormTitle from "../../components/form-title";
@@ -17,7 +16,7 @@ export default async function NewCompanyPage() {
         const session = cookies().get("session")?.value;
 
         const response = await fetch("http://api:8080/company", {
-            method: "post",
+            method: "POST",
             headers: {
                 "content-type": "application/json",
                 Authorization: `Bearer ${session}`,
@@ -29,8 +28,6 @@ export default async function NewCompanyPage() {
             const error = await response.json();
             throw new Error(error.message);
         }
-
-        revalidatePath("/");
     }
 
     return (

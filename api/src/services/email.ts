@@ -24,7 +24,7 @@ class EmailService {
             fetch(slackHookUrl, {
                 method: "POST",
                 body: JSON.stringify({
-                    text: `Clique no link para alterar sua senha: http://localhost:3001/reset-password/${token}`,
+                    text: `Clique no link para alterar sua senha: http://localhost:3001/auth/reset-password/${token}`,
                 }),
                 headers: {
                     "content-type": "application/json",

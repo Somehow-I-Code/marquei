@@ -65,7 +65,7 @@ export default async function ProfilePage() {
 
             <div className="flex flex-col p-6 gap-2">
                 <Button asChild className="font-bold text-base">
-                    <Link href="/change-password">ALTERAR SENHA</Link>
+                    <Link href="/auth/update-password">ALTERAR SENHA</Link>
                 </Button>
                 <Button
                     asChild

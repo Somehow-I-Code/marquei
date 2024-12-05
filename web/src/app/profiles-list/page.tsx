@@ -5,21 +5,15 @@ import { Plus, Search } from "lucide-react";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 
+import { AllProfilesResponse } from "@/types/profiles";
 import { revalidatePath } from "next/cache";
+import { cookies } from "next/headers";
 import CompanyLogo from "../components/company-logo";
 import ProfileCard from "../components/profile-card";
 import Salute from "../components/salute";
 import getSession from "../utis/get-session";
 
-async function getProfiles(token: string): Promise<
-    Array<{
-        id: number;
-        name: string;
-        email: string;
-        level: string;
-        occupation: string;
-    }>
-> {
+async function getProfiles(token: string): Promise<AllProfilesResponse> {
     const response = await fetch("http://api:8080/profiles", {
         headers: {
             Authorization: `Bearer ${token}`,
@@ -44,7 +38,7 @@ export default async function ProfilesList({
         return redirect("/login");
     }
 
-    const profiles = await getProfiles(session);
+    const { profiles } = await getProfiles(session);
 
     async function deleteProfile(id: number) {
         "use server";
@@ -61,21 +55,28 @@ export default async function ProfilesList({
             throw new Error(error.message);
         }
 
+        const { refreshedToken } = await response.json();
+
+        cookies().set("session", refreshedToken);
         revalidatePath("/profiles-list");
     }
 
     const { q } = searchParams;
+
     const filteredResults = profiles.filter((profile) => {
         if (!q) {
             return true;
         }
+
         const formattedFilter = q.toLowerCase();
+
         const searchableKeys = [
             "name",
             "email",
             "level",
             "occupation",
         ] as Array<keyof typeof profile>;
+
         return searchableKeys.some((key) => {
             const value = profile[key];
             return (

@@ -1,3 +1,14 @@
 {
-    "extends": "@tsconfig/node20/tsconfig.json"
+    "extends": "@tsconfig/node20/tsconfig.json",
+    "compilerOptions": {
+        "baseUrl": "./",
+        "paths": {
+            "@repositories/*": ["src/repositories/*"],
+            "@services/*": ["src/services/*"],
+            "@validators/*": ["src/validators/*"],
+            "@routes/*": ["src/http/routes/*"],
+            "@middlewares/*": ["src/http/middlewares/*"],
+            "@lib/*": ["src/lib/*"]
+        }
+    }
 }

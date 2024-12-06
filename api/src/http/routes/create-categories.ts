@@ -1,10 +1,10 @@
 import { FastifyInstance } from "fastify";
-
+import { verify } from "jsonwebtoken";
+import { ZodError } from "zod";
 import categoriesRepository from "../../repositories/categories";
 import { createCategory } from "../../validators/categories";
-import { getToken } from "./utils/get-token";
 import { getJwtSecret } from "./utils/get-jwt-secret";
-import { verify } from "jsonwebtoken";
+import { getToken } from "./utils/get-token";
 import httpCodes from "./utils/http-codes";
 
 export async function createCategories(server: FastifyInstance) {
@@ -13,10 +13,22 @@ export async function createCategories(server: FastifyInstance) {
         const secretKey = getJwtSecret();
 
         if (!token) {
-            return reply.status(httpCodes.BAD_REQUEST).send({ message: "Token inválido!" });
+            return reply
+                .status(httpCodes.BAD_REQUEST)
+                .send({ message: "Token inválido!" });
         }
 
-        const { name, companyId } = createCategory.parse(request.body);
+        let validatedCategoryData;
+
+        try {
+            validatedCategoryData = createCategory.parse(request.body);
+        } catch (error) {
+            return reply.status(httpCodes.BAD_REQUEST).send({
+                message: (error as ZodError).issues[0].message,
+            });
+        }
+
+        const { name, companyId } = validatedCategoryData;
 
         const profile = verify(token, secretKey) as {
             companyId: number;
@@ -36,3 +48,4 @@ export async function createCategories(server: FastifyInstance) {
         return reply.status(httpCodes.CREATED).send(category);
     });
 }
+

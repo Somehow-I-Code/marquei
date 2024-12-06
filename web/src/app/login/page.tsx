@@ -32,7 +32,7 @@ export default function LoginPage() {
         });
 
         if (data.firstLogin) {
-            redirect("/first-login");
+            redirect("/welcome");
         } else {
             redirect("/");
         }

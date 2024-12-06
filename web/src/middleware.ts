@@ -48,6 +48,7 @@ export function middleware(request: NextRequest) {
 
 export const config = {
     matcher: [
+        "/",
         "/auth/update-password",
         "/category/new",
         "/company/new",

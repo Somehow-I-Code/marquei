@@ -80,7 +80,7 @@ export default async function SheetMenu() {
                         <span>Gerenciar perfis</span>
                     </div>
 
-                    {decoded.level === "ADMIN" ? (
+                    {decoded.level !== "USER" ? (
                         <>
                             <div className="flex items-center gap-2 px-8 font-medium hover:underline">
                                 <Link href="/profile/new">Novo perfil</Link>
@@ -107,7 +107,7 @@ export default async function SheetMenu() {
                             <span>Empresa</span>
                         </div>
                         <div className="flex items-center gap-2 px-8 font-medium hover:underline">
-                            <Link href="/new-company">Nova empresa</Link>
+                            <Link href="/company/new">Nova empresa</Link>
                         </div>
                     </div>
                 ) : null}

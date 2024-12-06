@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import CompanyLogo from "../../../components/company-logo";
 import Salute from "../../../components/salute";
-import Scheduling from "../resource/list/assets/scheduling.svg";
+import Scheduling from "../assets/scheduling.svg";
 
 export default function EmptyResourcesList() {
     return (

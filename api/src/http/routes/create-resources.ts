@@ -1,10 +1,11 @@
 import { FastifyInstance } from "fastify";
 
+import { verify } from "jsonwebtoken";
+import { ZodError } from "zod";
 import resourcesRepository from "../../repositories/resources";
 import { createResource } from "../../validators/resources";
-import { getToken } from "./utils/get-token";
-import { verify } from "jsonwebtoken";
 import { getJwtSecret } from "./utils/get-jwt-secret";
+import { getToken } from "./utils/get-token";
 import httpCodes from "./utils/http-codes";
 
 export async function createResources(server: FastifyInstance) {
@@ -13,11 +14,23 @@ export async function createResources(server: FastifyInstance) {
         const secretKey = getJwtSecret();
 
         if (!token) {
-            return reply.status(httpCodes.BAD_REQUEST).send({ message: "Token inválido!" });
+            return reply
+                .status(httpCodes.BAD_REQUEST)
+                .send({ message: "Token inválido!" });
+        }
+
+        let validatedResourceData;
+
+        try {
+            validatedResourceData = createResource.parse(request.body);
+        } catch (error) {
+            return reply.status(httpCodes.BAD_REQUEST).send({
+                message: (error as ZodError).issues[0].message,
+            });
         }
 
         const { name, description, categoryId, companyId } =
-            createResource.parse(request.body);
+            validatedResourceData;
 
         const profile = verify(token, secretKey) as {
             companyId: number;
@@ -39,3 +52,4 @@ export async function createResources(server: FastifyInstance) {
         return reply.status(httpCodes.CREATED).send(resource);
     });
 }
+

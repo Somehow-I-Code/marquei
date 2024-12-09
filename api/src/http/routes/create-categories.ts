@@ -1,6 +1,7 @@
 import { FastifyInstance } from "fastify";
-
 import { verify } from "jsonwebtoken";
+import { ZodError } from "zod";
+
 import categoriesRepository from "../../repositories/categories";
 import { createCategory } from "../../validators/categories";
 import { getJwtSecret } from "./utils/get-jwt-secret";
@@ -18,7 +19,17 @@ export async function createCategories(server: FastifyInstance) {
                 .send({ message: "Token inválido!" });
         }
 
-        const { name } = createCategory.parse(request.body);
+        let validatedCategoryData;
+
+        try {
+            validatedCategoryData = createCategory.parse(request.body);
+        } catch (error) {
+            return reply.status(httpCodes.BAD_REQUEST).send({
+                message: (error as ZodError).issues[0].message,
+            });
+        }
+
+        const { name } = validatedCategoryData;
 
         const { companyId } = verify(token, secretKey) as {
             companyId: number;

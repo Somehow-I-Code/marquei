@@ -6,24 +6,6 @@ import generatePassword from "@repositories/utils/generateRandomPassword";
 import emailService from "@services/email";
 import { CreateProfileInput } from "@validators/profile";
 
-// export type ProfileRepositoryType = {
-//     create(data: CreateProfileInput): Promise<any>;
-//     findByEmail(email: string): Promise<any>;
-//     findById(id: number): Promise<any>;
-//     updatePassword(id: number, newPassword: string): Promise<any>;
-//     toggleProfile(
-//         currenUser: { level: Level },
-//         id: number,
-//         companyId: number | undefined,
-//         newState: boolean,
-//     ): Promise<any>;
-//     findAll(companyId: number, isSudo: boolean): Promise<any>;
-//     delete(
-//         id: number,
-//         currentUser: { level: Level; companyId: number },
-//     ): Promise<any>;
-// };
-
 class ProfileRepository {
     async create(data: CreateProfileInput) {
         const password = generatePassword();

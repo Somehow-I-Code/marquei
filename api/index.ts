@@ -1,14 +1,12 @@
 import Fastify from "fastify";
 
-import { changePassword } from "@routes/change-password";
+import { auth } from "@routes/auth";
 import { createCategories } from "@routes/create-categories";
 import { createCompany } from "@routes/create-company";
-import CreateNewPassword from "@routes/create-new-password";
 import { createResources } from "@routes/create-resources";
 import { getCategories } from "@routes/get-categories";
 import { getCompanies } from "@routes/get-companies";
 import { getResources } from "@routes/get-resources";
-import { login } from "@routes/login";
 import {
     activateProfile,
     createProfile,
@@ -18,8 +16,6 @@ import {
     getProfile,
     getProfiles,
 } from "@routes/profile";
-import { resetPassword } from "@routes/reset-password";
-import { sudoLogin } from "@routes/sudo-login";
 
 const server = Fastify();
 
@@ -32,16 +28,14 @@ server.register(deleteProfile);
 server.register(activateProfile);
 server.register(deactivateProfile);
 
+// auth
+server.register(auth, { prefix: "/auth" });
+
 server.register(createCategories);
 server.register(createResources);
 server.register(getResources);
 server.register(getCategories);
-server.register(login);
-server.register(resetPassword);
-server.register(changePassword);
-server.register(sudoLogin);
 server.register(createCompany);
-server.register(CreateNewPassword);
 server.register(getCompanies);
 
 server.listen({ port: 8080, host: "0.0.0.0" }, (err, address) => {

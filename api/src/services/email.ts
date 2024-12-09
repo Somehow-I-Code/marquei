@@ -35,4 +35,5 @@ class EmailService {
 }
 
 const emailService = new EmailService();
+export type EmailServiceType = typeof emailService;
 export default emailService;

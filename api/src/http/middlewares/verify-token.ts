@@ -1,8 +1,9 @@
 import { FastifyReply } from "fastify";
-import { verify } from "jsonwebtoken";
 
-import { getJwtSecret } from "../routes/utils/get-jwt-secret";
-import httpCodes from "../routes/utils/http-codes";
+import { decodeAuthToken } from "@http/utils/decode-auth-token";
+import { validateAuthToken } from "@http/utils/validate-auth-token";
+import HttpError from "@routes/utils/http-error";
+import { SERVER_ERROR, UNAUTHORIZED } from "../routes/utils/http-codes";
 import { LoggedRequest } from "./types/request";
 
 export function verifyToken(
@@ -10,39 +11,27 @@ export function verifyToken(
     reply: FastifyReply,
     next: (err?: Error) => void,
 ) {
-    const requestAuthorization = request.headers["authorization"];
-    const token = requestAuthorization?.split(" ")[1];
-
-    if (!token) {
-        return reply
-            .status(httpCodes.UNAUTHORIZED)
-            .send({ message: "Faltando token de autenticação" });
-    }
-
-    let secretKey: string | undefined;
-
     try {
-        secretKey = getJwtSecret();
+        const requestAuthorization = request.headers["authorization"];
+        const token = requestAuthorization?.split(" ")[1];
+
+        if (!token) {
+            throw new HttpError(UNAUTHORIZED, "Faltando token de autenticação");
+        }
+
+        const profile = decodeAuthToken(token);
+        validateAuthToken(token);
+
+        request.userId = profile.id;
+
+        next();
     } catch (e) {
+        if (e instanceof HttpError) {
+            return reply.status(e.code).send({ message: e.message });
+        }
+
         return reply
-            .status(httpCodes.SERVER_ERROR)
-            .send({ message: (e as Error).message });
+            .status(SERVER_ERROR)
+            .send({ message: "Erro interno do servidor" });
     }
-
-    const profile = verify(token, secretKey) as {
-        id: number;
-        exp: number;
-    };
-
-    const now = Date.now();
-
-    if (now > profile.exp) {
-        return reply
-            .status(httpCodes.UNAUTHORIZED)
-            .send({ message: "Token expirado" });
-    }
-
-    request.userId = profile.id;
-
-    next();
 }

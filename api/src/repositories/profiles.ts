@@ -149,5 +149,6 @@ class ProfileRepository {
     }
 }
 
-const profileRepository = new ProfileRepository();
+export const profileRepository = new ProfileRepository();
+export type ProfileRepositoryType = typeof profileRepository;
 export default profileRepository;

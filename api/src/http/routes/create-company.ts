@@ -1,11 +1,12 @@
+import { Level } from "@prisma/client";
 import { FastifyInstance } from "fastify";
+import { verify } from "jsonwebtoken";
+import { ZodError } from "zod";
 import companyRepository from "../../repositories/company";
 import { createCompanySchema } from "./../../validators/company";
-import httpCodes from "./utils/http-codes";
-import { getToken } from "./utils/get-token";
 import { getJwtSecret } from "./utils/get-jwt-secret";
-import { verify } from "jsonwebtoken";
-import { Level } from "@prisma/client";
+import { getToken } from "./utils/get-token";
+import httpCodes from "./utils/http-codes";
 
 export async function createCompany(server: FastifyInstance) {
     server.post("/company", async (request, reply) => {
@@ -22,8 +23,18 @@ export async function createCompany(server: FastifyInstance) {
             level: Level;
         };
 
+        let validatedCompanyData;
+
+        try {
+            validatedCompanyData = createCompanySchema.parse(request.body);
+        } catch (error) {
+            return reply.status(httpCodes.BAD_REQUEST).send({
+                message: (error as ZodError).issues[0].message,
+            });
+        }
+
         const { name, isActive, city, nickname, representativeName } =
-            createCompanySchema.parse(request.body);
+            validatedCompanyData;
 
         const isSudo = profile.level === Level.SUDO;
 
@@ -44,3 +55,4 @@ export async function createCompany(server: FastifyInstance) {
         });
     });
 }
+

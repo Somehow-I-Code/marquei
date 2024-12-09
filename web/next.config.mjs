@@ -29,4 +29,9 @@ export default {
 
         return config;
     },
+    logging: {
+        fetches: {
+            fullUrl: true,
+        },
+    },
 };

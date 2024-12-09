@@ -1,7 +1,7 @@
 import { FastifyInstance } from "fastify";
-
 import { verify } from "jsonwebtoken";
 import { ZodError } from "zod";
+
 import resourcesRepository from "../../repositories/resources";
 import { createResource } from "../../validators/resources";
 import { getJwtSecret } from "./utils/get-jwt-secret";
@@ -29,27 +29,19 @@ export async function createResources(server: FastifyInstance) {
             });
         }
 
-        const { name, description, categoryId, companyId } =
-            validatedResourceData;
+        const { name, description, categoryId } = validatedResourceData;
 
         const profile = verify(token, secretKey) as {
             companyId: number;
         };
 
-        if (profile.companyId !== companyId) {
-            return reply.status(httpCodes.UNAUTHORIZED).send({
-                message: "Você não tem permissão para executar esta operação!",
-            });
-        }
-
         const resource = await resourcesRepository.create({
             name,
             description,
             categoryId,
-            companyId,
+            companyId: profile.companyId,
         });
 
         return reply.status(httpCodes.CREATED).send(resource);
     });
 }
-

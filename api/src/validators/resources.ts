@@ -13,10 +13,8 @@ export const createResource = z.object({
         required_error: "A categoria é obrigatório!",
         invalid_type_error: "A categoria é obrigatório!",
     }),
-    companyId: z.number({
-        required_error: "Empresa é obrigatório, contate o suporte!",
-        invalid_type_error: "Empresa é obrigatório, contate o suporte!",
-    }),
 });
 
-export type CreateResourceInput = z.infer<typeof createResource>;
+export type CreateResourceInput = z.infer<typeof createResource> & {
+    companyId: number;
+};

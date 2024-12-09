@@ -1,6 +1,7 @@
 import { FastifyInstance } from "fastify";
 import { verify } from "jsonwebtoken";
 import { ZodError } from "zod";
+
 import categoriesRepository from "../../repositories/categories";
 import { createCategory } from "../../validators/categories";
 import { getJwtSecret } from "./utils/get-jwt-secret";
@@ -28,17 +29,11 @@ export async function createCategories(server: FastifyInstance) {
             });
         }
 
-        const { name, companyId } = validatedCategoryData;
+        const { name } = validatedCategoryData;
 
-        const profile = verify(token, secretKey) as {
+        const { companyId } = verify(token, secretKey) as {
             companyId: number;
         };
-
-        if (profile.companyId !== companyId) {
-            return reply.status(httpCodes.UNAUTHORIZED).send({
-                message: "Você não tem permissão para executar esta operação!",
-            });
-        }
 
         const category = await categoriesRepository.create({
             name,
@@ -48,4 +43,3 @@ export async function createCategories(server: FastifyInstance) {
         return reply.status(httpCodes.CREATED).send(category);
     });
 }
-

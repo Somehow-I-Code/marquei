@@ -3,7 +3,6 @@ import { ProfilesResponse } from "@/types/profiles";
 import { cookies } from "next/headers";
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import getSession from "../utis/get-session";
 import UserImage from "./assets/user.svg";
 import LogoutButton from "./components/logout-button";
 
@@ -15,11 +14,7 @@ async function doLogout() {
 }
 
 async function getProfile(): Promise<ProfilesResponse> {
-    const session = getSession();
-
-    if (!session) {
-        return redirect("/login");
-    }
+    const session = cookies().get("session")?.value;
 
     const response = await fetch("http://api:8080/profile", {
         headers: {
@@ -70,7 +65,7 @@ export default async function ProfilePage() {
 
             <div className="flex flex-col p-6 gap-2">
                 <Button asChild className="font-bold text-base">
-                    <Link href="/change-password">ALTERAR SENHA</Link>
+                    <Link href="/auth/update-password">ALTERAR SENHA</Link>
                 </Button>
                 <Button
                     asChild

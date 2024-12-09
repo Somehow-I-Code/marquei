@@ -18,6 +18,8 @@ export function CatchErrors() {
             try {
                 await originalMethod.call(this, request, reply);
             } catch (error) {
+                console.error(error);
+
                 if (error instanceof HttpError) {
                     reply.status(error.code).send({ message: error.message });
                 } else {

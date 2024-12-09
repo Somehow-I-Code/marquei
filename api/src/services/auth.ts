@@ -126,10 +126,7 @@ class AuthService {
     }
 
     private async findUserByEmail(email: string) {
-        console.log(email);
         const profile = await this.profileRepository.findByEmail(email);
-
-        console.log({ found: profile });
 
         if (!profile) {
             throw new HttpError(UNAUTHORIZED, "Credenciais inválidas");

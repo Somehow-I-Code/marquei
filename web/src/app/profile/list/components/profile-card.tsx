@@ -128,7 +128,6 @@ export default function ProfileCard({
                             </AccordionTrigger>
                             <AccordionContent className="flex flex-col gap-5 text-slate-600 text-base mt-3">
                                 <Link href="">Editar perfil</Link>
-                                <Link href="">Pedir nova senha</Link>
 
                                 {loggedUser?.level === "SUDO" ? (
                                     <Button

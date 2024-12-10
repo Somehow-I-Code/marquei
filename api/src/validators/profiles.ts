@@ -2,10 +2,14 @@ import { z } from "zod";
 
 export const createProfileSchema = z.object({
     name: z.string({
-        required_error: "Nome é obrigatório!",
-        invalid_type_error: "Nome é obrigatório!",
+        required_error: "Nome é obrigatório",
+        invalid_type_error: "Nome tem que ser um texto",
     }),
-    occupation: z.string(),
+    occupation: z
+        .string({
+            invalid_type_error: "Cargo tem que ser um texto",
+        })
+        .optional(),
     email: z
         .string({
             required_error: "Email é obrigatório",
@@ -18,15 +22,24 @@ export const createProfileSchema = z.object({
         invalid_type_error: "Empresa é obrigatório, contate o suporte!",
     }),
 });
+export type CreateProfileInput = z.infer<typeof createProfileSchema>;
 
 export const toggleProfileSchema = z.object({
-    profileId: z.string().transform((value) => parseInt(value)),
+    profileId: z
+        .string({
+            required_error: "Id do perfil é obrigatório",
+            invalid_type_error: "Id do perfil tem que ser um número",
+        })
+        .transform((value) => parseInt(value)),
 });
+export type ToggleProfileInput = z.infer<typeof toggleProfileSchema>;
 
 export const deleteProfileSchema = z.object({
-    profileId: z.string().transform((value) => parseInt(value)),
+    profileId: z
+        .string({
+            required_error: "Id do perfil é obrigatório",
+            invalid_type_error: "Id do perfil tem que ser um número",
+        })
+        .transform((value) => parseInt(value)),
 });
-
-export type CreateProfileInput = z.infer<typeof createProfileSchema>;
-export type ToggleProfileInput = z.infer<typeof toggleProfileSchema>;
 export type DeleteProfileInput = z.infer<typeof deleteProfileSchema>;

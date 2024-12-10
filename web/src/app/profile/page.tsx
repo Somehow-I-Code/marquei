@@ -16,7 +16,7 @@ async function doLogout() {
 async function getProfile(): Promise<ProfilesResponse> {
     const session = cookies().get("session")?.value;
 
-    const response = await fetch("http://api:8080/profile", {
+    const response = await fetch("http://api:8080/profiles", {
         headers: {
             "content-type": "application/json",
             Authorization: `Bearer ${session}`,

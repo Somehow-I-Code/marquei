@@ -13,7 +13,7 @@ export default async function UpdatePasswordPage() {
 
         const session = cookies().get("session")?.value;
 
-        const response = await fetch("http://api:8080/change-password", {
+        const response = await fetch("http://api:8080/auth/update-password", {
             method: "PATCH",
             headers: {
                 "content-type": "application/json",

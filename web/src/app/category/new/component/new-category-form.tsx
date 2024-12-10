@@ -105,10 +105,7 @@ export default function NewCategoryForm({
                     <Button type="submit" className="text-base font-bold">
                         SALVAR
                     </Button>
-                    <Button
-                        asChild
-                        className="bg-white text-indigo-950 text-base font-bold border border-indigo-950"
-                    >
+                    <Button asChild variant="secondary">
                         <Link href="/">CANCELAR</Link>
                     </Button>
                 </div>

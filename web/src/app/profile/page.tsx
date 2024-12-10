@@ -63,16 +63,16 @@ export default async function ProfilePage() {
                 </div>
             </div>
 
-            <div className="flex flex-col p-6 gap-2">
-                <Button asChild className="font-bold text-base">
-                    <Link href="/auth/update-password">ALTERAR SENHA</Link>
-                </Button>
-                <Button
-                    asChild
-                    className="font-bold text-base bg-white text-indigo-950 border border-indigo-950"
-                >
-                    <Link href="/">VOLTAR</Link>
-                </Button>
+            <div className="flex flex-col p-6 gap-16">
+                <div className="flex flex-col gap-4">
+                    <Button asChild className="font-bold text-base">
+                        <Link href="/auth/update-password">ALTERAR SENHA</Link>
+                    </Button>
+
+                    <Button asChild variant="secondary">
+                        <Link href="/">VOLTAR</Link>
+                    </Button>
+                </div>
                 <LogoutButton doLogout={doLogout} />
             </div>
         </section>

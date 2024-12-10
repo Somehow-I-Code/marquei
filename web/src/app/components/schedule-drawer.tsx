@@ -26,7 +26,7 @@ export default function ScheduleDrawer() {
             <DrawerFooter>
                 <Button className="bg-indigo-950">Agendar</Button>
                 <DrawerClose>
-                    <Button variant="outline">Cancelar</Button>
+                    <Button variant="secondary">Cancelar</Button>
                 </DrawerClose>
             </DrawerFooter>
         </DrawerContent>

@@ -198,11 +198,7 @@ export default function NewResourceForm({
                 <div className="flex flex-col gap-2">
                     <Button className="bg-indigo-950 font-bold">SALVAR</Button>
 
-                    <Button
-                        asChild
-                        variant="outline"
-                        className="border border-indigo-950 text-indigo-950 font-bold"
-                    >
+                    <Button asChild variant="secondary">
                         <Link href="/">CANCELAR</Link>
                     </Button>
                 </div>

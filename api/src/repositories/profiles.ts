@@ -80,6 +80,7 @@ class ProfilesRepository {
             },
             data: {
                 isActive: newState,
+                updatedAt: new Date(Date.now()),
             },
         });
 

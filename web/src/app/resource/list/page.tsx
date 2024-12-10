@@ -28,7 +28,7 @@ async function getResources(): Promise<Resources> {
 
     const data = await response.json();
 
-    return transformResources(data);
+    return transformResources(data.resources);
 }
 
 function getResourcesByCategory(resources: Resources) {

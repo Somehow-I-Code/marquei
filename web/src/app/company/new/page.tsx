@@ -15,7 +15,7 @@ export default async function NewCompanyPage() {
 
         const session = cookies().get("session")?.value;
 
-        const response = await fetch("http://api:8080/company", {
+        const response = await fetch("http://api:8080/companies", {
             method: "POST",
             headers: {
                 "content-type": "application/json",

@@ -26,10 +26,7 @@ export default async function WelcomeSuccess() {
                         {/* TODO: Adicionar caminho quando a aplicação estiver fazendo agendamentos */}
                         <Link href="">VAMOS LÁ!</Link>
                     </Button>
-                    <Button
-                        asChild
-                        className="font-bold text-base bg-white text-indigo-950 border border-indigo-950"
-                    >
+                    <Button asChild variant="secondary">
                         <Link href="/">MAIS TARDE</Link>
                     </Button>
                 </div>

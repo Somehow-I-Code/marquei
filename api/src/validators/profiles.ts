@@ -6,7 +6,12 @@ export const createProfileSchema = z.object({
         invalid_type_error: "Nome é obrigatório!",
     }),
     occupation: z.string(),
-    email: z.string().email({ message: "Email inválido!" }),
+    email: z
+        .string({
+            required_error: "Email é obrigatório",
+            invalid_type_error: "Email deve ser um texto",
+        })
+        .email({ message: "Email inválido!" }),
     level: z.union([z.literal("USER"), z.literal("ADMIN"), z.literal("SUDO")]),
     companyId: z.number({
         required_error: "Empresa é obrigatório, contate o suporte!",
@@ -15,14 +20,11 @@ export const createProfileSchema = z.object({
 });
 
 export const toggleProfileSchema = z.object({
-    profileId: z.string().pipe(z.coerce.number()),
+    profileId: z.string().transform((value) => parseInt(value)),
 });
 
 export const deleteProfileSchema = z.object({
-    id: z.coerce.number({
-        required_error: "Id do perfil é obrigatório!",
-        invalid_type_error: "Id tem que ser um número, contate o suporte!",
-    }),
+    profileId: z.string().transform((value) => parseInt(value)),
 });
 
 export type CreateProfileInput = z.infer<typeof createProfileSchema>;

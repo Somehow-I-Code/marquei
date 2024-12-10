@@ -5,7 +5,11 @@ import { findLoggedUser } from "@middlewares/find-logged-user";
 import { sudoRoute } from "@middlewares/sudo-route";
 import { verifyToken } from "@middlewares/verify-token";
 
-export async function auth(server: FastifyInstance) {
+export async function auth(
+    server: FastifyInstance,
+    _: any,
+    done: (err?: Error) => void,
+) {
     server.post("/login", authController.login);
 
     server.post(
@@ -35,4 +39,6 @@ export async function auth(server: FastifyInstance) {
         },
         authController.setPassword,
     );
+
+    done();
 }

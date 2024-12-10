@@ -4,9 +4,11 @@ import { Label } from "@/components/ui/label";
 import { Plus, Search } from "lucide-react";
 import Link from "next/link";
 
+import { readCookieData } from "@/app/actions";
 import { AllProfilesResponse } from "@/types/profiles";
 import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 import CompanyLogo from "../../components/company-logo";
 import Salute from "../../components/salute";
 import ProfileCard from "./components/profile-card";
@@ -35,6 +37,32 @@ export default async function ProfilesListPage({
     searchParams,
 }: ProfileListParams) {
     const { profiles } = await getProfiles();
+    const loggedUser = await readCookieData();
+
+    async function sudoLogin(email: string) {
+        "use server";
+
+        const session = cookies().get("session")?.value;
+
+        const response = await fetch("http://api:8080/auth/sudo-login", {
+            method: "POST",
+            headers: {
+                Authorization: `Bearer ${session}`,
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ email }),
+        });
+
+        if (response.status !== 200) {
+            const error = await response.json();
+            throw new Error(error.message);
+        }
+
+        const data = await response.json();
+
+        cookies().set("session", data.token);
+        redirect("/");
+    }
 
     async function deleteProfile(id: number) {
         "use server";
@@ -42,7 +70,7 @@ export default async function ProfilesListPage({
         const session = cookies().get("session")?.value;
 
         const response = await fetch(`http://api:8080/profiles/${id}`, {
-            method: "delete",
+            method: "DELETE",
             headers: {
                 Authorization: `Bearer ${session}`,
             },
@@ -95,7 +123,7 @@ export default async function ProfilesListPage({
                 <h1 className="text-2xl font-semibold">Lista de Perfis</h1>
                 <Button className="bg-indigo-950 font-bold gap-2">
                     <Plus />
-                    <Link className="text-xs" href="/new-profile">
+                    <Link className="text-xs" href="/profile/new">
                         NOVO PERFIL
                     </Link>
                 </Button>
@@ -131,7 +159,9 @@ export default async function ProfilesListPage({
                 filteredResults.map((profile) => (
                     <ProfileCard
                         key={profile.id}
+                        loggedUser={loggedUser}
                         profile={profile}
+                        sudoLogin={sudoLogin}
                         deleteProfile={deleteProfile}
                     />
                 ))

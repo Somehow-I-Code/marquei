@@ -16,6 +16,7 @@ import {
     CardHeader,
 } from "@/components/ui/card";
 import { useToast } from "@/components/ui/use-toast";
+import { DecodedProfile } from "@/types/profiles";
 import Link from "next/link";
 
 type ProfileCardProps = {
@@ -26,11 +27,15 @@ type ProfileCardProps = {
         level: string;
         occupation: string;
     };
+    loggedUser: DecodedProfile | null;
+    sudoLogin: (email: string) => void;
     deleteProfile: (id: number) => void;
 };
 
 export default function ProfileCard({
     profile,
+    loggedUser,
+    sudoLogin,
     deleteProfile,
 }: ProfileCardProps) {
     const { toast } = useToast();
@@ -41,6 +46,25 @@ export default function ProfileCard({
         const initials = `${names[0][0]}${reversedNames[0][0]}`;
 
         return initials.toUpperCase();
+    }
+
+    async function handleSudoLogin() {
+        try {
+            await sudoLogin(profile.email);
+
+            toast({
+                title: "Logado como outro usuário!",
+                description: `Agora você está acessando a plataforma como ${profile.name}.`,
+            });
+        } catch (e) {
+            if (e instanceof Error) {
+                toast({
+                    variant: "destructive",
+                    title: "Erro ao logar como outro usuário!",
+                    description: e.message,
+                });
+            }
+        }
     }
 
     async function handleDeleteProfile() {
@@ -104,7 +128,17 @@ export default function ProfileCard({
                             </AccordionTrigger>
                             <AccordionContent className="flex flex-col gap-5 text-slate-600 text-base mt-3">
                                 <Link href="">Editar perfil</Link>
-                                <Link href="">Pedir nova senha</Link>
+
+                                {loggedUser?.level === "SUDO" ? (
+                                    <Button
+                                        variant="outline"
+                                        className="rounded-lg"
+                                        onClick={handleSudoLogin}
+                                    >
+                                        Logar como esse usuário
+                                    </Button>
+                                ) : null}
+
                                 <div className="flex justify-between">
                                     <Link href="">Desativar perfil</Link>
                                     <h1 className="text-base text-slate-400 tracking-widest">

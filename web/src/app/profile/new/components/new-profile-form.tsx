@@ -21,6 +21,7 @@ import {
 import { ToastAction } from "@/components/ui/toast";
 import { useToast } from "@/components/ui/use-toast";
 import { Company } from "@/types/companies";
+import { DecodedProfile } from "@/types/profiles";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -39,23 +40,24 @@ const formSchema = z.object({
         message: "Selecione um dos níveis de perfil da lista.",
     }),
     companyId: z.string().min(1, {
-        message: "Selecione uma empresa."
+        message: "Selecione uma empresa.",
     }),
-})
-
+});
 
 export type NewProfileFormSchema = z.infer<typeof formSchema>;
 
 type NewProfileFormProps = {
     levels: Array<string>;
     createProfile: (data: NewProfileFormSchema) => Promise<void>;
-    companies: Array<Company>;
+    companies?: Array<Company>;
+    loggedUser: DecodedProfile | null;
 };
 
 export default function NewProfileForm({
     levels,
     createProfile,
-    companies
+    companies,
+    loggedUser,
 }: NewProfileFormProps) {
     const form = useForm<NewProfileFormSchema>({
         resolver: zodResolver(formSchema),
@@ -64,7 +66,7 @@ export default function NewProfileForm({
             occupation: "",
             email: "",
             level: "",
-            companyId:"",
+            companyId: String(loggedUser?.companyId),
         },
     });
 
@@ -85,7 +87,6 @@ export default function NewProfileForm({
 
     async function onSubmit(data: NewProfileFormSchema) {
         try {
-
             await createProfile(data);
 
             form.reset();
@@ -238,52 +239,64 @@ export default function NewProfileForm({
                         }}
                     />
 
-                    <FormField
-                        control={form.control}
-                        name="companyId"
-                        render={({ field }) => {
-                            return (
-                                <FormItem>
-                                    <div className="flex flex-col gap-2">
-                                        <FormLabel htmlFor="companyId">
-                                            Empresa
-                                        </FormLabel>
-                                        <Select
-                                            value={field.value} 
-                                            defaultValue={field.value} 
-                                            onValueChange={field.onChange}
-                                        >
-                                            <FormControl>
-                                                <SelectTrigger>
-                                                    <SelectValue
-                                                        id="companyId"
-                                                        placeholder="Escolha uma empresa"
-                                                        {...field}
-                                                    />
-                                                </SelectTrigger>
-                                            </FormControl>
-                                            <SelectContent>
-                                                {companies.map((company) => {
-                                                    return (
-                                                        <SelectItem
-                                                            key={company.id}
-                                                            value={String(company.id)}
-                                                        >
-                                                            {company.name}
-                                                        </SelectItem>
-                                                    );
-                                                })}
-                                            </SelectContent>
-                                        </Select>
-                                    </div>
-                                </FormItem>
-                            );
-                        }}
-                    />
+                    {loggedUser?.level === "SUDO" ? (
+                        <FormField
+                            control={form.control}
+                            name="companyId"
+                            render={({ field }) => {
+                                return (
+                                    <FormItem>
+                                        <div className="flex flex-col gap-2">
+                                            <FormLabel htmlFor="companyId">
+                                                Empresa
+                                            </FormLabel>
+                                            <Select
+                                                value={field.value}
+                                                defaultValue={field.value}
+                                                onValueChange={field.onChange}
+                                            >
+                                                <FormControl>
+                                                    <SelectTrigger>
+                                                        <SelectValue
+                                                            id="companyId"
+                                                            placeholder="Escolha uma empresa"
+                                                            {...field}
+                                                        />
+                                                    </SelectTrigger>
+                                                </FormControl>
+                                                <SelectContent>
+                                                    {companies?.map(
+                                                        (company) => {
+                                                            return (
+                                                                <SelectItem
+                                                                    key={
+                                                                        company.id
+                                                                    }
+                                                                    value={String(
+                                                                        company.id,
+                                                                    )}
+                                                                >
+                                                                    {
+                                                                        company.name
+                                                                    }
+                                                                </SelectItem>
+                                                            );
+                                                        },
+                                                    )}
+                                                </SelectContent>
+                                            </Select>
+                                        </div>
+                                    </FormItem>
+                                );
+                            }}
+                        />
+                    ) : null}
                 </div>
 
                 <div className="flex flex-col gap-2">
-                    <Button type="submit" className="bg-indigo-950 font-bold">SALVAR</Button>
+                    <Button type="submit" className="bg-indigo-950 font-bold">
+                        SALVAR
+                    </Button>
 
                     <Button
                         asChild
@@ -297,7 +310,3 @@ export default function NewProfileForm({
         </Form>
     );
 }
-function register(arg0: string, arg1: { value: string; }): import("react").JSX.IntrinsicAttributes & import("react").ClassAttributes<HTMLInputElement> & import("react").InputHTMLAttributes<HTMLInputElement> {
-    throw new Error("Function not implemented.");
-}
-

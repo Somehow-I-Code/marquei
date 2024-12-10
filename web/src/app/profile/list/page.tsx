@@ -123,7 +123,7 @@ export default async function ProfilesListPage({
                 <h1 className="text-2xl font-semibold">Lista de Perfis</h1>
                 <Button className="bg-indigo-950 font-bold gap-2">
                     <Plus />
-                    <Link className="text-xs" href="/new-profile">
+                    <Link className="text-xs" href="/profile/new">
                         NOVO PERFIL
                     </Link>
                 </Button>

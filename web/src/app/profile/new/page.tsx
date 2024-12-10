@@ -1,3 +1,4 @@
+import { readCookieData } from "@/app/actions";
 import { Company } from "@/types/companies";
 import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
@@ -20,7 +21,7 @@ async function getLevels(): Promise<{ levels: Array<string> }> {
     return data;
 }
 
-async function getCompanies(): Promise<Array<Company>> {
+async function getCompanies(): Promise<{ companies: Array<Company> }> {
     const token = cookies().get("session")?.value;
 
     const response = await fetch("http://api:8080/companies", {
@@ -35,7 +36,8 @@ async function getCompanies(): Promise<Array<Company>> {
 
 export default async function NewProfilePage() {
     const { levels } = await getLevels();
-    const companies = await getCompanies();
+    const { companies } = await getCompanies();
+    const loggedUser = await readCookieData();
 
     async function createProfile(data: NewProfileFormSchema) {
         "use server";
@@ -78,6 +80,7 @@ export default async function NewProfilePage() {
                     levels={levels}
                     createProfile={createProfile}
                     companies={companies}
+                    loggedUser={loggedUser}
                 />
             </div>
         </section>

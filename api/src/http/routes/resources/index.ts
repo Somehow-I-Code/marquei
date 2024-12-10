@@ -1,3 +1,7 @@
+import { resourcesController } from "@controllers/resources";
+import { findLoggedUser } from "@middlewares/find-logged-user";
+import { refreshToken } from "@middlewares/refresh-token";
+import { verifyToken } from "@middlewares/verify-token";
 import { FastifyInstance } from "fastify";
 
 export async function resources(
@@ -5,9 +9,21 @@ export async function resources(
     _: any,
     done: (err?: Error) => void,
 ) {
-    server.get("/", () => {});
+    server.get(
+        "/",
+        {
+            preHandler: [verifyToken, findLoggedUser],
+        },
+        resourcesController.index,
+    );
 
-    server.post("/", () => {});
+    server.post(
+        "/",
+        {
+            preHandler: [verifyToken, findLoggedUser, refreshToken],
+        },
+        resourcesController.create,
+    );
 
     done();
 }

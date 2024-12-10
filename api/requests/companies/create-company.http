@@ -9,11 +9,11 @@ Content-Type: application/json
 
 ###
 
-@authToken = Bearer {{login.response.body.$.token}}
+@auth_token = {{login.response.body.$.token}}
 
 POST {{host}}/companies
 Content-Type: application/json
-Authorization: {{authToken}}
+Authorization: Bearer {{auth_token}}
 
 {
     "name": "Gisele SPA das unhas",

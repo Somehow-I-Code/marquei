@@ -9,7 +9,7 @@ export default function LoginPage() {
     async function login(credentials: LoginFormSchema) {
         "use server";
 
-        const response = await fetch("http://api:8080/login", {
+        const response = await fetch("http://api:8080/auth/login", {
             method: "POST",
             body: JSON.stringify(credentials),
             headers: {

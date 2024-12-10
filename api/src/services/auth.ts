@@ -5,8 +5,8 @@ import { decodeAuthToken } from "@http/utils/decode-auth-token";
 import { signAuthToken } from "@http/utils/sign-auth-token";
 import { validateAuthToken } from "@http/utils/validate-auth-token";
 import {
-    ProfileRepositoryType,
-    profileRepository,
+    ProfilesRepositoryType,
+    profilesRepository,
 } from "@repositories/profiles";
 import { UNAUTHORIZED } from "@routes/utils/http-codes";
 import HttpError from "@routes/utils/http-error";
@@ -14,7 +14,7 @@ import emailService, { EmailServiceType } from "@services/email";
 
 class AuthService {
     constructor(
-        private profileRepository: ProfileRepositoryType,
+        private profilesRepository: ProfilesRepositoryType,
         private emailService: EmailServiceType,
     ) {}
 
@@ -61,7 +61,7 @@ class AuthService {
 
         await this.comparePasswords(data.newPassword, data.repeatPassword);
 
-        const updatedProfile = await this.profileRepository.updatePassword(
+        const updatedProfile = await this.profilesRepository.updatePassword(
             profile.id,
             data.newPassword,
         );
@@ -94,7 +94,7 @@ class AuthService {
         await this.comparePasswords(data.newPassword, data.repeatPassword);
 
         const { password, ...updatedProfile } =
-            await this.profileRepository.updatePassword(
+            await this.profilesRepository.updatePassword(
                 decodedProfile.id,
                 data.newPassword,
             );
@@ -115,7 +115,7 @@ class AuthService {
 
         this.comparePasswords(data.newPassword, data.repeatPassword);
 
-        const updatedProfile = await this.profileRepository.updatePassword(
+        const updatedProfile = await this.profilesRepository.updatePassword(
             profile.id,
             data.newPassword,
         );
@@ -126,7 +126,7 @@ class AuthService {
     }
 
     private async findUserByEmail(email: string) {
-        const profile = await this.profileRepository.findByEmail(email);
+        const profile = await this.profilesRepository.findByEmail(email);
 
         if (!profile) {
             throw new HttpError(UNAUTHORIZED, "Credenciais inválidas");
@@ -157,5 +157,5 @@ class AuthService {
     }
 }
 
-export const authService = new AuthService(profileRepository, emailService);
+export const authService = new AuthService(profilesRepository, emailService);
 export type AuthServiceType = typeof authService;

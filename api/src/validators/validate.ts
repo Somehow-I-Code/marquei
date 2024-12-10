@@ -10,9 +10,9 @@ export function validate<T>(
     },
 ): T {
     try {
-        schema.parse(data);
+        const parsedData = schema.parse(data);
 
-        return data;
+        return parsedData;
     } catch (error) {
         throw new HttpError(BAD_REQUEST, (error as ZodError).issues[0].message);
     }

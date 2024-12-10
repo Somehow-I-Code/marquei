@@ -14,7 +14,7 @@ import ProfileCard from "./components/profile-card";
 async function getProfiles(): Promise<AllProfilesResponse> {
     const token = cookies().get("session")?.value;
 
-    const response = await fetch("http://api:8080/profiles", {
+    const response = await fetch("http://api:8080/profiles/all", {
         headers: {
             Authorization: `Bearer ${token}`,
         },

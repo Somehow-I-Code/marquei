@@ -1,24 +1,24 @@
 # @name login
-POST {{host}}/login
+POST {{host}}/auth/login
 Content-Type: application/json
 
 {
-    "email": "admin@marquei.com",
+    "email": "sudo@marquei.com",
     "password": "1234567890"
 }
 
 ###
 
-@authToken = {{login.response.body.$.token}}
+@auth_token = {{login.response.body.$.token}}
 
 POST {{host}}/profiles
 Content-Type: application/json
-Authorization: Bearer {{authToken}}
+Authorization: Bearer {{auth_token}}
 
 {
-    "name": "User da Silva",
-    "occupation": "Recepcionista",
-    "email": "userdasilva@email.com",
-    "level": "ADMIN",
+    "name": "user da silva 2",
+    "email": "user2@silva.com",
+    "occupation": "developer",
+    "level": "USER",
     "companyId": 1
 }

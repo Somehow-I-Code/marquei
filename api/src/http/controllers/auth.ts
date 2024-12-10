@@ -15,7 +15,6 @@ import { CatchErrors } from "./utils/catch-errors";
 
 class AuthController {
     constructor(private authService: AuthServiceType) {
-        // This is needed because the methods are being passed as callbacks
         this.login = this.login.bind(this);
         this.sudoLogin = this.sudoLogin.bind(this);
         this.updatePassword = this.updatePassword.bind(this);

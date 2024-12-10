@@ -9,7 +9,7 @@ export default function EmptyResourcesList() {
         <>
             <header className="flex justify-between items-end px-6 py-12">
                 <CompanyLogo />
-                <Salute>{"Usuário"}</Salute>
+                <Salute />
             </header>
 
             <section>

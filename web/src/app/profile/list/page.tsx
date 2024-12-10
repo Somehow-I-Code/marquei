@@ -116,7 +116,7 @@ export default async function ProfilesListPage({
         <section className="my-12 mx-6 flex flex-col gap-12">
             <div className="flex justify-between items-end">
                 <CompanyLogo />
-                <Salute>{"Usuário"}</Salute>
+                <Salute />
             </div>
 
             <div className="flex justify-between items-center">

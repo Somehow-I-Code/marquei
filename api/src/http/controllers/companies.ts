@@ -19,7 +19,7 @@ class CompaniesController {
 
     async create(request: FastifyRequest, reply: FastifyReply) {
         const { refreshedToken } = validate(request, refreshedTokenRequest);
-        const data = validate(request, createCompanySchema);
+        const data = validate(request.body, createCompanySchema);
 
         const company = await this.companiesServices.create(data);
 

@@ -1,17 +1,17 @@
 # @name login
-POST {{host}}/login
+POST {{host}}/auth/login
 Content-Type: application/json
 
 {
     "email": "sudo@marquei.com",
-    "password": "1234567890"
+    "password": "0987654321"
 }
 
 ###
 
 @authToken = Bearer {{login.response.body.$.token}}
 
-POST {{host}}/company
+POST {{host}}/companies
 Content-Type: application/json
 Authorization: {{authToken}}
 

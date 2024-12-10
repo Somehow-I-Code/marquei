@@ -1,28 +1,18 @@
 import Fastify from "fastify";
 
 import { auth } from "@routes/auth";
-import { createCategories } from "@routes/create-categories";
-import { createCompany } from "@routes/create-company";
-import { createResources } from "@routes/create-resources";
-import { getCategories } from "@routes/get-categories";
-import { getCompanies } from "@routes/get-companies";
-import { getResources } from "@routes/get-resources";
+import { categories } from "@routes/categories";
+import { companies } from "@routes/companies";
 import { profiles } from "@routes/profiles";
+import { resources } from "@routes/resources";
 
 const server = Fastify();
 
-// profile
 server.register(profiles, { prefix: "/profiles" });
-
-// auth
 server.register(auth, { prefix: "/auth" });
-
-server.register(createCategories);
-server.register(createResources);
-server.register(getResources);
-server.register(getCategories);
-server.register(createCompany);
-server.register(getCompanies);
+server.register(categories, { prefix: "/categories" });
+server.register(companies, { prefix: "/companies" });
+server.register(resources, { prefix: "/resources" });
 
 server.listen({ port: 8080, host: "0.0.0.0" }, (err, address) => {
     if (err) {

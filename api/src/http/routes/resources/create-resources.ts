@@ -2,11 +2,11 @@ import { FastifyInstance } from "fastify";
 import { verify } from "jsonwebtoken";
 import { ZodError } from "zod";
 
-import resourcesRepository from "../../repositories/resources";
-import { createResource } from "../../validators/resources";
-import { getJwtSecret } from "./utils/get-jwt-secret";
-import { getToken } from "./utils/get-token";
-import httpCodes from "./utils/http-codes";
+import resourcesRepository from "../../../repositories/resources";
+import { createResource } from "../../../validators/resources";
+import { getJwtSecret } from "../utils/get-jwt-secret";
+import { getToken } from "../utils/get-token";
+import httpCodes from "../utils/http-codes";
 
 export async function createResources(server: FastifyInstance) {
     server.post("/resources", async (request, reply) => {

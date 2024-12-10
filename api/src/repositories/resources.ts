@@ -1,5 +1,5 @@
 import { prisma } from "../lib/prisma";
-import { CreateResourceInput } from "./../validators/resources";
+import { CreateResourcesInput } from "./../validators/resources";
 
 class ResourcesRepository {
     async create({
@@ -7,7 +7,7 @@ class ResourcesRepository {
         description,
         categoryId,
         companyId,
-    }: CreateResourceInput) {
+    }: CreateResourcesInput) {
         const resource = await prisma.resource.create({
             data: {
                 name,
@@ -34,5 +34,6 @@ class ResourcesRepository {
     }
 }
 
-const resourcesRepository = new ResourcesRepository();
+export const resourcesRepository = new ResourcesRepository();
+export type ResourcesRepositoryType = typeof resourcesRepository;
 export default resourcesRepository;

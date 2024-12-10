@@ -7,10 +7,10 @@ import NewProfileForm, {
     NewProfileFormSchema,
 } from "./components/new-profile-form";
 
-async function getLevels(): Promise<Array<string>> {
+async function getLevels(): Promise<{ levels: Array<string> }> {
     const token = cookies().get("session")?.value;
 
-    const response = await fetch("http://api:8080/levels", {
+    const response = await fetch("http://api:8080/profiles/levels", {
         headers: {
             Authorization: `Bearer ${token}`,
         },
@@ -34,7 +34,7 @@ async function getCompanies(): Promise<Array<Company>> {
 }
 
 export default async function NewProfilePage() {
-    const levels = await getLevels();
+    const { levels } = await getLevels();
     const companies = await getCompanies();
 
     async function createProfile(data: NewProfileFormSchema) {

@@ -1,5 +1,5 @@
 # @name login
-POST {{host}}/login
+POST {{host}}/auth/login
 Content-Type: application/json
 
 {
@@ -9,14 +9,11 @@ Content-Type: application/json
 
 ###
 
-@authToken = Bearer {{login.response.body.$.token}}
-# essa request não vai funcionar sempre pq tem que checar se a categoryId e companyId
-# batem com os valores que estão no banco (checar em localhost:5555 na tabela company
-# quais são os ids da categories registradas)
+@auth_token = {{login.response.body.$.token}}
 
 POST {{host}}/resources
 Content-Type: application/json
-Authorization: Bearer {{authToken}}
+Authorization: Bearer {{auth_token}}
 
 {
     "name": "Dr. Hudson Dodói",

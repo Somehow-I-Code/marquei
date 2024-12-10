@@ -6,9 +6,13 @@
             "@repositories/*": ["src/repositories/*"],
             "@services/*": ["src/services/*"],
             "@validators/*": ["src/validators/*"],
+            "@controllers/*": ["src/http/controllers/*"],
             "@routes/*": ["src/http/routes/*"],
             "@middlewares/*": ["src/http/middlewares/*"],
+            "@http/utils/*": ["src/http/utils/*"],
             "@lib/*": ["src/lib/*"]
-        }
+        },
+        "experimentalDecorators": true,
+        "emitDecoratorMetadata": true
     }
 }

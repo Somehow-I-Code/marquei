@@ -4,9 +4,9 @@ import { hash } from "bcrypt";
 import { prisma } from "@lib/prisma";
 import generatePassword from "@repositories/utils/generateRandomPassword";
 import emailService from "@services/email";
-import { CreateProfileInput } from "@validators/profile";
+import { CreateProfileInput } from "@validators/profiles";
 
-class ProfileRepository {
+class ProfilesRepository {
     async create(data: CreateProfileInput) {
         const password = generatePassword();
         const passwordHash = await hash(password, 10);
@@ -60,13 +60,12 @@ class ProfileRepository {
     }
 
     async toggleProfile(
-        currenUser: { level: Level },
+        currentUser: { level: Level },
         id: number,
         companyId: number | undefined,
         newState: boolean,
     ) {
-        const filter: { [key in Level]: Level[] } = {
-            USER: ["USER", "ADMIN", "SUDO"],
+        const filter: { [key in Level]?: Level[] } = {
             ADMIN: ["SUDO"],
             SUDO: [],
         };
@@ -76,7 +75,7 @@ class ProfileRepository {
                 id,
                 companyId,
                 level: {
-                    notIn: filter[currenUser.level],
+                    notIn: filter[currentUser.level],
                 },
             },
             data: {
@@ -87,67 +86,48 @@ class ProfileRepository {
         return updatedProfile;
     }
 
-    async findAll(companyId: number, isSudo: boolean) {
-        if (isSudo) {
-            return prisma.profile.findMany({
-                select: {
-                    id: true,
-                    name: true,
-                    email: true,
-                    level: true,
-                    occupation: true,
-                },
-            });
-        }
-        return prisma.profile.findMany({
-            select: {
-                id: true,
-                name: true,
-                email: true,
-                level: true,
-                occupation: true,
-            },
+    async findAll(companyId: number | undefined, level: Level) {
+        const filters: { [key in Level]?: Level[] } = {
+            ADMIN: ["SUDO"],
+            SUDO: [],
+        };
+
+        const profiles = await prisma.profile.findMany({
             where: {
                 companyId,
-                level: { not: "SUDO" },
+                level: {
+                    notIn: filters[level],
+                },
+            },
+            orderBy: {
+                id: "asc",
             },
         });
+
+        return profiles;
     }
 
-    async delete(id: number, currentUser: { level: Level; companyId: number }) {
-        try {
-            if (currentUser.level === Level.SUDO) {
-                const deletedProfile = await prisma.profile.delete({
-                    select: {
-                        id: true,
-                    },
-                    where: {
-                        id,
-                    },
-                });
+    async delete(level: Level, id: number, companyId: number | undefined) {
+        const filters: { [key in Level]?: Level[] } = {
+            ADMIN: ["SUDO"],
+            SUDO: [],
+        };
 
-                return deletedProfile;
-            }
-
-            const deletedProfile = await prisma.profile.delete({
-                select: {
-                    id: true,
+        const deletedProfile = await prisma.profile.delete({
+            select: { id: true },
+            where: {
+                id,
+                companyId,
+                level: {
+                    notIn: filters[level],
                 },
-                where: {
-                    id,
-                    companyId: currentUser.companyId,
-                    level: {
-                        not: Level.SUDO,
-                    },
-                },
-            });
+            },
+        });
 
-            return deletedProfile;
-        } catch {
-            return null;
-        }
+        return deletedProfile;
     }
 }
 
-const profileRepository = new ProfileRepository();
-export default profileRepository;
+export const profilesRepository = new ProfilesRepository();
+export type ProfilesRepositoryType = typeof profilesRepository;
+export default profilesRepository;

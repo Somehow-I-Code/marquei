@@ -24,5 +24,6 @@ class CategoriesRepository {
     }
 }
 
-const categoriesRepository = new CategoriesRepository();
+export const categoriesRepository = new CategoriesRepository();
+export type CategoriesRepositoryType = typeof categoriesRepository;
 export default categoriesRepository;

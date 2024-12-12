@@ -40,6 +40,51 @@ export default async function ProfilesList({
 
     const { profiles } = await getProfiles(session);
 
+    async function deactivateProfile(id: number) {
+        "use server";
+
+        const response = await fetch(
+            `http://api:8080/profile/deactivate/${id}`,
+            {
+                method: "PATCH",
+                headers: {
+                    Authorization: `Bearer ${session}`,
+                },
+            },
+        );
+
+        if (response.status !== 200) {
+            const error = await response.json();
+            throw new Error(error.message);
+        }
+
+        const { refreshedToken } = await response.json();
+
+        cookies().set("session", refreshedToken);
+        revalidatePath("/profiles-list");
+    }
+
+    async function activateProfile(id: number) {
+        "use server";
+
+        const response = await fetch(`http://api:8080/profile/activate/${id}`, {
+            method: "PATCH",
+            headers: {
+                Authorization: `Bearer ${session}`,
+            },
+        });
+
+        if (response.status !== 200) {
+            const error = await response.json();
+            throw new Error(error.message);
+        }
+
+        const { refreshedToken } = await response.json();
+
+        cookies().set("session", refreshedToken);
+        revalidatePath("/profiles-list");
+    }
+
     async function deleteProfile(id: number) {
         "use server";
 
@@ -134,6 +179,8 @@ export default async function ProfilesList({
                     <ProfileCard
                         key={profile.id}
                         profile={profile}
+                        deactivateProfile={deactivateProfile}
+                        activateProfile={activateProfile}
                         deleteProfile={deleteProfile}
                     />
                 ))

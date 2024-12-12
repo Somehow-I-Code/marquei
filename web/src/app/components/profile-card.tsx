@@ -25,12 +25,17 @@ type ProfileCardProps = {
         email: string;
         level: string;
         occupation: string;
+        isActive: boolean;
     };
+    deactivateProfile: (id: number) => void;
+    activateProfile: (id: number) => void;
     deleteProfile: (id: number) => void;
 };
 
 export default function ProfileCard({
     profile,
+    deactivateProfile,
+    activateProfile,
     deleteProfile,
 }: ProfileCardProps) {
     const { toast } = useToast();
@@ -41,6 +46,44 @@ export default function ProfileCard({
         const initials = `${names[0][0]}${reversedNames[0][0]}`;
 
         return initials.toUpperCase();
+    }
+
+    async function handleDeactivateProfile() {
+        try {
+            await deactivateProfile(profile.id);
+
+            toast({
+                title: "Perfil desativado!",
+                description: "O perfil foi desativado com sucesso.",
+            });
+        } catch (e) {
+            if (e instanceof Error) {
+                toast({
+                    variant: "destructive",
+                    title: "Erro ao desativar perfil!",
+                    description: e.message,
+                });
+            }
+        }
+    }
+
+    async function handleActivateProfile() {
+        try {
+            await activateProfile(profile.id);
+
+            toast({
+                title: "Perfil ativar!",
+                description: "O perfil foi ativado com sucesso.",
+            });
+        } catch (e) {
+            if (e instanceof Error) {
+                toast({
+                    variant: "destructive",
+                    title: "Erro ao desativar perfil!",
+                    description: e.message,
+                });
+            }
+        }
     }
 
     async function handleDeleteProfile() {
@@ -102,22 +145,31 @@ export default function ProfileCard({
                             <AccordionTrigger className="text-blue-500">
                                 Ações disponíveis
                             </AccordionTrigger>
-                            <AccordionContent className="flex flex-col gap-5 text-slate-600 text-base mt-3">
+                            <AccordionContent className="flex flex-col gap-5 text-slate-600 text-base mt-3 underline">
                                 <Link href="">Editar perfil</Link>
-                                <Link href="">Pedir nova senha</Link>
-                                <div className="flex justify-between">
-                                    <Link href="">Desativar perfil</Link>
-                                    <h1 className="text-base text-slate-400 tracking-widest">
-                                        ATIVO
-                                    </h1>
-                                </div>
+
+                                {profile.isActive ? (
+                                    <Button
+                                        className="bg-transparent text-rose-600 font-bold border border-rose-600 rounded-lg"
+                                        onClick={handleDeactivateProfile}
+                                    >
+                                        DESATIVAR PERFIL
+                                    </Button>
+                                ) : (
+                                    <Button
+                                        className="rounded-lg"
+                                        onClick={handleActivateProfile}
+                                    >
+                                        ATIVAR PERFIL
+                                    </Button>
+                                )}
 
                                 <Button
                                     variant="danger"
                                     className="rounded-lg"
                                     onClick={handleDeleteProfile}
                                 >
-                                    Excluir perfil
+                                    EXCLUIR PERFIL
                                 </Button>
                             </AccordionContent>
                         </AccordionItem>

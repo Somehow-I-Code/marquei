@@ -4,9 +4,11 @@ export type Category = {
     companyId: number;
 };
 
-export type CategoriesResponse = Array<
-    Category & {
-        createdAt: string;
-        updatedAt: string;
-    }
->;
+export type CategoriesResponse = {
+    categories: Array<
+        Category & {
+            createdAt: string;
+            updatedAt: string;
+        }
+    >;
+};

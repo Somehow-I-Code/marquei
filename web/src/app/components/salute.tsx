@@ -1,13 +1,11 @@
-import { ReactNode } from "react";
+import { readCookieData } from "../actions";
 
-type SaluteProps = {
-    children: ReactNode;
-};
+export default async function Salute() {
+    const loggedUser = await readCookieData();
 
-export default function Salute({ children }: SaluteProps) {
     return (
         <span className="text-sm font-bold text-indigo-950">
-            olá, {children}
+            {loggedUser ? `Olá, ${loggedUser.name}` : "bem-vindo!"}
         </span>
     );
 }

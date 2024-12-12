@@ -1,5 +1,5 @@
 # @name login
-POST {{host}}/login
+POST {{host}}/auth/login
 Content-Type: application/json
 
 {
@@ -8,7 +8,9 @@ Content-Type: application/json
 }
 
 ###
-@authToken = Bearer {{login.response.body.$.token}}
 
-PATCH  {{host}}/profile/deactivate/3
-Authorization: {{authToken}}
+@profile_id = 12
+@auth_token = {{login.response.body.$.token}}
+
+PATCH {{host}}/profiles/deactivate/{{profile_id}}
+Authorization: Bearer {{auth_token}}

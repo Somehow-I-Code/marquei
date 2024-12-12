@@ -4,7 +4,7 @@ import { ZodError } from "zod";
 
 import { userIdentifiedRequest } from "@middlewares/validator/requests";
 import profileRepository from "@repositories/profiles";
-import { ToggleProfileInput, toggleProfileSchema } from "@validators/profile";
+import { ToggleProfileInput, toggleProfileSchema } from "@validators/profiles";
 import { BAD_REQUEST, NOT_FOUND } from "./http-codes";
 import HttpError from "./http-error";
 

@@ -5,6 +5,8 @@ export type Profile = {
     email: string;
     level: string;
     companyId: number;
+    firstLoign: boolean;
+    isActive: boolean;
 };
 
 export type FullProfile = Profile & {
@@ -18,4 +20,9 @@ export type ProfilesResponse = {
 
 export type AllProfilesResponse = {
     profiles: Array<FullProfile>;
+};
+
+export type DecodedProfile = FullProfile & {
+    iat: number;
+    exp: number;
 };

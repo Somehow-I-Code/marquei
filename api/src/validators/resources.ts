@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export const createResource = z.object({
+export const createResourcesSchema = z.object({
     name: z.string({
         required_error: "Nome do recurso é obrigatório!",
         invalid_type_error: "Nome do recurso é obrigatório!",
@@ -13,10 +13,8 @@ export const createResource = z.object({
         required_error: "A categoria é obrigatório!",
         invalid_type_error: "A categoria é obrigatório!",
     }),
-    companyId: z.number({
-        required_error: "Empresa é obrigatório, contate o suporte!",
-        invalid_type_error: "Empresa é obrigatório, contate o suporte!",
-    }),
 });
 
-export type CreateResourceInput = z.infer<typeof createResource>;
+export type CreateResourcesInput = z.infer<typeof createResourcesSchema> & {
+    companyId: number;
+};

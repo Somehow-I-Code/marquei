@@ -9,7 +9,7 @@ export default function LoginPage() {
     async function login(credentials: LoginFormSchema) {
         "use server";
 
-        const response = await fetch("http://api:8080/login", {
+        const response = await fetch("http://api:8080/auth/login", {
             method: "POST",
             body: JSON.stringify(credentials),
             headers: {
@@ -32,7 +32,7 @@ export default function LoginPage() {
         });
 
         if (data.firstLogin) {
-            redirect("/first-login");
+            redirect("/welcome");
         } else {
             redirect("/");
         }

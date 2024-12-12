@@ -3,7 +3,6 @@ import { ProfilesResponse } from "@/types/profiles";
 import { cookies } from "next/headers";
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import getSession from "../utis/get-session";
 import UserImage from "./assets/user.svg";
 import LogoutButton from "./components/logout-button";
 
@@ -15,13 +14,9 @@ async function doLogout() {
 }
 
 async function getProfile(): Promise<ProfilesResponse> {
-    const session = getSession();
+    const session = cookies().get("session")?.value;
 
-    if (!session) {
-        return redirect("/login");
-    }
-
-    const response = await fetch("http://api:8080/profile", {
+    const response = await fetch("http://api:8080/profiles", {
         headers: {
             "content-type": "application/json",
             Authorization: `Bearer ${session}`,
@@ -68,16 +63,16 @@ export default async function ProfilePage() {
                 </div>
             </div>
 
-            <div className="flex flex-col p-6 gap-2">
-                <Button asChild className="font-bold text-base">
-                    <Link href="/change-password">ALTERAR SENHA</Link>
-                </Button>
-                <Button
-                    asChild
-                    className="font-bold text-base bg-white text-indigo-950 border border-indigo-950"
-                >
-                    <Link href="/">VOLTAR</Link>
-                </Button>
+            <div className="flex flex-col p-6 gap-16">
+                <div className="flex flex-col gap-4">
+                    <Button asChild className="font-bold text-base">
+                        <Link href="/auth/update-password">ALTERAR SENHA</Link>
+                    </Button>
+
+                    <Button asChild variant="secondary">
+                        <Link href="/">VOLTAR</Link>
+                    </Button>
+                </div>
                 <LogoutButton doLogout={doLogout} />
             </div>
         </section>

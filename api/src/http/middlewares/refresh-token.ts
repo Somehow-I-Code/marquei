@@ -1,40 +1,29 @@
+import { signAuthToken } from "@http/utils/sign-auth-token";
+import HttpError from "@routes/utils/http-error";
 import { FastifyReply } from "fastify";
-import { sign } from "jsonwebtoken";
-import { getJwtSecret } from "../routes/utils/get-jwt-secret";
 import httpCodes from "../routes/utils/http-codes";
 import { LoggedRequest } from "./types/request";
 import { userIdentifiedRequest } from "./validator/requests";
-
-const _24_HOURS = 60 * 60 * 24 * 1000;
 
 export function refreshToken(
     request: LoggedRequest,
     reply: FastifyReply,
     next: (err?: Error) => void,
 ) {
-    const { profile } = userIdentifiedRequest.parse(request);
-
-    const { password, ...profileWithoutPassword } = profile;
-
-    let secretKey: string | undefined;
-
     try {
-        secretKey = getJwtSecret();
+        const { profile } = userIdentifiedRequest.parse(request);
+
+        const token = signAuthToken(profile);
+
+        request.refreshedToken = token;
+        next();
     } catch (e) {
+        if (e instanceof HttpError) {
+            return reply.status(e.code).send({ message: e.message });
+        }
+
         return reply
             .status(httpCodes.SERVER_ERROR)
-            .send({ message: (e as Error).message });
+            .send({ message: "Erro interno do servidor" });
     }
-
-    const token = sign(
-        {
-            ...profileWithoutPassword,
-            iat: Date.now(),
-            exp: Date.now() + _24_HOURS,
-        },
-        secretKey,
-    );
-
-    request.refreshedToken = token;
-    next();
 }

@@ -3,7 +3,7 @@ import { prisma } from "../../src/lib/prisma";
 
 import { faker } from "@faker-js/faker";
 import { hash } from "bcrypt";
-import { CreateProfileInput } from "../../src/validators/profile";
+import { CreateProfileInput } from "../../src/validators/profiles";
 
 const DEFAULT_PASSWORD = "1234567890";
 const DEFAULT_SALT = 10;

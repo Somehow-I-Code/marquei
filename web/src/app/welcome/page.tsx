@@ -31,6 +31,9 @@ export default async function WelcomePage() {
             throw new Error(data.message);
         }
 
+        const { refreshedToken } = await response.json();
+        cookies().set("session", refreshedToken);
+
         redirect("/welcome/success");
     }
 

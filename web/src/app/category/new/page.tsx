@@ -1,5 +1,6 @@
 import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 import CompanyLogo from "../../components/company-logo";
 import NewCategoryForm, {
     NewCategoryFormSchema,
@@ -25,9 +26,17 @@ export default async function NewCategoryPage() {
         });
 
         if (response.status !== 201) {
+            if (response.status === 401) {
+                cookies().delete("session");
+                redirect("/login");
+            }
+
             const error = await response.json();
             throw new Error(error.message);
         }
+
+        const { refresedToken } = await response.json();
+        cookies().set("session", refresedToken);
 
         revalidatePath("/resource/list");
     }

@@ -1,4 +1,5 @@
 import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 import UpdatePasswordForm, {
     UpdatePasswordFormSchema,
 } from "./components/update-password-form";
@@ -23,9 +24,17 @@ export default async function UpdatePasswordPage() {
         });
 
         if (response.status !== 200) {
-            const data = (await response.json()) as { message: string };
+            if (response.status === 401) {
+                cookies().delete("session");
+                redirect("/login");
+            }
+
+            const data = await response.json();
             throw new Error(data.message);
         }
+
+        const { refreshedToken } = await response.json();
+        cookies().set("session", refreshedToken);
     }
 
     return (

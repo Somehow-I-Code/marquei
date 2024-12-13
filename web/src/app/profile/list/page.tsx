@@ -1,13 +1,12 @@
+import { readCookieData } from "@/app/actions";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Plus, Search } from "lucide-react";
-import Link from "next/link";
-
-import { readCookieData } from "@/app/actions";
 import { AllProfilesResponse } from "@/types/profiles";
+import { Plus, Search } from "lucide-react";
 import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
+import Link from "next/link";
 import { redirect } from "next/navigation";
 import CompanyLogo from "../../components/company-logo";
 import Salute from "../../components/salute";
@@ -21,6 +20,11 @@ async function getProfiles(): Promise<AllProfilesResponse> {
             Authorization: `Bearer ${token}`,
         },
     });
+
+    if (response.status === 401) {
+        cookies().delete("session");
+        redirect("/login");
+    }
 
     const data = await response.json();
 
@@ -59,8 +63,8 @@ export default async function ProfilesListPage({
         }
 
         const data = await response.json();
-
         cookies().set("session", data.token);
+
         redirect("/");
     }
 
@@ -77,13 +81,18 @@ export default async function ProfilesListPage({
         });
 
         if (response.status !== 200) {
+            if (response.status === 401) {
+                cookies().delete("session");
+                redirect("/login");
+            }
+
             const error = await response.json();
             throw new Error(error.message);
         }
 
         const { refreshedToken } = await response.json();
-
         cookies().set("session", refreshedToken);
+
         revalidatePath("/profile/list");
     }
 

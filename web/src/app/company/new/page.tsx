@@ -1,4 +1,5 @@
 import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 import CompanyLogo from "../../components/company-logo";
 import FormTitle from "../../components/form-title";
 import NewCompanyForm, {
@@ -25,9 +26,17 @@ export default async function NewCompanyPage() {
         });
 
         if (response.status !== 201) {
+            if (response.status === 401) {
+                cookies().delete("session");
+                redirect("/login");
+            }
+
             const error = await response.json();
             throw new Error(error.message);
         }
+
+        const { refreshedToken } = await response.json();
+        cookies().set("session", refreshedToken);
     }
 
     return (

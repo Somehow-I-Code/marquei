@@ -2,6 +2,7 @@ import { readCookieData } from "@/app/actions";
 import { Company } from "@/types/companies";
 import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 import CompanyLogo from "../../components/company-logo";
 import FormTitle from "../../components/form-title";
 import NewProfileForm, {
@@ -16,6 +17,12 @@ async function getLevels(): Promise<{ levels: Array<string> }> {
             Authorization: `Bearer ${token}`,
         },
     });
+
+    if (response.status === 401) {
+        cookies().delete("session");
+        redirect("/login");
+    }
+
     const data = await response.json();
 
     return data;
@@ -29,6 +36,12 @@ async function getCompanies(): Promise<{ companies: Array<Company> }> {
             Authorization: `Bearer ${token}`,
         },
     });
+
+    if (response.status === 401) {
+        cookies().delete("session");
+        redirect("/login");
+    }
+
     const data = await response.json();
 
     return data;
@@ -59,6 +72,11 @@ export default async function NewProfilePage() {
         });
 
         if (response.status !== 201) {
+            if (response.status === 401) {
+                cookies().delete("session");
+                redirect("/login");
+            }
+
             const error = await response.json();
             throw new Error(error.message);
         }

@@ -1,6 +1,7 @@
 import { CategoriesResponse } from "@/types/categories";
 import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 import CompanyLogo from "../../components/company-logo";
 import FormTitle from "../../components/form-title";
 import NewResourceForm, {
@@ -15,6 +16,12 @@ async function getCategories(): Promise<CategoriesResponse> {
             Authorization: `Bearer ${token}`,
         },
     });
+
+    if (response.status === 401) {
+        cookies().delete("session");
+        redirect("/login");
+    }
+
     const data = await response.json();
 
     return data;
@@ -43,9 +50,17 @@ export default async function NewResourcePage() {
         });
 
         if (response.status !== 201) {
+            if (response.status === 401) {
+                cookies().delete("session");
+                redirect("/login");
+            }
+
             const error = await response.json();
             throw new Error(error.message);
         }
+
+        const { refreshedToken } = await response.json();
+        cookies().set("session", refreshedToken);
 
         revalidatePath("/resource/list");
     }

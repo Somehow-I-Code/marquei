@@ -1,5 +1,6 @@
 import { ResourceResponse, Resources } from "@/types/resources";
 import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 import BottomFloatingMenu from "../../components/bottom-floating-menu";
 import CompanyLogo from "../../components/company-logo";
 import Salute from "../../components/salute";
@@ -25,6 +26,11 @@ async function getResources(): Promise<Resources> {
             Authorization: `Bearer ${token}`,
         },
     });
+
+    if (response.status === 401) {
+        cookies().delete("session");
+        redirect("/login");
+    }
 
     const data = await response.json();
 

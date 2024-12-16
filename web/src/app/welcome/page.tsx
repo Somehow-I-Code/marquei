@@ -17,7 +17,7 @@ export default async function WelcomePage() {
 
         const session = cookies().get("session")?.value;
 
-        const response = await fetch("http://api:8080/change-password", {
+        const response = await fetch("http://api:8080/auth/set-password", {
             method: "PATCH",
             headers: {
                 "content-type": "application/json",
@@ -27,6 +27,11 @@ export default async function WelcomePage() {
         });
 
         if (response.status !== 200) {
+            if (response.status === 401) {
+                cookies().delete("session");
+                redirect("/login");
+            }
+
             const data = (await response.json()) as { message: string };
             throw new Error(data.message);
         }

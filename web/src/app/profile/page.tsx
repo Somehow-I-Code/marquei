@@ -1,8 +1,8 @@
 import { Button } from "@/components/ui/button";
-import { ProfilesResponse } from "@/types/profiles";
 import { cookies } from "next/headers";
 import Link from "next/link";
 import { redirect } from "next/navigation";
+// import { getProfile } from "./actions";
 import UserImage from "./assets/user.svg";
 import LogoutButton from "./components/logout-button";
 
@@ -13,24 +13,12 @@ async function doLogout() {
     redirect("/login");
 }
 
-async function getProfile(): Promise<ProfilesResponse> {
-    const session = cookies().get("session")?.value;
+async function getProfile() {
+    "use server";
 
-    const response = await fetch("http://api:8080/profiles", {
-        headers: {
-            "content-type": "application/json",
-            Authorization: `Bearer ${session}`,
-        },
-    });
+    (await cookies()).delete("session");
 
-    if (response.status === 401) {
-        cookies().delete("session");
-        redirect("/login");
-    }
-
-    const data = await response.json();
-
-    return data;
+    return { profile: {} };
 }
 
 export default async function ProfilePage() {

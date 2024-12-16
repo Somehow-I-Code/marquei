@@ -27,8 +27,9 @@ class AuthService {
         );
 
         const token = signAuthToken(profile);
+        const { password, ...profileWithoutPassword } = profile;
 
-        return token;
+        return { token, profile: profileWithoutPassword };
     }
 
     async sudoLogin(email: string) {

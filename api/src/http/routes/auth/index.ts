@@ -30,9 +30,9 @@ export async function auth(
 
     server.post("/reset-password-token", authController.resetPasswordToken);
 
-    server.post("/reset-password", authController.resetPassword);
+    server.patch("/reset-password", authController.resetPassword);
 
-    server.post(
+    server.patch(
         "/set-password",
         {
             preHandler: [verifyToken, findLoggedUser],

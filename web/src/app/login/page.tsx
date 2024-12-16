@@ -1,3 +1,4 @@
+import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import CompanyLogo from "../components/company-logo";
 import LoginForm, { LoginFormSchema } from "./components/login-form";
@@ -5,6 +6,8 @@ import LoginForm, { LoginFormSchema } from "./components/login-form";
 export default function LoginPage() {
     async function login(credentials: LoginFormSchema) {
         "use server";
+
+        console.log(credentials);
 
         const response = await fetch("http://api:8080/auth/login", {
             method: "POST",
@@ -14,6 +17,8 @@ export default function LoginPage() {
             },
         });
 
+        console.log(response);
+
         if (response.status !== 200) {
             const data = (await response.json()) as { message: string };
             throw new Error(data.message);
@@ -21,10 +26,12 @@ export default function LoginPage() {
 
         const data = (await response.json()) as {
             token: string;
-            firstLogin: boolean;
+            profile: { firstLogin: boolean };
         };
 
-        if (data.firstLogin) {
+        cookies().set("session", data.token);
+
+        if (data.profile.firstLogin) {
             redirect("/welcome");
         } else {
             redirect("/");

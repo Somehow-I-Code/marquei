@@ -27,9 +27,9 @@ class AuthController {
     async login(request: FastifyRequest, reply: FastifyReply) {
         const credentials = validate(request.body, loginSchema);
 
-        const token = await this.authService.login(credentials);
+        const { token, profile } = await this.authService.login(credentials);
 
-        return reply.status(SUCCESS).send({ token });
+        return reply.status(SUCCESS).send({ token, profile });
     }
 
     @CatchErrors()

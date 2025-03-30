@@ -73,8 +73,10 @@ model Company {
 model Appointment {
   id          Int      @id @default(autoincrement())
   name        String
-  date        DateTime
+  startsAt    DateTime
+  endsAt      DateTime
   description String
   createdAt   DateTime @default(now())
   updatedAt   DateTime @default(now())
 }
+

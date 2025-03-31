@@ -169,8 +169,10 @@ export default function ProfileCard({
                             <AccordionTrigger className="text-blue-500">
                                 Ações disponíveis
                             </AccordionTrigger>
-                            <AccordionContent className="flex flex-col gap-5 text-slate-600 text-base mt-3 underline">
-                                <Link href="">Editar perfil</Link>
+                            <AccordionContent className="flex flex-col gap-5 text-slate-600 text-base mt-3">
+                                <Link href="" className="underline">
+                                    Editar perfil
+                                </Link>
 
                                 {loggedUser?.level === "SUDO" ? (
                                     <Button
@@ -178,13 +180,13 @@ export default function ProfileCard({
                                         className="rounded-lg"
                                         onClick={handleSudoLogin}
                                     >
-                                        Logar como esse usuário
+                                        LOGAR COMO ESSE USUÁRIO
                                     </Button>
                                 ) : null}
 
                                 {profile.isActive ? (
                                     <Button
-                                        className="bg-transparent text-rose-600 font-bold border border-rose-600 rounded-lg"
+                                        className="bg-transparent text-rose-600 border border-rose-600 rounded-lg"
                                         onClick={handleDeactivateProfile}
                                     >
                                         DESATIVAR PERFIL

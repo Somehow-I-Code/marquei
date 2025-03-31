@@ -132,6 +132,10 @@ class AuthService {
             throw new HttpError(UNAUTHORIZED, "Credenciais inválidas");
         }
 
+        if (!profile.isActive) {
+            throw new HttpError(UNAUTHORIZED, "Usuário desativado");
+        }
+
         return profile;
     }
 

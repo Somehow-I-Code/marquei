@@ -70,7 +70,7 @@ export default async function ProfilesListPage({
         const session = cookies().get("session")?.value;
 
         const response = await fetch(
-            `http://api:8080/profile/deactivate/${id}`,
+            `http://api:8080/profiles/deactivate/${id}`,
             {
                 method: "PATCH",
                 headers: {
@@ -87,7 +87,7 @@ export default async function ProfilesListPage({
         const { refreshedToken } = await response.json();
 
         cookies().set("session", refreshedToken);
-        revalidatePath("/profiles-list");
+        revalidatePath("/profile/list");
     }
 
     async function activateProfile(id: number) {
@@ -95,12 +95,15 @@ export default async function ProfilesListPage({
 
         const session = cookies().get("session")?.value;
 
-        const response = await fetch(`http://api:8080/profile/activate/${id}`, {
-            method: "PATCH",
-            headers: {
-                Authorization: `Bearer ${session}`,
+        const response = await fetch(
+            `http://api:8080/profiles/activate/${id}`,
+            {
+                method: "PATCH",
+                headers: {
+                    Authorization: `Bearer ${session}`,
+                },
             },
-        });
+        );
 
         if (response.status !== 200) {
             const error = await response.json();
@@ -110,7 +113,7 @@ export default async function ProfilesListPage({
         const { refreshedToken } = await response.json();
 
         cookies().set("session", refreshedToken);
-        revalidatePath("/profiles-list");
+        revalidatePath("/profile/list");
     }
 
     async function deleteProfile(id: number) {
@@ -138,7 +141,7 @@ export default async function ProfilesListPage({
 
     const { q } = searchParams;
 
-    const filteredResults = profiles.filter((profile) => {
+    const filteredResults = profiles?.filter((profile) => {
         if (!q) {
             return true;
         }
@@ -199,7 +202,7 @@ export default async function ProfilesListPage({
                 </div>
             </div>
 
-            {filteredResults.length === 0 ? (
+            {!filteredResults || filteredResults.length === 0 ? (
                 <p>
                     Ops! Não conseguimos encontrar nenhum perfil que corresponda
                     à sua busca.

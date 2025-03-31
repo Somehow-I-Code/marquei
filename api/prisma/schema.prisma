@@ -69,3 +69,14 @@ model Company {
   resource           Resource[]
   category           Category[]
 }
+
+model Appointment {
+  id          Int      @id @default(autoincrement())
+  name        String
+  startsAt    DateTime
+  endsAt      DateTime
+  description String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @default(now())
+}
+

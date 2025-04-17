@@ -8,10 +8,10 @@ class AppointmentsRepository {
         return `From repository id: ${id}`;
     }
 
-    // Encontra um appointment através de uma data especifica (day)
+    // Encontra um appointment através de uma data especifica
     async findByDay(startsAt: Date) {
-        const startOfDay = new Date(startsAt); // Pega o início da data informada
-        const endOfDay = addDays(startOfDay, 1); // Obtem o final do dia (Amanhã)
+        const startOfDay = new Date(startsAt); // Recebe o início do dia da data informada
+        const endOfDay = addDays(startOfDay, 1); // Recebe o início do dia seguinte
 
         //Busca no banco de dados o dia desejado
         const appointments = await prisma.appointment.findMany({

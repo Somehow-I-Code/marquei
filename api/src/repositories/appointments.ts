@@ -1,5 +1,5 @@
 import { prisma } from "@lib/prisma";
-import { addDays, subDays } from "date-fns";
+import { addDays } from "date-fns";
 
 class AppointmentsRepository {
     // Encontra um appointment através do seu id

@@ -1,5 +1,5 @@
 import { prisma } from "@lib/prisma";
-import { addDays } from "date-fns";
+import { addDays, parseISO } from "date-fns";
 
 class AppointmentsRepository {
     // Encontra um appointment através do seu id
@@ -11,14 +11,12 @@ class AppointmentsRepository {
     // Encontra um appointment através de uma data especifica
     async findByDay(startsAt: Date) {
         const startOfDay = new Date(startsAt); // Recebe o início do dia da data informada
-        const endOfDay = addDays(startOfDay, 1); // Recebe o início do dia seguinte
 
         //Busca no banco de dados o dia desejado
         const appointments = await prisma.appointment.findMany({
             where: {
                 startsAt: {
-                    gte: startOfDay, // O gte(>=), início do dia (>= 2025-04-16).
-                    lt: endOfDay, // O lt(<), início do dia seguinte (< 2025/04/17).
+                    equals: startOfDay,
                 },
             },
         });

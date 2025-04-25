@@ -3,7 +3,10 @@ import {
     appointmentsService,
     AppointmentsServiceType,
 } from "@services/appointments";
-import { findAppointmentSchema } from "@validators/appointments";
+import {
+    createAppointmentSchema,
+    findAppointmentSchema,
+} from "@validators/appointments";
 import { validate } from "@validators/validate";
 import { FastifyReply, FastifyRequest } from "fastify";
 import { CatchErrors } from "./utils/catch-errors";
@@ -15,6 +18,7 @@ class AppointmentsController {
         // Precisamos vincular o objeto "this" da função, pois a função "find"
         // é usada como callback no arquivo de rotas
         this.find = this.find.bind(this);
+        this.create = this.create.bind(this);
     }
 
     // Automaticamente captura e trata erros que podem acontecer a partir
@@ -35,8 +39,18 @@ class AppointmentsController {
         // Devolvemos uma resposta http com resultado encontrado
         return reply.status(SUCCESS).send({ appointment });
     }
+
+    @CatchErrors()
+    async create(request: FastifyRequest, reply: FastifyReply) {
+        const data = validate(request.body, createAppointmentSchema);
+
+        const appointment = await this.appointmentsService.create(data);
+
+        return reply.status(201).send({ appointment });
+    }
 }
 
 export const appointmentsController = new AppointmentsController(
     appointmentsService,
 );
+

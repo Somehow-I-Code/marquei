@@ -15,10 +15,21 @@ class AppointmentsService {
 
         return appointment;
     }
+
+    async create(data: {
+        name: string;
+        description: string;
+        startsAt: Date;
+        endsAt: Date;
+    }) {
+        const appointment = await this.appointmentsRepository.create(data);
+        return appointment;
+    }
 }
 
 export const appointmentsService = new AppointmentsService(
     appointmentsRepository,
 );
 
-export type AppointmentsServiceType = typeof appointmentsService;
+export type AppointmentsServiceType = AppointmentsService;
+

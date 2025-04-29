@@ -15,6 +15,13 @@ class AppointmentsService {
 
         return appointment;
     }
+
+    async findByDay(startsAt: Date) {
+        const appointment =
+            await this.appointmentsRepository.findByDay(startsAt);
+
+        return appointment;
+    }
 }
 
 export const appointmentsService = new AppointmentsService(

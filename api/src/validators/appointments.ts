@@ -1,6 +1,6 @@
 import z from "zod";
 
-// Garante que o id quando executando um find appointment sejam número
+// Garante que o id quando executando um find appointment seja um número
 export const findAppointmentSchema = z.object({
     id: z.coerce.number({
         required_error: "Id do agendamento é obrigatório!",
@@ -25,3 +25,10 @@ export const createAppointmentSchema = z.object({
     }),
 });
 
+// Para validar a data usada na busca por agendamentos em um dia específico.
+export const findByDaySchema = z.object({
+    startsAt: z.coerce.date({
+        required_error: "Data de agendamento é obrigatória!",
+        invalid_type_error: "A data de agendamento precisa ser válida",
+    }),
+});

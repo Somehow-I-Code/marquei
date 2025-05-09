@@ -11,6 +11,12 @@ export function appointments(
     // Por enquanto não usa middlewares e executa a função find no appointments controller
     server.get("/:id", { preHandler: [] }, appointmentsController.find);
     server.post("/", { preHandler: [] }, appointmentsController.create);
+    // Essa rota responde a /appointments/by-day/2025-04-16, por exemplo.
+    server.get(
+        "/by-day/:startsAt",
+        { preHandler: [] },
+        appointmentsController.findByDay,
+    );
 
     done();
 }

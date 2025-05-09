@@ -31,5 +31,5 @@ export const appointmentsService = new AppointmentsService(
     appointmentsRepository,
 );
 
-export type AppointmentsServiceType = AppointmentsService;
+export type AppointmentsServiceType = typeof appointmentsService;
 
